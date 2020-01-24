@@ -19,7 +19,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, user));
 
-    history.push('/dashboard');
+    history.push('/feed');
   } catch (err) {
     toast.error('Falha na autenticação, verifique seus dados');
     yield put(signFailure());
@@ -38,7 +38,7 @@ export function* signUp({ payload }) {
 
     api.defaults.headers.Authorization = `Baerer ${token}`;
     yield put(signInSuccess(token, user));
-    history.push('/dashboard');
+    history.push('/feed');
   } catch (err) {
     toast.error('Falha ao criar conta. Tente novamente');
     yield put(signFailure());

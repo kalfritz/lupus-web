@@ -5,7 +5,7 @@ import Route from './Route';
 import SignIn from '~/pages/Signin';
 import SignUp from '~/pages/Signup';
 
-import Dashboard from '~/pages/Dashboard';
+import Feed from '~/pages/Feed';
 //import Profile from '~/pages/Profile';
 
 export default function Routes() {
@@ -14,7 +14,7 @@ export default function Routes() {
       <Route path="/" exact component={SignIn}></Route>
       <Route path="/register" component={SignUp}></Route>
 
-      <Route path="/dashboard" component={Dashboard} isPrivate></Route>
+      <Route path="/feed" component={Feed} isPrivate></Route>
       <Route
         path="/profile"
         component={() => <h1>profile</h1>}

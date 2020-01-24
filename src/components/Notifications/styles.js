@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import PerfectScrollBar from 'react-perfect-scrollbar';
-import { lighten } from 'polished';
 
 export const Container = styled.div`
   position: relative;
@@ -33,7 +32,7 @@ export const NotificationList = styled.div`
   width: 400px;
   left: calc(50% - 200px);
   top: calc(100% + 30px);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   border-radius: 4px;
   padding: 15px 0px;
   display: ${props => (props.visible ? 'block' : 'none')};

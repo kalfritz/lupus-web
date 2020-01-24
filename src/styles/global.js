@@ -23,6 +23,7 @@ html, body, #root {
 
 body {
     -webkit-font-smoothing: antialiased !important;
+    scroll-behavior: smooth;
 }
 
 body,

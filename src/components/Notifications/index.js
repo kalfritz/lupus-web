@@ -39,18 +39,14 @@ export default function Notifications() {
     loadNotifications();
   }, []);
 
-  const handleMarkAsRead = async id => {
+  /* const handleMarkAsRead = async id => {
     await api.put(`notifications/${id}`);
     setNotifications(
       notifications.map(notification =>
         notification._id === id ? { ...notification, read: true } : notification
       )
     );
-  };
-
-  useEffect(() => {
-    console.log(notifications);
-  }, [notifications]);
+  };*/
 
   return (
     <Container>

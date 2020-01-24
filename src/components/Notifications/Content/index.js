@@ -16,7 +16,7 @@ export default function Content({ notif }) {
     if (notif.context === 'friendship') {
       return `/users/${notif.dispatcher.id}`;
     }
-  }, [notif.context]);
+  }, [notif]);
 
   return (
     <Container notif={notif} to={route}>
@@ -30,7 +30,7 @@ export default function Content({ notif }) {
             <time>{notif.timeDistance}</time>
           </div>
           {notif.content.post_picture && (
-            <img src={notif.content.post_picture} alt="post-picture" />
+            <img src={notif.content.post_picture} alt="post" />
           )}
         </>
       )}
@@ -44,7 +44,7 @@ export default function Content({ notif }) {
             <time>{notif.timeDistance}</time>
           </div>
           {notif.content.post_picture && (
-            <img src={notif.content.post_picture} alt="post-picture" />
+            <img src={notif.content.post_picture} alt="post" />
           )}
         </>
       )}
@@ -58,7 +58,7 @@ export default function Content({ notif }) {
             <time>{notif.timeDistance}</time>
           </div>
           {notif.content.post_picture && (
-            <img src={notif.content.post_picture} alt="post-picture" />
+            <img src={notif.content.post_picture} alt="post" />
           )}
         </>
       )}
