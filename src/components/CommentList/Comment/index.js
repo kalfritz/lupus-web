@@ -23,8 +23,10 @@ export default function Comment({ comment }) {
 
       <div>
         <UsernameAndContent>
-          <strong>{comment.user.name || comment.user.username}</strong>
-          <p>{comment.content}</p>
+          <p>
+            <strong>{comment.user.name || comment.user.username}</strong>{' '}
+            {comment.content}
+          </p>
         </UsernameAndContent>
         <LikeAndTime liked={comment.liked}>
           <svg

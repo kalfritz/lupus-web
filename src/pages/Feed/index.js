@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { parseISO, format, formatDistance } from 'date-fns';
+
 //import pt from 'date-fns/locale/pt';
 import en from 'date-fns/locale/en-US';
 
@@ -8,11 +9,14 @@ import api from '~/services/api';
 
 import FriendList from '~/components/FriendList';
 import Post from '~/components/Post';
+import Modal from '~/components/Modal';
 import { Container, Trends, PostList } from './styles';
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
   const profile = useSelector(state => state.user.profile);
+  const modal = useSelector(state => state.modal);
+  const { loading, post, status } = modal;
 
   useEffect(() => {
     async function loadPosts() {
@@ -47,7 +51,8 @@ export default function Feed() {
           <Post post={post} key={post.id} />
         ))}
       </PostList>
-      <FriendList></FriendList>
+      <FriendList />
+      {status && <Modal />}
     </Container>
   );
 }

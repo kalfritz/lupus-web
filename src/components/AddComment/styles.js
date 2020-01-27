@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -7,7 +7,16 @@ export const Container = styled.div`
   flex-direction: row;
   padding: 0px 15px;
   align-items: center;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ddd;
+
+  ${props =>
+    props.fixed &&
+    css`
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      background: #eee;
+    `}
 
   img {
     height: 38px;

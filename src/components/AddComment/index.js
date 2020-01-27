@@ -13,7 +13,7 @@ const schema = Yup.object().shape({
   comment: Yup.string().required(''),
 });
 
-export default forwardRef(({ post }, ref) => {
+export default forwardRef(({ post, fixed = false }, ref) => {
   const profile = useSelector(state => state.user.profile);
   const handleSubmit = async ({ comment }, { resetForm }) => {
     const response = await api.post(`posts/${post.id}/comments`, {
@@ -24,7 +24,7 @@ export default forwardRef(({ post }, ref) => {
     response.data.err && toast.error(response.data.err);
   };
   return (
-    <Container ref={ref}>
+    <Container ref={ref} fixed={fixed}>
       <img
         src={
           profile.avatar

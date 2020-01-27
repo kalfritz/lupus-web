@@ -15,6 +15,10 @@ export const Container = styled.article`
   footer {
     padding: 0px 15px 10px;
   }
+
+  ul {
+    padding: 10px 20px;
+  }
 `;
 export const UserInfo = styled.div`
   display: flex;
@@ -60,16 +64,18 @@ export const UserInfo = styled.div`
 
 export const Content = styled.div`
   & > p {
+    color: #222;
     font-size: 14px;
-    line-height: 10px;
-    padding: 0px 15px;
+    line-height: 18px;
     margin-bottom: 15px;
+    margin-left: 20px;
   }
 
   & > img {
     width: 100%;
     max-height: 70vh;
     margin-bottom: 15px;
+    cursor: pointer;
   }
 `;
 

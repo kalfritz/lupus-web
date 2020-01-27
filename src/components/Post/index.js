@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { MdBookmark } from 'react-icons/md';
 
 import { likePostRequest } from '~/store/modules/like/actions';
+import { openModalWithAPost } from '~/store/modules/modal/actions';
 
 import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
@@ -27,6 +28,9 @@ export default function Post({ post }) {
   const addCommentRef = useRef(null);
   const handleLike = () => {
     dispatch(likePostRequest(post.id));
+  };
+  const handleClickImage = () => {
+    dispatch(openModalWithAPost({ post }));
   };
   return (
     <Container>
@@ -62,7 +66,9 @@ export default function Post({ post }) {
 
       <Content>
         <p>{post.content}</p>
-        {post.picture && <img src={post.picture.url} alt="post" />}
+        {post.picture && (
+          <img src={post.picture.url} alt="post" onClick={handleClickImage} />
+        )}
       </Content>
 
       <footer>

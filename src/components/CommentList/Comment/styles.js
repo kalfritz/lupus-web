@@ -1,12 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.li`
   display: flex;
   flex-direction: row;
 
-  align-items: flex-start;
-
-  & + div {
+  & + li {
     margin-top: 15px;
   }
 
@@ -24,24 +22,21 @@ export const Container = styled.div`
 export const UsernameAndContent = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 5px;
-
-  strong {
-    font-size: 14px;
-    color: #7159c1;
-    font-weight: bold;
-    margin-right: 6px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
 
   p {
     font-size: 14px;
     color: #111;
+
+    strong {
+      color: #7159c1;
+      font-weight: bold;
+      margin-right: 3px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 `;
 export const LikeAndTime = styled.div`
