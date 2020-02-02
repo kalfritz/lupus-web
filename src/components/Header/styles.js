@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.header`
   background: #fff;
   padding: 0 30px;
+  width: 100%;
 `;
 
 export const Content = styled.div`

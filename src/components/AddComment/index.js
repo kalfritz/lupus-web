@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 
 import { Container } from './styles';
 
+import standardProfilePic from '~/assets/ninja.jpg';
+
 const schema = Yup.object().shape({
   comment: Yup.string().required(''),
 });
@@ -26,12 +28,8 @@ export default forwardRef(({ post, fixed = false }, ref) => {
   return (
     <Container ref={ref} fixed={fixed}>
       <img
-        src={
-          profile.avatar
-            ? profile.avatar.url
-            : 'https://api.adorable.io/avatars/50/abott@adorable.png'
-        }
-        alt={profile.name || profile.username}
+        src={profile.avatar ? profile.avatar.url : standardProfilePic}
+        alt="user"
       />
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input

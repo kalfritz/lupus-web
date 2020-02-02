@@ -3,49 +3,44 @@ import { Link } from 'react-router-dom';
 import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
-  z-index: 2;
   position: relative;
+  z-index: 2;
 `;
 
 export const Badge = styled.button`
   background: none;
   border: 0;
   position: relative;
+  margin-right: 15px;
 
   ${props =>
     props.hasUnread &&
     css`
       &::after {
         position: absolute;
-        font-size: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 3px;
-        color: #fff;
-        right: -2px;
-        top: -5px;
-        width: 10px;
-        height: 10px; 
+        right: 0;
+        top: 0;
+        width: 8px;
+        height: 8px;
         background: #ff892e;
+        content: '';
         border-radius: 50%;
-        content: '${props => props.unreadCount}';
       }
     `}
 `;
 
-export const NotificationList = styled.div`
+export const RequestList = styled.div`
   border: 1px solid #bbb;
   position: absolute;
   width: 400px;
-  left: calc(50% - 201px);
+  left: calc(50% - 208px);
   top: calc(100% + 30px);
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
-  padding: 5px 0px 15px;
+  padding: 5px 0px 0px;
   @media (max-width: 500px) {
     width: 350px;
-    left: calc(50% - 175px);
+    left: calc(50% - 138px);
   }
   display: ${props => (props.visible ? 'block' : 'none')};
 
@@ -71,10 +66,10 @@ export const NotificationList = styled.div`
 
 export const Scroll = styled(PerfectScrollBar)`
   max-height: 380px;
-  padding: 0px 15px 5px;
+  padding: 0px 15px 15px;
 `;
 
-export const Notification = styled.div`
+export const Request = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,13 +77,9 @@ export const Notification = styled.div`
   color: #222;
   padding: 5px 10px;
 
-  & > section {
+  & > div {
     display: flex;
-    flex-direction: row;
-  }
-
-  &:hover {
-    background: #ddd;
+    align-items: center;
   }
 
   & + div {
@@ -99,47 +90,49 @@ export const Notification = styled.div`
   ${props =>
     props.unread &&
     css`
-      background: #ddd;
+      background: rgba(128, 0, 128, 0.1);
 
       &:hover {
-        background: #ccc;
+        background: rgba(128, 0, 128, 0.2);
       }
     `}
 `;
 
 export const ProfileLink = styled(Link)`
-  img {
+  & > img {
     height: 50px;
     width: 50px;
     border-radius: 50%;
+    margin-right: 10px;
+  }
+  & > span {
+    font-size: 15px;
+    color: #7159c1;
+    font-weight: bold;
   }
 `;
 
-export const NotifActions = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: 3px;
+export const Button = styled.button`
+  padding: 5px 10px;
+  border: 0;
+  outline: 0;
+  margin-left: 5px;
+  color: #fff;
+  font-weight: 550;
+  ${props =>
+    props.color === 'accept' &&
+    css`
+      /* background: #3b9eff; */
+      background: #3b9eff;
 
-  button {
-    width: 7px;
-    height: 7px;
-    border: 0;
-    margin-bottom: 5px;
-    div {
-      margin: 0;
-      height: 7px;
-      width: 7px;
-      border-radius: 50%;
-      border: 0;
-      outline: 0;
-      cursor: pointer;
-      background: #aaa;
-    }
-  }
-
-  svg {
-    cursor: pointer;
-  }
+      &:hover {
+      }
+    `}
+  ${props =>
+    props.color === 'reject' &&
+    css`
+      /* background: #f64c75; */
+      background: #ddd;
+      color: #111;
+    `};
 `;

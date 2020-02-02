@@ -1,37 +1,19 @@
-import React, { useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-
-import { likeCommentRequest } from '~/store/modules/like/actions';
-import { openModalWithLikes } from '~/store/modules/modal/actions';
-
-import { Container, UsernameAndContent, LikeAndTime } from './styles';
+import React from 'react';
+import { MdPersonAdd } from 'react-icons/md';
+import { Container, UserInfo, Friendship } from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
-export default function Comment({ comment }) {
-  const dispatch = useDispatch();
-  const handleLike = () => {
-    dispatch(
-      likeCommentRequest({ post_id: comment.post_id, comment_id: comment.id })
-    );
-  };
+export default function Like({ like: liker }) {
   return (
     <Container>
-      <img
-        src={comment.user.avatar ? comment.user.avatar.url : standardProfilePic}
-        alt={comment.user.name || comment.user.username}
-      />
-
-      <div>
-        <UsernameAndContent>
-          <p>
-            <strong>{comment.user.name || comment.user.username}</strong>
-            {comment.content}
-          </p>
-        </UsernameAndContent>
-        <LikeAndTime liked={comment.liked}>
+      <UserInfo>
+        <div>
+          <img
+            src={liker.avatar ? liker.avatar.url : standardProfilePic}
+            alt="user"
+          />
           <svg
-            onClick={handleLike}
             width="23px"
             height="22px"
             viewBox="0 0 23 22"
@@ -43,13 +25,13 @@ export default function Comment({ comment }) {
               id="Web"
               stroke="none"
               strokeWidth="1"
-              fill="none"
+              fill="#ff0000"
               fillRule="evenodd"
             >
               <g
                 id="Home"
                 transform="translate(-449.000000, -713.000000)"
-                stroke="#000000"
+                stroke="#ff0000"
                 strokeWidth="1.44"
               >
                 <g id="Group-3" transform="translate(430.000000, 102.000000)">
@@ -68,20 +50,15 @@ export default function Comment({ comment }) {
               </g>
             </g>
           </svg>
-          <span
-            onClick={() => {
-              dispatch(openModalWithLikes({ likes: comment.likes }));
-            }}
-          >
-            {comment.likes && comment.likes.length}
-          </span>
-          <small title={comment.time}>
-            {comment.timeDistance === 'less than a minute'
-              ? 'right now'
-              : comment.timeDistance}
-          </small>
-        </LikeAndTime>
-      </div>
+        </div>
+        <span>{liker.name || liker.username}</span>
+      </UserInfo>
+      {liker.friendship === 'add' && (
+        <Friendship>
+          <MdPersonAdd size={14} color="#333" />
+          <span>Add Friend</span>
+        </Friendship>
+      )}
     </Container>
   );
 }

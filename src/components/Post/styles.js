@@ -65,7 +65,7 @@ export const UserInfo = styled.div`
 export const Content = styled.div`
   & > p {
     color: #222;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 18px;
     margin-bottom: 15px;
     margin-left: 20px;
@@ -82,7 +82,7 @@ export const Content = styled.div`
 export const Actions = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 
   img {
     margin-right: 10px;
@@ -118,6 +118,20 @@ export const MoreActions = styled.div`
   & > img {
     &:hover {
       transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+`;
+
+export const LikeBox = styled.div`
+  position: relative;
+  display: block;
+
+  & > span {
+    color: #111;
+    font-weight: bold;
+    display: inline-block;
+    &:hover {
       cursor: pointer;
     }
   }

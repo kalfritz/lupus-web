@@ -8,6 +8,7 @@ import send from '~/assets/send.svg';
 
 import CommentList from '~/components/CommentList';
 import AddComment from '~/components/AddComment';
+import MiniLikesModal from '~/components/MiniLikesModal';
 
 import api from '~/services/api';
 
@@ -19,29 +20,45 @@ import {
   MoreActionsModel,
   Actions,
   Scroll,
+  LikeBox,
 } from './styles';
 
-import { closeModal } from '~/store/modules/modal/actions';
+import {
+  closePostModal,
+  openModalWithLikes,
+  passEventsToLikesModal,
+} from '~/store/modules/modal/actions';
 import { likePostRequest } from '~/store/modules/like/actions';
 
 export default function Modal() {
+  const dispatch = useDispatch();
   const ref = useRef();
   const addCommentRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const moreOptionsRef = useRef();
+  const [visibleMoreOptions, setVisibleMoreOptions] = useState(false);
+  const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
-  const handleKeyPress = e => {
-    e.keyCode === 27 && dispatch(closeModal());
+
+  const handleKeyDown = e => {
+    e.keyCode === 27 && dispatch(closePostModal());
   };
-  const dispatch = useDispatch();
   const modal = useSelector(state => state.modal);
-  const { loading, post, status } = modal;
+  const { data: post } = modal.post;
   const handleLike = () => {
     dispatch(likePostRequest(post.id));
   };
-  useEffect(() => {
-    ref.current.focus();
-  }, []);
+  const handleClickOutside = e => {
+    if (moreOptionsRef.current && !moreOptionsRef.current.contains(e.target)) {
+      setVisibleMoreOptions(false);
+    }
+  };
+  const handleClickOutsideModal = e => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      dispatch(closePostModal());
+    }
+  };
+
   useEffect(() => {
     async function loadComments() {
       console.log(`loading ${post.content}...`);
@@ -51,13 +68,44 @@ export default function Modal() {
       setLoadingComments(false);
     }
     loadComments();
+
+    ref.current.focus();
+
+    document.addEventListener('click', handleClickOutsideModal, false);
+    document.addEventListener('keydown', handleKeyDown, false);
+
+    //This command is needed so that when the Likes Modal is opened the event
+    //listener of the post modal is removed, and then, after the likes modal
+    //is closed, the event listener is activated again
+    dispatch(passEventsToLikesModal({ event: {
+      click: handleClickOutsideModal,
+      keyDown: handleKeyDown
+    } }));
+
+    return () => {
+      document.removeEventListener('click', handleClickOutsideModal, false);
+      document.removeEventListener('keydown', handleKeyDown, false);
+    };
   }, []);
+
+  useEffect(() => {
+    if (visibleMoreOptions === true) {
+      document.addEventListener('click', handleClickOutside, false);
+
+      return () => {
+        document.removeEventListener('click', handleClickOutside, false);
+      };
+    } else {
+      document.removeEventListener('click', handleClickOutside, false);
+    }
+  }, [visibleMoreOptions]);
+
   return (
-    <Container tabIndex="0" ref={ref} onKeyDown={handleKeyPress}>
-      <button onClick={() => dispatch(closeModal())}>
+    <Container tabIndex="0">
+      <button onClick={() => dispatch(closePostModal())}>
         <MdClose size={26} color="#ccc" />
       </button>
-      <Content tabIndex="0" onKeyDown={handleKeyPress}>
+      <Content ref={ref} tabIndex="0" >
         {post.picture && <img src={post.picture.url} alt="post" />}
         <section>
           <Scroll>
@@ -76,9 +124,12 @@ export default function Modal() {
                   src={more}
                   alt="More"
                   title="See more options"
-                  onClick={() => setVisible(!visible)}
+                  onClick={() => setVisibleMoreOptions(!visibleMoreOptions)}
                 />
-                <MoreActionsModel visible={visible}>
+                <MoreActionsModel
+                  visible={visibleMoreOptions}
+                  ref={moreOptionsRef}
+                >
                   <div>
                     <MdBookmark size={14} color="black"></MdBookmark>
                     <div>
@@ -91,13 +142,26 @@ export default function Modal() {
             </header>
             <p>{post.content}</p>
             <footer>
-              <strong>
-                {post.likes.length === 0
-                  ? 'be the first to like'
-                  : post.likes.length > 1
-                  ? `${post.likes.length} likes`
-                  : `${post.likes.length} like`}
-              </strong>
+              <LikeBox>
+                <strong
+                  onMouseEnter={() => {
+                    setVisibleMiniLikes(true);
+                  }}
+                  onMouseLeave={() => {
+                    setVisibleMiniLikes(false);
+                  }}
+                  onClick={() => {
+                    dispatch(openModalWithLikes({ likes: post.likes }));
+                  }}
+                >
+                  {post.likes.length === 0
+                    ? ''
+                    : post.likes.length > 1
+                    ? `${post.likes.length} likes`
+                    : `${post.likes.length} like`}
+                </strong>
+                <MiniLikesModal visible={visibleMiniLikes} likes={post.likes} />
+              </LikeBox>
               <Actions liked={post.liked}>
                 {/* <likeSVG /> */}
                 <svg

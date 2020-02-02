@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'lupus',
       storage,
-      whiteList: ['auth', 'user'],
+      whiteList: ['auth', 'user', 'modal', 'like'],
     },
     reducers
   );

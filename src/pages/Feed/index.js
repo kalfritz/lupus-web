@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { parseISO, format, formatDistance } from 'date-fns';
+import { Form, Input } from '@rocketseat/unform';
+import TextareaAutosize from 'react-textarea-autosize';
 
 //import pt from 'date-fns/locale/pt';
 import en from 'date-fns/locale/en-US';
@@ -10,13 +12,22 @@ import api from '~/services/api';
 import FriendList from '~/components/FriendList';
 import Post from '~/components/Post';
 import Modal from '~/components/Modal';
-import { Container, Trends, PostList } from './styles';
+import LikesModal from '~/components/LikesBoxModal'; //CHANGE CHANGE CHANGE
+import { Container, Trends, PostList, CreatePostBox } from './styles';
+
+import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function Feed() {
+  const textRef = useRef(null);
   const [posts, setPosts] = useState([]);
+  const [textareaText, setTextareaText] = useState('');
   const profile = useSelector(state => state.user.profile);
   const modal = useSelector(state => state.modal);
-  const { loading, post, status } = modal;
+  const { post, likes } = modal;
+
+  const handleTextarea = e => {
+    setTextareaText(e.target.value);
+  };
 
   useEffect(() => {
     async function loadPosts() {
@@ -44,15 +55,38 @@ export default function Feed() {
         <h1>trends....</h1>
       </Trends>
       <PostList>
-        <h1>posts...</h1>
-        <header>Poste algo amigo</header>
+        <CreatePostBox>
+          <header>
+            <h2>Create a Post!</h2>
+          </header>
+          <div>
+            <img
+              src={profile.avatar ? profile.avatar.url : standardProfilePic}
+              alt="user"
+            />
+
+            <Form onSubmit={() => {}}>
+              <TextareaAutosize
+                minRows={3}
+                maxRows={100}
+                onChange={handleTextarea}
+                value={textareaText}
+                name="content"
+                type="text"
+                placeholder="Why don't you share something fun?"
+              />
+              <button type="submit">Post</button>
+            </Form>
+          </div>
+        </CreatePostBox>
 
         {posts.map(post => (
           <Post post={post} key={post.id} />
         ))}
       </PostList>
       <FriendList />
-      {status && <Modal />}
+      {post.status && <Modal />}
+      {likes.status && <LikesModal />}
     </Container>
   );
 }

@@ -1,10 +1,14 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { MdBookmark } from 'react-icons/md';
 
 import { likePostRequest } from '~/store/modules/like/actions';
-import { openModalWithAPost } from '~/store/modules/modal/actions';
+import {
+  openModalWithAPost,
+  openModalWithLikes,
+  closeLikesModal,
+} from '~/store/modules/modal/actions';
 
 import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
@@ -12,6 +16,7 @@ import send from '~/assets/send.svg';
 
 import CommentList from '~/components/CommentList';
 import AddComment from '~/components/AddComment';
+import MiniLikesModal from '~/components/MiniLikesModal';
 
 import {
   Container,
@@ -20,18 +25,43 @@ import {
   MoreActions,
   MoreActionsModel,
   Actions,
+  LikeBox,
 } from './styles';
 
 export default function Post({ post }) {
+  const likes = useSelector(state => state.modal.likes);
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
+  const moreOptionsRef = useRef();
   const addCommentRef = useRef(null);
+  const [visibleMoreOptions, setVisibleMoreOptions] = useState(false);
+  const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
+
   const handleLike = () => {
     dispatch(likePostRequest(post.id));
   };
   const handleClickImage = () => {
     dispatch(openModalWithAPost({ post }));
   };
+
+  const handleClickOutside = e => {
+    if (moreOptionsRef.current && !moreOptionsRef.current.contains(e.target)) {
+      //if click outside closes moreOptions
+      setVisibleMoreOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    if (visibleMoreOptions === true) {
+      document.addEventListener('click', handleClickOutside, false);
+
+      return () => {
+        document.removeEventListener('click', handleClickOutside, false);
+      };
+    } else {
+      document.removeEventListener('click', handleClickOutside, false);
+    }
+  }, [visibleMoreOptions]);
+
   return (
     <Container>
       <header>
@@ -50,11 +80,11 @@ export default function Post({ post }) {
             src={more}
             alt="More"
             title="See more options"
-            onClick={() => setVisible(!visible)}
+            onClick={() => setVisibleMoreOptions(!visibleMoreOptions)}
           />
-          <MoreActionsModel visible={visible}>
+          <MoreActionsModel visible={visibleMoreOptions} ref={moreOptionsRef}>
             <div>
-              <MdBookmark size={14} color="black"></MdBookmark>
+              <MdBookmark size={14} color="black" />
               <div>
                 <strong>Save post</strong>
                 <span>Add this to your saved itens</span>
@@ -126,13 +156,26 @@ export default function Post({ post }) {
           />
           <img src={send} alt="send" />
         </Actions>
-        <strong>
-          {post.likes.length === 0
-            ? 'be the first to like'
-            : post.likes.length > 1
-            ? `${post.likes.length} likes`
-            : `${post.likes.length} like`}
-        </strong>
+        <LikeBox>
+          {post.likes.length !== 0 && (
+            <span
+              onMouseEnter={() => {
+                setVisibleMiniLikes(true);
+              }}
+              onMouseLeave={() => {
+                setVisibleMiniLikes(false);
+              }}
+              onClick={() => {
+                dispatch(openModalWithLikes({ likes: post.likes }));
+              }}
+            >
+              {post.likes.length > 1
+                ? `${post.likes.length} likes`
+                : `${post.likes.length} like`}
+            </span>
+          )}
+          <MiniLikesModal visible={visibleMiniLikes} likes={post.likes} />
+        </LikeBox>
       </footer>
 
       <CommentList comments={post.comments} />

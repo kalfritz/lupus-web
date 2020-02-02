@@ -4,6 +4,7 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 export const Container = styled.div`
   background: rgba(0, 0, 0, 0.9);
   position: absolute;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
@@ -30,6 +31,7 @@ export const Content = styled.div`
   grid-area: content;
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-columns: 14fr 8fr;
   grid-template-areas: 'img .';
   background: white;
@@ -37,7 +39,7 @@ export const Content = styled.div`
   & > img {
     grid-area: img;
     width: 100%;
-    height: 100%;
+    height: 90vh;
   }
 
   section {
@@ -59,7 +61,7 @@ export const Scroll = styled(PerfectScrollBar)`
   }
   & > p {
     color: #222;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 18px;
     margin-top: 15px;
   }
@@ -115,6 +117,18 @@ export const MoreActions = styled.div`
   & > img {
     &:hover {
       transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
+`;
+
+export const LikeBox = styled.div`
+  position: relative;
+  display: block;
+
+  & > strong {
+    color: #111;
+    &:hover {
       cursor: pointer;
     }
   }
