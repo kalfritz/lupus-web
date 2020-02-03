@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import socketio from 'socket.io-client';
 import { parseISO, format, formatDistance } from 'date-fns';
 import { Form, Input } from '@rocketseat/unform';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -24,6 +25,16 @@ export default function Feed() {
   const profile = useSelector(state => state.user.profile);
   const modal = useSelector(state => state.modal);
   const { post, likes } = modal;
+
+  const socket = useMemo(
+    () =>
+      socketio('http://localhost:3333', {
+        query: {
+          user_id: profile.id,
+        },
+      }),
+    [profile.id]
+  );
 
   const handleTextarea = e => {
     setTextareaText(e.target.value);

@@ -1,28 +1,50 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 15px;
   display: grid;
+  padding: 0px 15px 0px;
+  padding-top: calc(64px + 15px);
   grid-template-columns: 3fr 6fr 3fr;
-  grid-template-areas: 'trends feed friends';
+  grid-template-areas: '. feed .';
   grid-gap: 15px;
 
-  @media (max-width: 700px) {
+  @media (max-width: 1000px) {
+    grid-gap: 10px;
+    padding-left: 10px;
+    padding-top: calc(64px + 10px);
+  }
+
+  @media (max-width: 950px) {
+    grid-template-columns: 8fr 4fr;
+    grid-template-areas: 'feed .';
+  }
+
+  @media (max-width: 760px) {
     margin: 0;
-    padding: 0px;
+    padding: 0;
+    padding-top: 64px;
     grid-template-columns: 1fr;
     grid-template-areas: 'feed';
   }
 `;
 
 export const Trends = styled.aside`
-  display: grid;
-  grid-area: trends;
-  background: green;
+  position: relative;
+  background: yellowgreen;
+  height: calc(100vh - 15px - 64px); /*64px = header, 15px = extra margin*/
+  position: fixed;
+  width: 23.5vw;
+  left: calc(15px); /*margin*/
+  top: calc(64px + 15px); /*64px = header, 15px = extra margin*/
 
-  @media (max-width: 700px) {
+  @media (max-width: 1000px) {
+    left: 10px;
+    top: calc(64px + 10px);
+    height: calc(100vh - 10px - 64px);
+  }
+
+  @media (max-width: 950px) {
     display: none;
-    min-width: 100%;
   }
 `;
 export const PostList = styled.section`
@@ -33,9 +55,10 @@ export const PostList = styled.section`
   margin: 0 auto;
   padding: 10px 20px 15px;
 
-  @media (max-width: 700px) {
-    padding: 5px 5px 10px;
-    margin: 0;
+  @media (max-width: 1000px) {
+    padding: 10px 15px 15px;
+  }
+  @media (max-width: 950px) {
   }
 `;
 export const CreatePostBox = styled.div`

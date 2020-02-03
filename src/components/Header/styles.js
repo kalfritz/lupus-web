@@ -4,6 +4,10 @@ export const Container = styled.header`
   background: #fff;
   padding: 0 30px;
   width: 100%;
+  position: fixed;
+  top: 0px;
+  right: 17px;
+  z-index: 1;
 `;
 
 export const Content = styled.div`
