@@ -39,7 +39,7 @@ export default forwardRef(({ visible, setVisible }, ref) => {
   return (
     <Container ref={ref}>
       <Badge onClick={() => setVisible(!visible)}>
-        <MdGroup size={24} color="#7159c1" />
+        <MdGroup size={24} color="#444" />
       </Badge>
       <RequestList visible={visible}>
         <h2>Friend Requests</h2>

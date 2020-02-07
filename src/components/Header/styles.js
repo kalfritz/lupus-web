@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
   background: #fff;
@@ -8,6 +9,10 @@ export const Container = styled.header`
   top: 0px;
   right: 17px;
   z-index: 1;
+
+  @media (max-width: 800px) {
+    right: 0px;
+  }
 `;
 
 export const Content = styled.div`
@@ -29,7 +34,7 @@ export const Content = styled.div`
     a {
       font-weight: bold;
       text-transform: uppercase;
-      color: #7159c1;
+      color: #444;
     }
   }
   aside {
@@ -39,6 +44,7 @@ export const Content = styled.div`
 `;
 
 export const Profile = styled.div`
+  position: relative;
   display: flex;
   margin-left: 15px;
   padding-left: 15px;
@@ -63,5 +69,65 @@ export const Profile = styled.div`
     height: 32px;
     width: 32px;
     border-radius: 50%;
+    cursor: pointer;
   }
+`;
+
+export const HeaderOptions = styled.div`
+  position: absolute;
+  border: 1px solid #eee;
+  width: 200px;
+  left: calc(100% - 200px);
+  top: calc(100% + 5px);
+  background: rgba(255, 255, 255, 1);
+  border-radius: 4px;
+  padding: 10px 10px;
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
+export const HeaderLink = styled(Link)`
+  border: 0;
+  width: 100%;
+  padding: 6px 0px;
+  cursor: pointer;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span {
+      font-size: 12px;
+      margin-left: 10px;
+      color: #444;
+    }
+  }
+  &:hover {
+    background: #eee;
+  }
+`;
+
+export const LogoutButton = styled.button`
+  margin-top: 6px;
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 0px;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  cursor: pointer;
+
+  span {
+    font-size: 12px;
+    margin-left: 10px;
+    color: #444;
+  }
+
+  &:hover {
+    background: #eee;
+  }
+
+  border-top: 1px solid #ddd;
 `;

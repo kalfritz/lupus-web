@@ -11,15 +11,9 @@ export default function Profile() {
   }, []);
   return (
     <Container>
-      <Trends>
-        <h1>q</h1>
-      </Trends>
       <PostList>
         <h1>q</h1>
       </PostList>
-      <FriendList>
-        <h1>q</h1>
-      </FriendList>
     </Container>
   );
 }

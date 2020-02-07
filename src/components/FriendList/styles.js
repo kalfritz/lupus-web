@@ -1,48 +1,72 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
+  background: #fff;
   position: relative;
-  padding: 10px 0px;
-  background: #ddd;
-  height: calc(100vh - 64px - 15px); /*64px = header, 15px = extra margin*/
+  border: 1px solid #ddd;
+  padding: 0px 0px;
+  height: calc(100vh - 64px - 10px); /*64px = header, 10px = extra margin*/
   position: fixed;
-  width: 23.5vw;
-  right: calc(17px + 15px); /*17px = scrolllbar, 15px = extra margin*/
-  top: calc(64px + 15px); /*64px = header, 15px = extra margin*/
+  width: 18vw;
+  right: 17px; /*17px = scrolllbar*/
+  bottom: 0px;
   display: flex;
   flex-direction: column;
 
-  h2 {
+  & > span {
+    padding: 10px 0px 10px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  h3 {
     margin-bottom: 15px;
-    padding: 0px 10px;
+    padding: 0px 5px;
   }
 
   img {
-    height: 38px;
-    width: 38px;
+    height: 34px;
+    width: 34px;
     border-radius: 50%;
     margin-right: 10px;
   }
 
-  @media (max-width: 1000px) {
-    right: calc(17px + 10px);
-    top: calc(64px + 10px);
-    height: calc(100vh - 64px - 10px);
+  @media (max-width: 1050px) {
+    width: 200px;
+
+    right: calc(17px + 20px);
+    cursor: pointer;
   }
 
-  @media (max-width: 950px) {
-    width: 32vw;
-  }
-
-  @media (max-width: 760px) {
-    display: none;
-  }
+  ${props =>
+    props.friendsBarStatus
+      ? css`
+          & > span {
+            background: #eee;
+          }
+        `
+      : css`
+          background: yellowgreen;
+          height: auto;
+          background: #333;
+          border: 0;
+          color: #fff;
+        `}
 `;
 
 export const Scroll = styled(PerfectScrollBar)`
   padding: 15px 5px 0px;
   border-top: 1px solid #ccc;
+
+  ${props =>
+    props.friendsBarStatus
+      ? css`
+          display: block;
+        `
+      : css`
+          display: none;
+        `}
 `;
 
 export const Friend = styled.div`
@@ -85,6 +109,10 @@ export const SearchBar = styled.div`
     }
   }
 
+  @media (max-width: 1050px) {
+    /* display: none; */
+  }
+
   input {
     width: 100%;
     outline: 0;
@@ -94,4 +122,13 @@ export const SearchBar = styled.div`
     color: #222;
     background: transparent;
   }
+
+  ${props =>
+    props.friendsBarStatus
+      ? css`
+          display: flex;
+        `
+      : css`
+          display: none;
+        `}
 `;

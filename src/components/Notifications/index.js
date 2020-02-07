@@ -80,7 +80,7 @@ export default forwardRef(({ visible, setVisible }, ref) => {
         unreadCount={String(unreadNotifsCount)}
         onClick={() => setVisible(!visible)}
       >
-        <MdNotifications size={24} color="#7159c1" />
+        <MdNotifications size={24} color="#444" />
       </Badge>
       <NotificationList visible={visible}>
         <h2>Notifications</h2>

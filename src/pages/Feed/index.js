@@ -95,7 +95,7 @@ export default function Feed() {
           <Post post={post} key={post.id} />
         ))}
       </PostList>
-      <FriendList />
+
       {post.status && <Modal />}
       {likes.status && <LikesModal />}
     </Container>

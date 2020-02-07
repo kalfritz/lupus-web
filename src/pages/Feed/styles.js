@@ -3,23 +3,20 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: grid;
   padding: 0px 15px 0px;
-  padding-top: calc(64px + 15px);
-  grid-template-columns: 3fr 6fr 3fr;
+  padding-top: calc(64px + 10px);
+  grid-template-columns: 25fr 59fr 18fr;
   grid-template-areas: '. feed .';
   grid-gap: 15px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1050px) {
     grid-gap: 10px;
     padding-left: 10px;
     padding-top: calc(64px + 10px);
+    grid-template-columns: 4fr 8fr;
+    grid-template-areas: '. feed';
   }
 
-  @media (max-width: 950px) {
-    grid-template-columns: 8fr 4fr;
-    grid-template-areas: 'feed .';
-  }
-
-  @media (max-width: 760px) {
+  @media (max-width: 800px) {
     margin: 0;
     padding: 0;
     padding-top: 64px;
@@ -31,19 +28,17 @@ export const Container = styled.div`
 export const Trends = styled.aside`
   position: relative;
   background: yellowgreen;
-  height: calc(100vh - 15px - 64px); /*64px = header, 15px = extra margin*/
+  height: calc(100vh - 10px - 64px); /*64px = header, 10px = extra margin*/
   position: fixed;
-  width: 23.5vw;
-  left: calc(15px); /*margin*/
-  top: calc(64px + 15px); /*64px = header, 15px = extra margin*/
+  width: 25vw;
+  left: 0px;
+  top: calc(64px + 10px); /*64px = header, 10px = extra margin*/
 
-  @media (max-width: 1000px) {
-    left: 10px;
-    top: calc(64px + 10px);
-    height: calc(100vh - 10px - 64px);
+  @media (max-width: 1050px) {
+    width: 33vw;
   }
 
-  @media (max-width: 950px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
@@ -52,13 +47,14 @@ export const PostList = styled.section`
   display: grid;
   grid-area: feed;
   background: #eee;
-  margin: 0 auto;
+  margin: 0 2px;
   padding: 10px 20px 15px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1050px) {
     padding: 10px 15px 15px;
   }
-  @media (max-width: 950px) {
+  @media (max-width: 800px) {
+    margin: 0px 0px;
   }
 `;
 export const CreatePostBox = styled.div`

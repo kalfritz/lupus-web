@@ -33,7 +33,7 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   grid-template-columns: 14fr 8fr;
-  grid-template-areas: 'img .';
+  grid-template-areas: 'img post';
   background: white;
 
   & > img {
@@ -47,12 +47,22 @@ export const Content = styled.div`
     width: 100%;
     transform: translate(0, 0);
   }
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'post';
+
+    & > img {
+      display: none;
+    }
+  }
 `;
 
 export const Scroll = styled(PerfectScrollBar)`
   padding: 20px 20px;
   max-height: 80vh;
   overflow: hidden;
+  grid-area: post;
 
   header {
     display: flex;
