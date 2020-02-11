@@ -5,6 +5,10 @@ export const Container = styled.article`
   border: 1px solid #ddd;
   margin-top: 15px;
 
+  &:first-child {
+    margin-top: 0;
+  }
+
   header {
     display: flex;
     align-items: center;

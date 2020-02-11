@@ -5,6 +5,7 @@ import api from '~/services/api';
 import {
   updateProfileSuccess,
   updateProfileFailure,
+  storeMyFriendListSuccess,
 } from '~/store/modules/user/actions';
 
 export function* updateProfile({ payload }) {
@@ -26,4 +27,19 @@ export function* updateProfile({ payload }) {
   }
 }
 
-export default all([takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile)]);
+export function* storeMyFriendList() {
+  try {
+    console.log('qa');
+    const response = yield call(api.get, 'friendlist');
+    console.log('q');
+    console.log(response.data);
+    yield put(storeMyFriendListSuccess(response.data));
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export default all([
+  takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile),
+  takeLatest('@user/STORE_MY_FRIEND_LIST_REQUEST', storeMyFriendList),
+]);

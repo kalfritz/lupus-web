@@ -4,7 +4,12 @@ import { useDispatch } from 'react-redux';
 import { likeCommentRequest } from '~/store/modules/like/actions';
 import { openModalWithLikes } from '~/store/modules/modal/actions';
 
-import { Container, UsernameAndContent, LikeAndTime } from './styles';
+import {
+  Container,
+  UsernameAndContent,
+  UsernameLink,
+  LikeAndTime,
+} from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
@@ -25,7 +30,9 @@ export default function Comment({ comment }) {
       <div>
         <UsernameAndContent>
           <p>
-            <strong>{comment.user.name || comment.user.username}</strong>
+            <UsernameLink to={`/profile/${comment.user.username}`}>
+              {comment.user.name || comment.user.username}
+            </UsernameLink>
             {comment.content}
           </p>
         </UsernameAndContent>

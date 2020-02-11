@@ -17,3 +17,16 @@ export function updateProfileFailure() {
     type: '@user/UPDATE_PROFILE_FAILURE',
   };
 }
+
+export function storeMyFriendListRequest() {
+  return {
+    type: '@user/STORE_MY_FRIEND_LIST_REQUEST',
+  };
+}
+
+export function storeMyFriendListSuccess(friends) {
+  return {
+    type: '@user/STORE_MY_FRIEND_LIST_SUCCESS',
+    payload: { friends },
+  };
+}

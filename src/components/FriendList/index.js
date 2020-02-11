@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { storeMyFriendListRequest } from '~/store/modules/user/actions';
 import { useMediaQuery } from 'react-responsive';
 import { MdSearch } from 'react-icons/md';
-
-import api from '~/services/api';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
 import { Container, Scroll, Friend, GreenCircle, SearchBar } from './styles';
 
 export default function FriendList() {
+  const dispatch = useDispatch();
+
   const isLessThan1050PxWith = useMediaQuery({
     query: '(max-width: 1050px)',
   });
@@ -17,11 +19,20 @@ export default function FriendList() {
   });
 
   useEffect(() => {
+    async function loadFriends() {
+      dispatch(storeMyFriendListRequest());
+    }
+    loadFriends();
+  }, []);
+
+  useEffect(() => {
     isLessThan1050PxWith ? setFriendsBar(false) : setFriendsBar(true);
   }, [isLessThan1050PxWith]);
 
   const searchBarRef = useRef();
-  const [friends, setFriends] = useState([]);
+
+  const friends = useSelector(state => state.user.friends);
+
   const [friendSearch, setFriendSearch] = useState('');
   const [friendsBar, setFriendsBar] = useState(true);
 
@@ -30,7 +41,7 @@ export default function FriendList() {
   };
 
   const friendsOnline = useMemo(() => {
-    return friends.filter(friend => friend.online).length;
+    return friends && friends.filter(friend => friend.online).length;
   }, [friends]);
 
   const filteredFriends = useMemo(() => {
@@ -47,14 +58,6 @@ export default function FriendList() {
     setFriendSearch(e.target.value.toLowerCase());
     console.log(friendSearch);
   };
-
-  useEffect(() => {
-    async function loadFriends() {
-      const response = await api.get('/friendlist');
-      setFriends(response.data);
-    }
-    loadFriends();
-  }, []);
 
   return (
     <Container friendsBarStatus={friendsBar}>

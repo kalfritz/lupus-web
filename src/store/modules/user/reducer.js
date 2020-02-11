@@ -2,6 +2,7 @@ import produce from 'immer';
 
 const INITIAL_STATE = {
   profile: null,
+  friends: [],
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -26,8 +27,17 @@ export default function user(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@user/STORE_MY_FRIEND_LIST_REQUEST': {
+        break;
+      }
+      case '@user/STORE_MY_FRIEND_LIST_SUCCESS': {
+        const { friends } = action.payload;
+        draft.friends = friends;
+        break;
+      }
       case '@auth/SIGN_OUT': {
         draft.profile = null;
+        draft.friends = [];
         break;
       }
       default:

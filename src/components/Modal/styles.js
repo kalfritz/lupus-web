@@ -61,6 +61,7 @@ export const Content = styled.div`
 export const Scroll = styled(PerfectScrollBar)`
   padding: 20px 20px;
   max-height: 80vh;
+  width: 100%;
   overflow: hidden;
   grid-area: post;
 

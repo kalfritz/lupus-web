@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.li`
   display: flex;
@@ -36,20 +37,6 @@ export const UsernameAndContent = styled.div`
     color: #111;
 
     /* word-break: break-all; Only one that actually worked */
-
-    strong {
-      color: #7159c1;
-      font-weight: bold;
-      margin-right: 3px;
-
-      @media (max-width: 700px) {
-        display: block;
-      }
-
-      &:hover {
-        cursor: pointer;
-      }
-    }
   }
 `;
 export const LikeAndTime = styled.div`
@@ -102,5 +89,20 @@ export const LikeAndTime = styled.div`
       text-decoration: underline;
       cursor: pointer;
     }
+  }
+`;
+
+export const UsernameLink = styled(Link)`
+  border: 0;
+  color: #7159c1;
+  font-weight: bold;
+  margin-right: 3px;
+
+  @media (max-width: 700px) {
+    display: block;
+  }
+
+  &:hover {
+    cursor: pointer;
   }
 `;

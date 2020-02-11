@@ -112,7 +112,7 @@ export default function Header() {
           <Profile>
             <div>
               <strong>{profile.name || profile.username}</strong>
-              <Link to="/profile">Meu Perfil</Link>
+              <Link to={`/profile/${profile.username}`}>Meu Perfil</Link>
             </div>
             <img
               src={profile.avatar ? profile.avatar.url : standardProfilePic}
@@ -123,7 +123,7 @@ export default function Header() {
               visible={visibleHeaderOptions}
               ref={headerOptionsRef}
             >
-              <HeaderLink to="/me">
+              <HeaderLink to={`/profile/${profile.username}`}>
                 <div>
                   <MdPerson size={22} color="#333" />
                   <span>My profile</span>
