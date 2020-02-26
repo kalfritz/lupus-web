@@ -31,8 +31,8 @@ export default function Timeline({ editable, profile }) {
       }));
       setPosts(data);
     }
-    loadPosts();
-  }, [profile]);
+    profile.id && loadPosts();
+  }, [profile.id]);
   return (
     <Container>
       <aside>

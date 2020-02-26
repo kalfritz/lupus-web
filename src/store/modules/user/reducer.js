@@ -35,6 +35,28 @@ export default function user(state = INITIAL_STATE, action) {
         draft.friends = friends;
         break;
       }
+      case '@user/FRIEND_SIGNED_IN': {
+        const { friend_id } = action.payload;
+
+        draft.friends = draft.friends.map(friend => {
+          if (friend.id === friend_id) {
+            friend.online = true;
+          }
+          return friend;
+        });
+        break;
+      }
+      case '@user/FRIEND_SIGNED_OUT': {
+        const { friend_id } = action.payload;
+
+        draft.friends = draft.friends.map(friend => {
+          if (friend.id === friend_id) {
+            friend.online = false;
+          }
+          return friend;
+        });
+        break;
+      }
       case '@auth/SIGN_OUT': {
         draft.profile = null;
         draft.friends = [];

@@ -1,17 +1,13 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { parseISO, format, formatDistance } from 'date-fns';
 import en from 'date-fns/locale/en-US';
 
 import { MdPhoto } from 'react-icons/md';
 
-import { Container, PhotosGrid, Photo } from './styles';
+import { Container, PhotosGrid, Photo, PhotosLink } from './styles';
 
-import {
-  openModalWithAPost,
-  openModalWithLikes,
-  closeLikesModal,
-} from '~/store/modules/modal/actions';
+import { openModalWithAPost } from '~/store/modules/modal/actions';
 
 import api from '~/services/api';
 
@@ -20,11 +16,7 @@ export default function Photos({ profile, editable }) {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     async function loadPosts() {
-      const response = await api.get(`/photos/${profile.id}`, {
-        query: {
-          limit: 9,
-        },
-      });
+      const response = await api.get(`/photos/${profile.id}?limit=9`);
 
       const data = response.data.map(post => ({
         ...post,
@@ -39,7 +31,7 @@ export default function Photos({ profile, editable }) {
       }));
       setPosts(data);
     }
-    loadPosts();
+    profile.id && loadPosts();
   }, [profile.id]);
 
   const handleClickImage = post => {
@@ -49,9 +41,12 @@ export default function Photos({ profile, editable }) {
   return (
     <Container>
       <header>
-        <MdPhoto size={24} color="#333" />
-        <span>Photos</span>
+        <PhotosLink to={`/${profile.username}/photos`}>
+          <MdPhoto size={24} color="#333" />
+          <span>Photos</span>
+        </PhotosLink>
       </header>
+
       <PhotosGrid>
         {posts.map(post => (
           <Photo

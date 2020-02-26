@@ -1,7 +1,7 @@
-export function openModalWithAPost({ post }) {
+export function openModalWithAPost({ post, deletePost, setPostContent }) {
   return {
     type: '@modal/OPEN_MODAL_WITH_A_POST',
-    payload: { post },
+    payload: { post, deletePost, setPostContent },
   };
 }
 
@@ -12,7 +12,6 @@ export function closePostModal() {
 }
 
 export function openModalWithLikes({ likes }) {
-  console.log(likes);
   return {
     type: '@modal/OPEN_MODAL_WITH_LIKES',
     payload: { likes },

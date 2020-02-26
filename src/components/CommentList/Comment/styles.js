@@ -5,24 +5,24 @@ export const Container = styled.li`
   display: flex;
   flex-direction: row;
   width: 100%;
+  margin-bottom: 15px;
 
   & > div {
     width: 100%;
   }
 
-  & + li {
-    margin-top: 15px;
-  }
-
-  & > img {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-
-    &:hover {
-      cursor: pointer;
-    }
+  &:last-child {
+    ${props =>
+      props.isRenderedInModal
+        ? css`
+            margin-bottom: 15px;
+            @media (max-width: 800px) {
+              margin-bottom: 30px;
+            }
+          `
+        : css`
+            margin-bottom: 0px;
+          `};
   }
 `;
 export const UsernameAndContent = styled.div`
@@ -92,17 +92,42 @@ export const LikeAndTime = styled.div`
   }
 `;
 
-export const UsernameLink = styled(Link)`
+export const UsernameLinkBox = styled.div`
   border: 0;
+  position: relative;
   color: #7159c1;
   font-weight: bold;
+  display: inline-block;
   margin-right: 3px;
 
   @media (max-width: 700px) {
-    display: block;
+    /* display: block; */
   }
 
   &:hover {
     cursor: pointer;
+  }
+`;
+
+export const ImgLink = styled(Link)`
+  & > img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+`;
+export const UsernameLink = styled(Link)`
+  span {
+    font-size: 15px;
+    color: #7159c1;
+    font-weight: bold;
+  }
+
+  &:link {
+    color: unset;
+  }
+  &:visited {
+    color: unset;
   }
 `;

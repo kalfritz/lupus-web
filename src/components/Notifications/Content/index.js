@@ -23,15 +23,15 @@ export default function Content({ notif }) {
     if (content) {
       return content.text.length >= 30
         ? content.text.substr(0, 29).concat('...')
-        : content.text.length;
+        : content.text;
     }
-  }, [notif.content]);
+  }, [notif]);
 
   return (
     <Container>
       <NotifContent notif={notif} to={route}>
         {notif.context === 'comment_post' && (
-          <>
+          <div>
             <div>
               <p>
                 <span>
@@ -44,42 +44,42 @@ export default function Content({ notif }) {
             {notif.content.post_picture && (
               <img src={notif.content.post_picture} alt="post" />
             )}
-          </>
+          </div>
         )}
         {notif.context === 'like_post' && (
-          <>
+          <div>
             <div>
               <p>
                 <span>
                   {notif.dispatcher.name || notif.dispatcher.username}
                 </span>
-                liked your post "{notif.content.text}"
+                liked your post "{limitedText}"
               </p>
               <Time>{notif.timeDistance}</Time>
             </div>
             {notif.content.post_picture && (
               <img src={notif.content.post_picture} alt="post" />
             )}
-          </>
+          </div>
         )}
         {notif.context === 'like_comment' && (
-          <>
+          <div>
             <div>
               <p>
                 <span>
                   {notif.dispatcher.name || notif.dispatcher.username}
                 </span>
-                liked your comment "{notif.content.text}"
+                liked your comment "{limitedText}"
               </p>
               <Time>{notif.timeDistance}</Time>
             </div>
             {notif.content.post_picture && (
               <img src={notif.content.post_picture} alt="post" />
             )}
-          </>
+          </div>
         )}
         {notif.context === 'friendship' && (
-          <>
+          <div>
             <div>
               <p>
                 <span>You</span>and
@@ -90,7 +90,7 @@ export default function Content({ notif }) {
               </p>
               <Time>{notif.timeDistance}</Time>
             </div>
-          </>
+          </div>
         )}
       </NotifContent>
     </Container>

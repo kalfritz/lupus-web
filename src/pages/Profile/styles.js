@@ -2,17 +2,17 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
-  width: calc(100vw - 17px - 18vw);
+  width: calc(80vw - 17px);
   padding: 0px 15px;
-  padding-top: 64px;
 
   @media (max-width: 1050px) {
     width: calc(100vw - 17px - 2vw);
+    width: calc(100vw - 17px);
     padding: 0px 5px 0px;
   }
   @media (max-width: 800px) {
-    width: 100vw;
     padding: 0;
+    width: 100%;
   }
 
   section {
@@ -25,39 +25,61 @@ export const Cover = styled.div`
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
+  background: #eee;
   background-image: url(${({ img }) => img});
   background-repeat: no-repeat;
   background-size: cover;
-  width: calc(100% / 12 * 11 - 13px);
+  /* width: calc(100% / 12 * 11 - 13px); */
+  width: 100%;
   margin: 0;
   height: 350px;
 `;
 
 export const ProfilePic = styled.img`
   position: absolute;
-  bottom: -25px;
+  top: -125px;
   left: 50%;
   transform: translate(-50%, 0);
+  margin: 0 auto;
   height: 150px;
   width: 150px;
   border-radius: 50%;
-  margin: 0 auto;
 `;
 
-export const Name = styled.div`
+export const UserNameAndOptions = styled.div`
+  position: relative;
   display: flex;
-  justify-content: center;
-  padding-top: 30px;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  padding: 30px 15px 0px;
   background: #fff;
-  width: calc(100% / 12 * 11 - 13px);
+  /* width: calc(100% / 12 * 11 - 13px); */
+  width: 100%;
   line-height: 24px;
   font-size: 24px;
   color: #222;
+
+  & > div {
+    &:last-child {
+      flex: 0 1 auto;
+      margin-left: auto;
+    }
+  }
+`;
+
+export const Name = styled.div`
+  margin-right: auto;
+  flex: 0 1 auto;
+  position: absolute; /* new */
+  left: 50%;
+  transform: translateX(-50%);
 `;
 
 export const Nav = styled.nav`
   padding: 0 0 0;
-  width: calc(100% / 12 * 11 - 13px);
+  /* width: calc(100% / 12 * 11 - 13px); */
+  width: 100%;
   margin: 0;
   background: #fff;
   height: 40px;

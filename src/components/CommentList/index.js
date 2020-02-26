@@ -7,7 +7,11 @@ import Comment from './Comment';
 
 import { Container } from './styles';
 
-export default function CommentList({ comments: rawComments }) {
+export default function CommentList({
+  comments: rawComments,
+  rect,
+  isRenderedInModal = false,
+}) {
   const profile = useSelector(state => state.user.profile);
   const comments = useMemo(() => {
     return (
@@ -42,7 +46,12 @@ export default function CommentList({ comments: rawComments }) {
   return comments && comments.length > 0 ? (
     <Container>
       {comments.map(comment => (
-        <Comment key={comment.id} comment={comment} />
+        <Comment
+          key={comment.id}
+          comment={comment}
+          rect={rect}
+          isRenderedInModal={isRenderedInModal}
+        />
       ))}
     </Container>
   ) : null;

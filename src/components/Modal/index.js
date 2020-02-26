@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MdClose, MdBookmark } from 'react-icons/md';
+import { MdClose, MdBookmark, MdInfo } from 'react-icons/md';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
@@ -21,6 +22,9 @@ import {
   Actions,
   Scroll,
   LikeBox,
+  DeleteSpan,
+  ConfirmSpan,
+  PostContent,
 } from './styles';
 
 import {
@@ -40,11 +44,41 @@ export default function Modal() {
   const [comments, setComments] = useState([]);
   const [loadingComments, setLoadingComments] = useState(false);
 
-  const handleKeyDown = e => {
-    e.keyCode === 27 && dispatch(closePostModal());
-  };
+  const [confirm, setConfirm] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  const handleKeyDown = useCallback(
+    e => {
+      e.keyCode === 27 && dispatch(closePostModal());
+    },
+    [dispatch]
+  );
   const modal = useSelector(state => state.modal);
   const { data: post } = modal.post;
+  const [editedContent, setEditedContent] = useState(post.content);
+  const handleTextarea = async e => {
+    setEditedContent(e.target.value);
+  };
+  const handlePostDelete = async id => {
+    await api.delete(`/posts/${id}`);
+    modal.deletePost(id);
+    dispatch(closePostModal());
+  };
+  useEffect(() => {
+    if (confirm) {
+      setTimeout(() => {
+        setConfirm(false);
+      }, 2000);
+    }
+  }, [confirm]);
+  const handleSubmit = async e => {
+    e.preventDefault();
+    await api.put(`/posts/${post.id}`, {
+      content: editedContent,
+    });
+    setEditing(false);
+    modal.setPostContent({ id: post.id, content: editedContent });
+  };
   const handleLike = () => {
     dispatch(likePostRequest(post.id));
   };
@@ -53,15 +87,23 @@ export default function Modal() {
       setVisibleMoreOptions(false);
     }
   };
-  const handleClickOutsideModal = e => {
-    if (ref.current && !ref.current.contains(e.target)) {
-      dispatch(closePostModal());
-    }
-  };
+  const handleClickOutsideModal = useCallback(
+    e => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        if (e.target.tagName === 'BUTTON') return;
+        dispatch(closePostModal());
+        /*Clicking on Cancel button when editing is closing the modal so I'm avoi
+      ding that to happen. I think it is happening because the button is being
+      rendered conditionally based on state causing it to not being finded on
+      ref.current.contains()
+      */
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     async function loadComments() {
-      console.log(`loading ${post.content}...`);
       setLoadingComments(true);
       const response = await api.get(`posts/${post.id}/comments`);
       setComments(response.data);
@@ -77,16 +119,20 @@ export default function Modal() {
     //This command is needed so that when the Likes Modal is opened the event
     //listener of the post modal is removed, and then, after the likes modal
     //is closed, the event listener is activated again
-    dispatch(passEventsToLikesModal({ event: {
-      click: handleClickOutsideModal,
-      keyDown: handleKeyDown
-    } }));
+    dispatch(
+      passEventsToLikesModal({
+        event: {
+          click: handleClickOutsideModal,
+          keyDown: handleKeyDown,
+        },
+      })
+    );
 
     return () => {
       document.removeEventListener('click', handleClickOutsideModal, false);
       document.removeEventListener('keydown', handleKeyDown, false);
     };
-  }, []);
+  }, [dispatch, handleClickOutsideModal, handleKeyDown, post.id]);
 
   useEffect(() => {
     if (visibleMoreOptions === true) {
@@ -105,7 +151,7 @@ export default function Modal() {
       <button onClick={() => dispatch(closePostModal())}>
         <MdClose size={26} color="#ccc" />
       </button>
-      <Content ref={ref} tabIndex="0" >
+      <Content ref={ref} tabIndex="0">
         {post.picture && <img src={post.picture.url} alt="post" />}
         <section>
           <Scroll>
@@ -126,21 +172,82 @@ export default function Modal() {
                   title="See more options"
                   onClick={() => setVisibleMoreOptions(!visibleMoreOptions)}
                 />
-                <MoreActionsModel
-                  visible={visibleMoreOptions}
-                  ref={moreOptionsRef}
-                >
-                  <div>
-                    <MdBookmark size={14} color="black"></MdBookmark>
-                    <div>
-                      <strong>Save post</strong>
-                      <span>Add this to your saved itens</span>
-                    </div>
-                  </div>
-                </MoreActionsModel>
+                {post.editable ? (
+                  <MoreActionsModel
+                    editable={post.editable}
+                    visible={visibleMoreOptions}
+                    ref={moreOptionsRef}
+                  >
+                    <button>
+                      <MdBookmark size={14} color="black" />
+                      <span>Save post</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setEditing(!editing);
+                      }}
+                    >
+                      <span>Edit post</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm) {
+                          handlePostDelete(post.id);
+                        } else {
+                          setConfirm(true);
+                        }
+                      }}
+                    >
+                      <DeleteSpan confirm={confirm}>Delete</DeleteSpan>
+                      <ConfirmSpan confirm={confirm}>
+                        <MdInfo size={16} color="#D07502" /> Click to confirm
+                      </ConfirmSpan>
+                    </button>
+                  </MoreActionsModel>
+                ) : (
+                  <MoreActionsModel
+                    editable={post.editable}
+                    visible={visibleMoreOptions}
+                    ref={moreOptionsRef}
+                  >
+                    <button>
+                      <MdBookmark size={14} color="black" />
+                      <div>
+                        <strong>Save post</strong>
+                        <span>Add this to your saved itens</span>
+                      </div>
+                    </button>
+                  </MoreActionsModel>
+                )}
               </MoreActions>
             </header>
-            <p>{post.content}</p>
+            <PostContent>
+              {editing ? (
+                <form onSubmit={handleSubmit}>
+                  <TextareaAutosize
+                    minRows={1}
+                    maxRows={100}
+                    onChange={handleTextarea}
+                    value={editedContent}
+                    name="content"
+                    type="text"
+                  />
+                  <div>
+                    <button
+                      onClick={() => {
+                        setEditing(false);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    <button type="submit">Save Changes</button>
+                  </div>
+                </form>
+              ) : (
+                <p>{post.content}</p>
+              )}
+              {post.picture && <img src={post.picture.url} alt="post" />}
+            </PostContent>
             <footer>
               <LikeBox>
                 <strong
@@ -228,7 +335,7 @@ export default function Modal() {
             {loadingComments ? (
               <h1>carregando.....</h1>
             ) : (
-              <CommentList comments={comments} />
+              <CommentList comments={comments} isRenderedInModal={true} />
             )}
           </Scroll>
           <AddComment ref={addCommentRef} post={post} fixed={true} />

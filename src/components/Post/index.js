@@ -1,19 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { MdBookmark } from 'react-icons/md';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { MdBookmark, MdInfo } from 'react-icons/md';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import { likePostRequest } from '~/store/modules/like/actions';
+
+import api from '~/services/api';
+
+import standardProfilePic from '~/assets/ninja.jpg';
 import {
   openModalWithAPost,
   openModalWithLikes,
-  closeLikesModal,
 } from '~/store/modules/modal/actions';
 
 import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
 import send from '~/assets/send.svg';
 
+import UserHover from '~/components/UserHover';
 import CommentList from '~/components/CommentList';
 import AddComment from '~/components/AddComment';
 import MiniLikesModal from '~/components/MiniLikesModal';
@@ -26,21 +30,57 @@ import {
   MoreActionsModel,
   Actions,
   LikeBox,
+  ImgLink,
+  NameLinkBox,
+  NameLink,
+  ConfirmSpan,
+  DeleteSpan,
 } from './styles';
 
-export default function Post({ post }) {
-  const likes = useSelector(state => state.modal.likes);
+export default function Post({ post, deletePost, setPostContent }) {
+  const nameLinkBoxRef = useRef();
   const dispatch = useDispatch();
   const moreOptionsRef = useRef();
   const addCommentRef = useRef(null);
+  const [editedContent, setEditedContent] = useState(post.content);
+  const [confirm, setConfirm] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [visibleMoreOptions, setVisibleMoreOptions] = useState(false);
   const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
+  const [visibleUserHover, setVisibleUserHover] = useState(false);
+
+  const handlePostDelete = async id => {
+    await api.delete(`/posts/${id}`);
+    deletePost(id);
+  };
+
+  useEffect(() => {
+    if (confirm) {
+      setTimeout(() => {
+        setConfirm(false);
+      }, 2000);
+    }
+  }, [confirm]);
 
   const handleLike = () => {
     dispatch(likePostRequest(post.id));
   };
   const handleClickImage = () => {
-    dispatch(openModalWithAPost({ post }));
+    dispatch(openModalWithAPost({ post, deletePost, setPostContent }));
+  };
+
+  const handleTextarea = async e => {
+    setEditedContent(e.target.value);
+  };
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    await api.put(`/posts/${post.id}`, {
+      content: editedContent,
+    });
+
+    setEditing(false);
+    setPostContent({ id: post.id, content: editedContent });
   };
 
   const handleClickOutside = e => {
@@ -62,15 +102,43 @@ export default function Post({ post }) {
     }
   }, [visibleMoreOptions]);
 
+  const rect = useMemo(() => {
+    if (visibleUserHover) {
+      return nameLinkBoxRef.current.getBoundingClientRect();
+    } else {
+      return null;
+    }
+  }, [visibleUserHover]);
+
   return (
     <Container>
       <header>
         <UserInfo>
           {post.user.avatar && (
-            <img src={post.user.avatar.url} alt="user profile pic" />
+            <ImgLink to={`/${post.user.username}`}>
+              <img
+                src={
+                  post.user.avatar ? post.user.avatar.url : standardProfilePic
+                }
+                alt={post.user.name || post.user.username}
+              />
+            </ImgLink>
           )}
           <div>
-            <span>{post.user.name || post.user.username}</span>
+            <NameLinkBox
+              ref={nameLinkBoxRef}
+              onMouseEnter={() => {
+                setVisibleUserHover(true);
+              }}
+              onMouseLeave={() => {
+                setVisibleUserHover(false);
+              }}
+            >
+              {visibleUserHover && <UserHover user={post.user} rect={rect} />}
+              <NameLink to={`/${post.user.username}`}>
+                <span>{post.user.name || post.user.username}</span>
+              </NameLink>
+            </NameLinkBox>
             <small title={post.time}>{post.timeDistance}</small>
           </div>
         </UserInfo>
@@ -82,20 +150,81 @@ export default function Post({ post }) {
             title="See more options"
             onClick={() => setVisibleMoreOptions(!visibleMoreOptions)}
           />
-          <MoreActionsModel visible={visibleMoreOptions} ref={moreOptionsRef}>
-            <div>
-              <MdBookmark size={14} color="black" />
-              <div>
-                <strong>Save post</strong>
-                <span>Add this to your saved itens</span>
-              </div>
-            </div>
-          </MoreActionsModel>
+          {post.editable ? (
+            <MoreActionsModel
+              editable={post.editable}
+              visible={visibleMoreOptions}
+              ref={moreOptionsRef}
+            >
+              <button>
+                <MdBookmark size={14} color="black" />
+                <span>Save post</span>
+              </button>
+              <button
+                onClick={() => {
+                  setEditing(!editing);
+                }}
+              >
+                <span>Edit post</span>
+              </button>
+              <button
+                onClick={() => {
+                  if (confirm) {
+                    handlePostDelete(post.id);
+                  } else {
+                    setConfirm(true);
+                  }
+                }}
+              >
+                <DeleteSpan confirm={confirm}>Delete</DeleteSpan>
+                <ConfirmSpan confirm={confirm}>
+                  <MdInfo size={16} color="#D07502" /> Click to confirm
+                </ConfirmSpan>
+              </button>
+            </MoreActionsModel>
+          ) : (
+            <MoreActionsModel
+              editable={post.editable}
+              visible={visibleMoreOptions}
+              ref={moreOptionsRef}
+            >
+              <button>
+                <MdBookmark size={14} color="black" />
+                <div>
+                  <strong>Save post</strong>
+                  <span>Add this to your saved itens</span>
+                </div>
+              </button>
+            </MoreActionsModel>
+          )}
         </MoreActions>
       </header>
 
       <Content>
-        <p>{post.content}</p>
+        {editing ? (
+          <form onSubmit={handleSubmit}>
+            <TextareaAutosize
+              minRows={1}
+              maxRows={100}
+              onChange={handleTextarea}
+              value={editedContent}
+              name="content"
+              type="text"
+            />
+            <div>
+              <button
+                onClick={() => {
+                  setEditing(false);
+                }}
+              >
+                Cancel
+              </button>
+              <button type="submit">Save Changes</button>
+            </div>
+          </form>
+        ) : (
+          <p>{post.content}</p>
+        )}
         {post.picture && (
           <img src={post.picture.url} alt="post" onClick={handleClickImage} />
         )}

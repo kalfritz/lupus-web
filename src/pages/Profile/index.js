@@ -1,32 +1,59 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 import api from '~/services/api';
 import history from '~/services/history';
 
+import { closePostModal, closeLikesModal } from '~/store/modules/modal/actions';
+
 import Timeline from '~/components/Timeline';
+import About from './About';
+import Friends from './Friends';
+import Photos from './Photos';
+import UpdateCover from './UpdateCover';
+import UpdateProfilePic from './UpdateProfilePic';
+import Friendship from '~/components/Friendship';
 import Modal from '~/components/Modal';
 import LikesModal from '~/components/LikesBoxModal'; //CHANGE CHANGE CHANGE
-import { Container, Cover, ProfilePic, Name, Nav, NavLink } from './styles';
+
+import {
+  Container,
+  Cover,
+  ProfilePic,
+  UserNameAndOptions,
+  Name,
+  Nav,
+  NavLink,
+} from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function Profile(props) {
+  const dispatch = useDispatch();
   const ref = useRef();
-  const [username, setUsername] = useState(null);
   const [user, setUser] = useState({});
+  const [friendship, setFriendship] = useState({});
   const profile = useSelector(state => state.user.profile);
-  const friends = useSelector(state => state.user.friends);
   const modal = useSelector(state => state.modal);
   const { post, likes } = modal;
 
+  const setStatus = ({ status }) => {
+    setFriendship({ ...friendship, customStatus: status });
+  };
+
   useEffect(() => {
     const { username } = props.match.params;
-    setUsername(username);
 
-    ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    modal.post.status && dispatch(closePostModal());
+    modal.likes.status && dispatch(closeLikesModal());
+
+    if (props.match.path === '/profile/:username') {
+      ref.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
 
     async function loadUser() {
       try {
@@ -36,41 +63,98 @@ export default function Profile(props) {
         history.goBack();
       }
     }
+
     loadUser();
-  }, [props.match.params.username]);
+
+    return () => {
+      dispatch(closePostModal());
+      dispatch(closeLikesModal());
+    };
+  }, [
+    props.match.path,
+    props.match.params,
+    dispatch,
+    modal.likes.status,
+    modal.post.status,
+  ]);
 
   useEffect(() => {
-    console.log('user...', user);
-  }, [user]);
+    const loadFriendship = async () => {
+      const response = await api.get(`/friendships/${user.id}`);
+      setFriendship(response.data);
+    };
+    if (user.id === Number(profile.id)) {
+      setFriendship(null);
+    } else {
+      user.id && loadFriendship();
+    }
+  }, [user.id, profile.id]);
 
   const editable = useMemo(() => {
-    return user.id == profile.id;
-  }, [user.id]);
+    return user.id === Number(profile.id);
+  }, [user.id, profile.id]);
 
   /*hhttps://scontent.fsdu11-1.fna.fbcdn.net/v/t1.0-9/18198454_877568099050834_5440765596958276149_n.jpg?_nc_cat=106&_nc_oc=AQlgDLVZMpTf_KrrkMTE6BRdYOqzvFc-NDrz9bA25YylD1s49kSBbWSieQmLhRktb1M&_nc_ht=scontent.fsdu11-1.fna&oh=3206f802898a1e47adb86efa16e79b5b&oe=5EC4CE2D*/
 
   return (
     <Container ref={ref}>
-      <Cover img="https://scontent.fsdu11-1.fna.fbcdn.net/v/t1.0-0/p180x540/30415344_1662453260507206_5770574881875820544_o.jpg?_nc_cat=108&_nc_oc=AQkmo2XOV0XkPVULJ8Ovy0KMiQNlrD0DnsdRoMZQ0sEY4OP-HU2VVe46EoTwphK2z-M&_nc_ht=scontent.fsdu11-1.fna&_nc_tp=6&oh=5413d95dd4d24fa316c2001dd0534149&oe=5EB5D506">
-        {user ? (
+      {editable ? (
+        <UpdateCover cover={user.cover} />
+      ) : (
+        <Cover img={user.cover && user.cover.url} />
+      )}
+
+      <UserNameAndOptions>
+        {editable ? (
+          <UpdateProfilePic avatar={user.avatar} />
+        ) : (
           <ProfilePic
             src={user.avatar ? user.avatar.url : standardProfilePic}
           />
-        ) : (
-          <ProfilePic src={standardProfilePic} />
         )}
-      </Cover>
-      <Name>
-        <span>{user.name || user.username}</span>
-      </Name>
+
+        <Name>
+          <span>{user.name || user.username}</span>
+        </Name>
+
+        <Friendship
+          status={friendship && friendship.customStatus}
+          setStatus={setStatus}
+          user={user}
+        />
+      </UserNameAndOptions>
       <Nav>
-        <NavLink to={`/profile/${user.username}`}>Timeline</NavLink>
-        <NavLink to={`/profile/${user.username}/about`}>About</NavLink>
-        <NavLink to={`/profile/${user.username}/friends`}>Friends</NavLink>
-        <NavLink to={`/profile/${user.username}/photos`}>Photos</NavLink>
+        <NavLink to={`/${user.username}`}>Timeline</NavLink>
+        <NavLink to={`/${user.username}/about`}>About</NavLink>
+        <NavLink to={`/${user.username}/friends/all`}>Friends</NavLink>
+        <NavLink to={`/${user.username}/photos`}>Photos</NavLink>
       </Nav>
 
-      <Timeline editable={editable} profile={user} />
+      <Route
+        exact
+        path={props.match.path}
+        render={props => (
+          <Timeline {...props} editable={editable} profile={user} />
+        )}
+      />
+      <Route
+        path={`${props.match.path}/about`}
+        render={props => (
+          <About {...props} editable={editable} profile={user} />
+        )}
+      />
+      <Route
+        path={`${props.match.path}/friends`}
+        render={props => (
+          <Friends {...props} editable={editable} profile={user} />
+        )}
+      />
+      <Route
+        path={`${props.match.path}/photos`}
+        render={props => (
+          <Photos {...props} editable={editable} profile={user} />
+        )}
+      />
 
       {post.status && <Modal />}
       {likes.status && <LikesModal />}

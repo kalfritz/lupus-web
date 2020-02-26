@@ -8,12 +8,24 @@ import {
   storeMyFriendListSuccess,
 } from '~/store/modules/user/actions';
 
+export function* updateCover({ payload }) {
+  try {
+    const { cover_id } = payload.data;
+
+    const response = yield call(api.put, 'users', { cover_id });
+
+    yield put(updateProfileSuccess(response.data));
+  } catch {
+    yield put(updateProfileFailure());
+  }
+}
+
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, avatar_id, ...rest } = payload.data;
+    const { name, email, bio, location, avatar_id, ...rest } = payload.data;
 
     const profile = Object.assign(
-      { name, email, avatar_id },
+      { name, email, bio, location, avatar_id },
       rest.oldPassword ? rest : {}
     );
 
@@ -28,18 +40,12 @@ export function* updateProfile({ payload }) {
 }
 
 export function* storeMyFriendList() {
-  try {
-    console.log('qa');
-    const response = yield call(api.get, 'friendlist');
-    console.log('q');
-    console.log(response.data);
-    yield put(storeMyFriendListSuccess(response.data));
-  } catch (err) {
-    console.log(err);
-  }
+  const response = yield call(api.get, 'friendlist');
+  yield put(storeMyFriendListSuccess(response.data));
 }
 
 export default all([
+  takeLatest('@user/UPDATE_COVER_REQUEST', updateCover),
   takeLatest('@user/UPDATE_PROFILE_REQUEST', updateProfile),
   takeLatest('@user/STORE_MY_FRIEND_LIST_REQUEST', storeMyFriendList),
 ]);

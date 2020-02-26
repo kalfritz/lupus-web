@@ -3,6 +3,8 @@ import { MdGroup } from 'react-icons/md';
 
 import api from '~/services/api';
 
+import standardProfilePic from '~/assets/ninja.jpg';
+
 import ZeroRequest from '~/components/ZeroRequest';
 import {
   Container,
@@ -50,11 +52,13 @@ export default forwardRef(({ visible, setVisible }, ref) => {
                 <div>
                   <ProfileLink request={request} to={`/users/${request.id}`}>
                     <img
-                      src={request.avatar.url}
+                      src={
+                        request.avatar ? request.avatar.url : standardProfilePic
+                      }
                       alt={request.name || request.username}
                     />
                   </ProfileLink>
-                  <ProfileLink request={request} to={`/users/${request.id}`}>
+                  <ProfileLink request={request} to={`/${request.username}`}>
                     <span>{request.name || request.username}</span>
                   </ProfileLink>
                 </div>

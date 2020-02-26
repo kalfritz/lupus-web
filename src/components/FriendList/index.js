@@ -1,8 +1,13 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { storeMyFriendListRequest } from '~/store/modules/user/actions';
+import {
+  storeMyFriendListRequest,
+  friendSignedOut,
+  friendSignedIn,
+} from '~/store/modules/user/actions';
 import { useMediaQuery } from 'react-responsive';
 import { MdSearch } from 'react-icons/md';
+import SocketContext from '~/context/SocketContext';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
@@ -11,11 +16,10 @@ import { Container, Scroll, Friend, GreenCircle, SearchBar } from './styles';
 export default function FriendList() {
   const dispatch = useDispatch();
 
+  const socket = useContext(SocketContext);
+
   const isLessThan1050PxWith = useMediaQuery({
     query: '(max-width: 1050px)',
-  });
-  const isLessThan800PxWidth = useMediaQuery({
-    query: '(max-width: 800px)',
   });
 
   useEffect(() => {
@@ -23,7 +27,7 @@ export default function FriendList() {
       dispatch(storeMyFriendListRequest());
     }
     loadFriends();
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     isLessThan1050PxWith ? setFriendsBar(false) : setFriendsBar(true);
@@ -56,8 +60,22 @@ export default function FriendList() {
 
   const handleFriendSearch = e => {
     setFriendSearch(e.target.value.toLowerCase());
-    console.log(friendSearch);
   };
+
+  useEffect(() => {
+    socket.on('FRIEND_SIGNED_IN', async ({ params }) => {
+      const { friend_id } = params;
+      console.log('signed in: ', friend_id);
+
+      dispatch(friendSignedIn({ friend_id }));
+    });
+    socket.on('FRIEND_SIGNED_OUT', async ({ params }) => {
+      const { friend_id } = params;
+      console.log('signed out: ', friend_id);
+
+      dispatch(friendSignedOut({ friend_id }));
+    });
+  }, [socket, dispatch]);
 
   return (
     <Container friendsBarStatus={friendsBar}>

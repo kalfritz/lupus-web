@@ -6,7 +6,7 @@ export const Container = styled.div`
   position: relative;
   border: 1px solid #ddd;
   padding: 0px 0px;
-  height: calc(100vh - 64px - 10px); /*64px = header, 10px = extra margin*/
+  height: calc(100vh - 64px); /*64px = header, 10px = extra margin*/
   position: fixed;
   width: 18vw;
   right: 17px; /*17px = scrolllbar*/

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -7,10 +7,15 @@ import SocketContext from '~/context/SocketContext';
 
 import Header from '~/components/Header';
 import FriendList from '~/components/FriendList';
-import { Wrapper } from './styles';
+import Modal from '~/components/Modal';
+import LikesModal from '~/components/LikesBoxModal';
+import { Wrapper, Children, Aside } from './styles';
 
 export default function DefaultLayout({ children }) {
   const profile = useSelector(state => state.user.profile);
+  const modal = useSelector(state => state.modal);
+  const { post, likes } = modal;
+
   const socket = useMemo(
     () =>
       socketio('http://localhost:3333', {
@@ -20,12 +25,26 @@ export default function DefaultLayout({ children }) {
       }),
     [profile.id]
   );
+
+  useEffect(() => {
+    return () => {
+      socket.emit('SIGN_OUT', {
+        query: {
+          user_id: profile.id,
+        },
+      });
+    };
+  }, [profile.id, socket]);
   return (
     <SocketContext.Provider value={socket}>
       <Wrapper>
         <Header />
-        {children}
-        <FriendList />
+        <Children>{children}</Children>
+        <Aside>
+          <FriendList />
+        </Aside>
+        {post.status && <Modal />}
+        {likes.status && <LikesModal />}
       </Wrapper>
     </SocketContext.Provider>
   );

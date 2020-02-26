@@ -1,6 +1,7 @@
 import React from 'react';
-import { MdPersonAdd } from 'react-icons/md';
-import { Container, UserInfo, Friendship } from './styles';
+
+import Friendship from '~/components/Friendship';
+import { Container, UserInfo } from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
@@ -53,12 +54,7 @@ export default function Like({ like: liker }) {
         </div>
         <span>{liker.name || liker.username}</span>
       </UserInfo>
-      {liker.friendship === 'add' && (
-        <Friendship>
-          <MdPersonAdd size={14} color="#333" />
-          <span>Add Friend</span>
-        </Friendship>
-      )}
+      <Friendship friendship={liker.friendship} />
     </Container>
   );
 }

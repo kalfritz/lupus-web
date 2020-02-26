@@ -39,25 +39,3 @@ export const UserInfo = styled.div`
     }
   }
 `;
-
-export const Friendship = styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 5px;
-  border: 1px solid #bbb;
-  outline: 0;
-  background: #eee;
-
-  & > svg {
-    margin-right: 5px;
-  }
-
-  & > span {
-    display: bold;
-  }
-
-  &:hover {
-    background: #ddd;
-  }
-`;

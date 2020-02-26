@@ -61,11 +61,24 @@ export const NotificationList = styled.div`
     border-bottom: 20px solid rgba(0, 0, 0, 0.6);
   }
 
-  h2 {
-    font-size: 16px;
-    color: #333;
-    margin-left: 15px;
-    margin-bottom: 5px;
+  & > header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+
+    & > h2 {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    & > button {
+      border: 0;
+      outline: 0;
+      background: none;
+    }
   }
 `;
 
@@ -85,6 +98,7 @@ export const Notification = styled.div`
   & > section {
     display: flex;
     flex-direction: row;
+    width: 100%;
   }
 
   &:hover {
@@ -108,6 +122,9 @@ export const Notification = styled.div`
 `;
 
 export const ProfileLink = styled(Link)`
+  display: flex;
+  align-items: center;
+
   img {
     height: 50px;
     width: 50px;

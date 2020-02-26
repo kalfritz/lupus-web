@@ -96,7 +96,7 @@ export default function Header() {
       <Content>
         <nav>
           {/* <img src={logo} alt="GoBarber" /> */}
-          <Link to="/feed">Lupus</Link>
+          <Link to="/">Lupus</Link>
         </nav>
         <aside>
           <Requests
@@ -112,7 +112,7 @@ export default function Header() {
           <Profile>
             <div>
               <strong>{profile.name || profile.username}</strong>
-              <Link to={`/profile/${profile.username}`}>Meu Perfil</Link>
+              <Link to={`/${profile.username}`}>My Profile</Link>
             </div>
             <img
               src={profile.avatar ? profile.avatar.url : standardProfilePic}
@@ -123,7 +123,7 @@ export default function Header() {
               visible={visibleHeaderOptions}
               ref={headerOptionsRef}
             >
-              <HeaderLink to={`/profile/${profile.username}`}>
+              <HeaderLink to={`/${profile.username}`}>
                 <div>
                   <MdPerson size={22} color="#333" />
                   <span>My profile</span>

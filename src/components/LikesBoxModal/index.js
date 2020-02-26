@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Content, Scroll } from './styles';
 import Like from './Like';
@@ -11,18 +11,29 @@ export default function LikeBox() {
   const dispatch = useDispatch();
   const contentRef = useRef();
   const profile = useSelector(state => state.user.profile);
+  const friends = useSelector(state => state.user.friends);
   const modal = useSelector(state => state.modal);
-  let { data: likes, status, loading, event } = modal.likes;
+  let { data: likes, event } = modal.likes;
 
-  const handleLikesKeyDown = e => {
-    e.keyCode === 27 && dispatch(closeLikesModal());
-  };
+  const handleLikesKeyDown = useCallback(
+    e => {
+      e.keyCode === 27 && dispatch(closeLikesModal());
+    },
+    [dispatch]
+  );
+
+  const friendsIds = useMemo(() => {
+    return friends.map(friend => friend.id);
+  }, [friends]);
 
   likes = useMemo(() => {
     const userFetchingIndex = likes.findIndex(like => like.id === profile.id);
     if (userFetchingIndex === -1) {
+      //if user fetching did not like
       return likes.map(like => {
-        like.friendship = 'add';
+        friendsIds.some(id => id === like.id)
+          ? (like.friendship = 'friend')
+          : (like.friendship = 'add');
         return like;
       });
     } else {
@@ -30,18 +41,22 @@ export default function LikeBox() {
       const newLikes = likes
         .filter((like, index) => index !== userFetchingIndex)
         .map(like => {
-          like.friendship = 'add';
+          friendsIds.some(id => id === like.id)
+            ? (like.friendship = 'friend')
+            : (like.friendship = 'add');
           return like;
         });
       return [{ ...like, friendship: false }, ...newLikes];
     }
-  }, [likes]);
-  const handleClickOutsideModal = e => {
-    console.log('click like');
-    if (contentRef.current && !contentRef.current.contains(e.target)) {
-      dispatch(closeLikesModal());
-    }
-  };
+  }, [likes, friendsIds, profile.id]);
+  const handleClickOutsideModal = useCallback(
+    e => {
+      if (contentRef.current && !contentRef.current.contains(e.target)) {
+        dispatch(closeLikesModal());
+      }
+    },
+    [dispatch]
+  );
   useEffect(() => {
     if (modal.post.status) {
       document.removeEventListener('click', event.click, false);
@@ -60,7 +75,13 @@ export default function LikeBox() {
         document.addEventListener('keydown', event.keyDown, false);
       }
     };
-  }, []);
+  }, [
+    event.click,
+    event.keyDown,
+    modal.post.status,
+    handleClickOutsideModal,
+    handleLikesKeyDown,
+  ]);
   return (
     <Container>
       <button onClick={() => dispatch(closeLikesModal())}>

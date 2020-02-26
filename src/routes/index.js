@@ -5,19 +5,23 @@ import Route from './Route';
 import SignIn from '~/pages/Signin';
 import SignUp from '~/pages/Signup';
 
-import Feed from '~/pages/Feed';
+import Home from '~/pages/Home';
 import Profile from '~/pages/Profile';
 
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={SignIn}></Route>
+      <Route path="/login" component={SignIn}></Route>
       <Route path="/register" component={SignUp}></Route>
 
-      <Route path="/feed" component={Feed} isPrivate></Route>
-      <Route path="/profile/:username" component={Profile} isPrivate></Route>
+      <Route path="/" exact component={Home} isPrivate></Route>
+      <Route path="/saved" component={Home} isPrivate></Route>
+      <Route path="/settings" component={Home} isPrivate></Route>
+      <Route path="/blocks" component={Home} isPrivate></Route>
+      <Route path="/sent" component={Home} isPrivate></Route>
+      <Route path="/:username" component={Profile} isPrivate></Route>
 
-      <Route path="/" component={() => <h1>404</h1>}></Route>
+      <Route path="/" component={Home}></Route>
     </Switch>
   );
 }

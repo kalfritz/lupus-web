@@ -25,7 +25,6 @@ export default forwardRef(({ visible, setVisible }, ref) => {
   useEffect(() => {
     async function loadNotifications() {
       const response = await api.get('notifications');
-
       const data = response.data.map(notification => ({
         ...notification,
         timeDistance: formatDistance(
@@ -48,6 +47,18 @@ export default forwardRef(({ visible, setVisible }, ref) => {
     return unreadNotifs.length;
   }, [notifications]);
 
+  const handleMarkAllAsRead = async () => {
+    const hasUnreadNotifs = notifications.some(notif => !notif.read);
+    if (hasUnreadNotifs) {
+      await api.put(`notifications`);
+      setNotifications(
+        notifications.map(notification => {
+          return { ...notification, read: true };
+        })
+      );
+    }
+  };
+
   const handleMarkAsRead = async id => {
     const response = await api.put(`notifications/${id}`);
     const { read } = response.data;
@@ -59,18 +70,11 @@ export default forwardRef(({ visible, setVisible }, ref) => {
   };
 
   const handleDelete = async id => {
-    let b;
-    try {
-      b = await api.delete(`notifications/${id}`);
-    } catch (err) {
-      console.log(err);
-    }
-    const q = notifications.filter(notification => notification._id !== id);
-
-    console.log('b:', b);
-    console.log('q');
-    console.log(q);
-    setNotifications(q);
+    await api.delete(`notifications/${id}`);
+    const newNotifications = notifications.filter(
+      notification => notification._id !== id
+    );
+    setNotifications(newNotifications);
   };
 
   return (
@@ -83,15 +87,15 @@ export default forwardRef(({ visible, setVisible }, ref) => {
         <MdNotifications size={24} color="#444" />
       </Badge>
       <NotificationList visible={visible}>
-        <h2>Notifications</h2>
+        <header>
+          <h2>Notifications</h2>
+          <button onClick={handleMarkAllAsRead}>Mark all as read</button>
+        </header>
         <Scroll>
           {notifications.map(notif => (
             <Notification key={notif._id} unread={!notif.read}>
               <section>
-                <ProfileLink
-                  notif={notif}
-                  to={`/users/${notif.dispatcher.username}`}
-                >
+                <ProfileLink notif={notif} to={`/${notif.dispatcher.username}`}>
                   <img
                     src={notif.dispatcher.avatar || standardProfilePic}
                     alt="user"

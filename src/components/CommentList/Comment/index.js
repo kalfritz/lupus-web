@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { likeCommentRequest } from '~/store/modules/like/actions';
@@ -7,34 +7,60 @@ import { openModalWithLikes } from '~/store/modules/modal/actions';
 import {
   Container,
   UsernameAndContent,
+  UsernameLinkBox,
   UsernameLink,
   LikeAndTime,
+  ImgLink,
 } from './styles';
+
+import UserHover from '~/components/UserHover';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, isRenderedInModal }) {
+  const usernameLinkBoxRef = useRef();
+  const [visibleUserHover, setVisibleUserHover] = useState(false);
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(
       likeCommentRequest({ post_id: comment.post_id, comment_id: comment.id })
     );
   };
+  const rect = useMemo(() => {
+    if (visibleUserHover) {
+      return usernameLinkBoxRef.current.getBoundingClientRect();
+    } else {
+      return null;
+    }
+  }, [visibleUserHover]);
   return (
-    <Container>
-      <img
-        src={comment.user.avatar ? comment.user.avatar.url : standardProfilePic}
-        alt={comment.user.name || comment.user.username}
-      />
+    <Container isRenderedInModal={isRenderedInModal}>
+      <ImgLink to={`/${comment.user.username}`}>
+        <img
+          src={
+            comment.user.avatar ? comment.user.avatar.url : standardProfilePic
+          }
+          alt={comment.user.name || comment.user.username}
+        />
+      </ImgLink>
 
       <div>
-        <UsernameAndContent>
-          <p>
-            <UsernameLink to={`/profile/${comment.user.username}`}>
+        <UsernameAndContent ref={usernameLinkBoxRef}>
+          <UsernameLinkBox
+            onMouseEnter={() => {
+              setVisibleUserHover(true);
+            }}
+            onMouseLeave={() => {
+              setVisibleUserHover(false);
+            }}
+          >
+            {visibleUserHover && <UserHover user={comment.user} rect={rect} />}
+            <UsernameLink to={`/${comment.user.username}`}>
               {comment.user.name || comment.user.username}
             </UsernameLink>
-            {comment.content}
-          </p>
+          </UsernameLinkBox>
+
+          <p> {comment.content}</p>
         </UsernameAndContent>
         <LikeAndTime liked={comment.liked}>
           <svg

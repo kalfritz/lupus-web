@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import PerfectScrollBar from 'react-perfect-scrollbar';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   background: rgba(0, 0, 0, 0.9);
@@ -62,19 +63,12 @@ export const Scroll = styled(PerfectScrollBar)`
   padding: 20px 20px;
   max-height: 80vh;
   width: 100%;
-  overflow: hidden;
   grid-area: post;
 
   header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-  }
-  & > p {
-    color: #222;
-    font-size: 15px;
-    line-height: 18px;
-    margin-top: 15px;
   }
 
   footer {
@@ -154,13 +148,44 @@ export const MoreActionsModel = styled.div`
   top: calc(20px);
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
-  padding: 15px 10px;
   display: ${props => (props.visible ? 'block' : 'none')};
 
-  & > div {
+  & > button {
+    border: 0;
+    outline: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 10px 10px;
+    width: 100%;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+    }
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
+    &:hover {
+      background: #eee;
+    }
+
+    &:first-child {
+      ${props =>
+        props.editable &&
+        css`
+          border-bottom: 1px solid #eee;
+        `}
+    }
+
+    & > svg {
+      margin-right: 5px;
+    }
+
+    & > span {
+      color: #333;
+    }
 
     div {
       display: flex;
@@ -213,6 +238,109 @@ export const Actions = styled.div`
       path {
         fill: rgba(237, 73, 86, 1);
         stroke: rgba(237, 73, 86, 1);
+      }
+    }
+  }
+`;
+
+export const ConfirmSpan = styled.span`
+  color: #d07502 !important;
+  flex-direction: row;
+  align-items: center;
+
+  & > svg {
+    margin-right: 5px;
+  }
+  ${props =>
+    props.confirm
+      ? css`
+          display: flex;
+        `
+      : css`
+          display: none;
+        `}
+`;
+export const DeleteSpan = styled.span`
+  ${props =>
+    props.confirm
+      ? css`
+          display: none;
+        `
+      : css`
+          display: block;
+        `}
+`;
+
+export const PostContent = styled.div`
+  width: 100%;
+  border: 0;
+  outline: 0;
+  & > p {
+    color: #222;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 15px 0px;
+  }
+
+  & > img {
+    width: 100%;
+    max-height: 40vh;
+    cursor: pointer;
+    display: none;
+
+    @media (max-width: 800px) {
+      display: block;
+    }
+  }
+
+  & > form {
+    display: block;
+    width: 94%;
+    margin: 15px 0px;
+
+    & > textarea {
+      color: #222;
+      font-size: 15px;
+      line-height: 18px;
+      resize: none;
+      overflow: hidden;
+      font-family: roboto;
+      width: 100%;
+      margin-bottom: 10px;
+      border: 0;
+    }
+
+    & > div {
+      display: flex;
+      margin-bottom: 10px;
+
+      & > button {
+        width: 50%;
+        border: 0;
+        outline: 0;
+        padding: 8px 0px;
+        background: #f64c75;
+        font-size: 16px;
+        color: #fff;
+        border-radius: 6px;
+        &:focus {
+          outline: none;
+        }
+        &::-moz-focus-inner {
+          border: 0;
+        }
+        &:hover {
+          background: ${darken(0.03, '#f64c75')};
+        }
+
+        &:last-child {
+          margin: 0 0 0 15px;
+          background: rgba(66, 183, 42, 1);
+
+          &:hover {
+            background: ${darken(0.03, 'rgba(66, 183, 42, 1)')};
+          }
+        }
       }
     }
   }
