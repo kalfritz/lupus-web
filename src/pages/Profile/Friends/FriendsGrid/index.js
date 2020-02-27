@@ -26,6 +26,7 @@ export default function FriendsGrid({ friends, setStatus }) {
             status={friend.status}
             user={friend}
             setStatus={setStatus}
+            context="friend_grid"
           />
         </Friend>
       ))}

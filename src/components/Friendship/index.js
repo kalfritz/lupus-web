@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { MdPersonAdd, MdDone } from 'react-icons/md';
+import { MdPersonAdd, MdDone, MdBlock } from 'react-icons/md';
 import { IoIosPersonAdd } from 'react-icons/io';
 import {
   Container,
-  Content,
+  ContentButton,
+  ContentDiv,
   FriendshipOptions,
   FriendshipOptionsContent,
 } from './styles';
 
 import api from '~/services/api';
 
-export default function Friendship({ user, status, setStatus }) {
+export default function Friendship({
+  user,
+  status,
+  setStatus,
+  context = 'hover',
+}) {
   const [visible, setVisible] = useState(false);
 
   const handleAddFriend = async () => {
@@ -18,9 +24,7 @@ export default function Friendship({ user, status, setStatus }) {
 
     setStatus({ status: 'sent', user_id: user.id });
   };
-  const handleBlock = async () => {
-    /*  const response = await api.post()*/
-  };
+
   const handleUnfriend = async () => {
     await api.delete(`/friendships/${user.id}`);
 
@@ -38,24 +42,29 @@ export default function Friendship({ user, status, setStatus }) {
     await api.delete(`/friendships/${user.id}`);
     setStatus({ status: 'add', user_id: user.id });
   };
+  const handleUnblock = async () => {
+    await api.delete(`/friendships/${user.id}`);
+    setStatus({ status: 'add', user_id: user.id });
+  };
 
   return (
-    <Container>
+    <Container context={context}>
       {!status && (
-        <Content invisible={true}>
+        <ContentDiv invisible={true}>
           <MdPersonAdd size={14} color="#333" />
           <span>Best Friends</span> {/* be your best friend */}
           {/*I'm setting opacity to 0 instead of just not rendering it for styling porpuses*/}
-        </Content>
+        </ContentDiv>
       )}
       {status === 'add' && (
-        <Content onClick={handleAddFriend}>
+        <ContentButton onClick={handleAddFriend} context={context}>
           <MdPersonAdd size={14} color="#333" />
           <span>Add Friend</span>
-        </Content>
+        </ContentButton>
       )}
       {status === 'friends' && (
-        <Content
+        <ContentDiv
+          context={context}
           onClick={() => {
             setVisible(!visible);
           }}
@@ -70,18 +79,16 @@ export default function Friendship({ user, status, setStatus }) {
           <span>Friends</span>
           <FriendshipOptions visible={visible}>
             <FriendshipOptionsContent>
-              <button onClick={handleBlock}>
-                <span>Block</span>
-              </button>
               <button onClick={handleUnfriend}>
                 <span>Unfriend</span>
               </button>
             </FriendshipOptionsContent>
           </FriendshipOptions>
-        </Content>
+        </ContentDiv>
       )}
       {status === 'sent' && (
-        <Content
+        <ContentDiv
+          context={context}
           onMouseEnter={() => {
             setVisible(true);
           }}
@@ -98,10 +105,11 @@ export default function Friendship({ user, status, setStatus }) {
               </button>
             </FriendshipOptionsContent>
           </FriendshipOptions>
-        </Content>
+        </ContentDiv>
       )}
       {status === 'received' && (
-        <Content
+        <ContentDiv
+          context={context}
           onClick={() => {
             setVisible(!visible);
           }}
@@ -124,7 +132,31 @@ export default function Friendship({ user, status, setStatus }) {
               </button>
             </FriendshipOptionsContent>
           </FriendshipOptions>
-        </Content>
+        </ContentDiv>
+      )}
+      {status === 'blocked' && (
+        <ContentDiv
+          context={context}
+          onClick={() => {
+            setVisible(!visible);
+          }}
+          onMouseEnter={() => {
+            setVisible(true);
+          }}
+          onMouseLeave={() => {
+            setVisible(false);
+          }}
+        >
+          <MdBlock size={14} color="#333" />
+          <span>Blocked</span>
+          <FriendshipOptions visible={visible}>
+            <FriendshipOptionsContent>
+              <button onClick={handleUnblock}>
+                <span>Unblock</span>
+              </button>
+            </FriendshipOptionsContent>
+          </FriendshipOptions>
+        </ContentDiv>
       )}
     </Container>
   );

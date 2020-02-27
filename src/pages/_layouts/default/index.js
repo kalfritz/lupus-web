@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import socketio from 'socket.io-client';
@@ -9,9 +9,13 @@ import Header from '~/components/Header';
 import FriendList from '~/components/FriendList';
 import Modal from '~/components/Modal';
 import LikesModal from '~/components/LikesBoxModal';
+
 import { Wrapper, Children, Aside } from './styles';
 
+import { closePostModal, closeLikesModal } from '~/store/modules/modal/actions';
+
 export default function DefaultLayout({ children }) {
+  const dispatch = useDispatch();
   const profile = useSelector(state => state.user.profile);
   const modal = useSelector(state => state.modal);
   const { post, likes } = modal;
@@ -35,6 +39,12 @@ export default function DefaultLayout({ children }) {
       });
     };
   }, [profile.id, socket]);
+
+  useEffect(() => {
+    modal.post.status && dispatch(closePostModal());
+    modal.likes.status && dispatch(closeLikesModal()); //eslint-disable-next-line
+  }, []); //I just want to check it on first render
+
   return (
     <SocketContext.Provider value={socket}>
       <Wrapper>

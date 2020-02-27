@@ -37,6 +37,7 @@ export default function UserHover({ user, rect }) {
         api.get(`/friendships/${user.id}`), //friendship with that person
         api.get(`/mutualfriends/${user.id}`), //mutual friends
       ]);
+
       setFriendship(friendshipResponse.data);
       setMutualFriends(mutualFriendsResponse.data);
     };

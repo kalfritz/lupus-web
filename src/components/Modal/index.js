@@ -87,8 +87,10 @@ export default function Modal() {
       setVisibleMoreOptions(false);
     }
   };
+
   const handleClickOutsideModal = useCallback(
     e => {
+      e.preventDefault();
       if (ref.current && !ref.current.contains(e.target)) {
         if (e.target.tagName === 'BUTTON') return;
         dispatch(closePostModal());
@@ -119,6 +121,7 @@ export default function Modal() {
     //This command is needed so that when the Likes Modal is opened the event
     //listener of the post modal is removed, and then, after the likes modal
     //is closed, the event listener is activated again
+
     dispatch(
       passEventsToLikesModal({
         event: {
@@ -132,7 +135,7 @@ export default function Modal() {
       document.removeEventListener('click', handleClickOutsideModal, false);
       document.removeEventListener('keydown', handleKeyDown, false);
     };
-  }, [dispatch, handleClickOutsideModal, handleKeyDown, post.id]);
+  }, [post.id, dispatch, handleClickOutsideModal, handleKeyDown]);
 
   useEffect(() => {
     if (visibleMoreOptions === true) {

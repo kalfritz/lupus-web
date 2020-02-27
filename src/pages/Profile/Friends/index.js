@@ -23,7 +23,6 @@ export default function Friends({ profile, editable }) {
   useEffect(() => {
     async function loadFriends() {
       const response = await api.get(`/friends/${profile.id}/?limit=50`);
-
       const friends = response.data.friends.sort(
         (a, b) => Number(b.mutualFriend) - Number(a.mutualFriend)
       );
@@ -49,6 +48,10 @@ export default function Friends({ profile, editable }) {
       );
     }
   }, [friends, friendSearch]);
+
+  useEffect(() => {
+    console.log(friends);
+  }, [friends]);
 
   const handleFriendsSearch = e => {
     setFriendSearch(e.target.value.toLowerCase());
@@ -119,7 +122,7 @@ export default function Friends({ profile, editable }) {
         <FriendContainer>
           <Route
             exact
-            path={`/profile/${profile.username}/friends/`}
+            path={`/${profile.username}/friends/`}
             render={props => (
               <FriendsGrid
                 {...props}
@@ -130,7 +133,7 @@ export default function Friends({ profile, editable }) {
           />
           <Route
             exact
-            path={`/profile/${profile.username}/friends/all`}
+            path={`/${profile.username}/friends/all`}
             render={props => (
               <FriendsGrid
                 {...props}
@@ -140,7 +143,7 @@ export default function Friends({ profile, editable }) {
             )}
           />
           <Route
-            path={`/profile/${profile.username}/friends/mutual`}
+            path={`/${profile.username}/friends/mutual`}
             render={props => (
               <FriendsGrid
                 {...props}

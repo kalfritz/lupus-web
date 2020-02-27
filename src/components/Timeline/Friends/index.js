@@ -34,7 +34,7 @@ export default function Friends({ profile, editable }) {
       </header>
       <FriendsGrid>
         {friends.map(friend => (
-          <Friend to={`/${friend.username}`}>
+          <Friend to={`/${friend.username}`} key={friend.id}>
             <img
               src={friend.avatar ? friend.avatar.url : standardProfilePic}
               alt="friend"

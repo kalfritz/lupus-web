@@ -51,10 +51,9 @@ export const UserNameAndOptions = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  position: relative;
+  align-items: center;
   padding: 30px 15px 0px;
   background: #fff;
-  /* width: calc(100% / 12 * 11 - 13px); */
   width: 100%;
   line-height: 24px;
   font-size: 24px;
@@ -62,16 +61,44 @@ export const UserNameAndOptions = styled.div`
 
   & > div {
     &:last-child {
-      flex: 0 1 auto;
-      margin-left: auto;
     }
+  }
+`;
+
+export const Options = styled.div`
+  flex: 0 1 auto;
+  margin-left: auto;
+  transform: translateY(-5px);
+
+  display: flex;
+  flex-direction: row;
+  min-height: 32px;
+`;
+
+export const BlockButton = styled.button`
+  margin-left: 5px;
+  border: 1px solid #ccc;
+  outline: 0;
+  background: #eee;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 5px;
+
+  & > svg {
+    margin-right: 5px;
+  }
+  & > span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #333;
   }
 `;
 
 export const Name = styled.div`
   margin-right: auto;
   flex: 0 1 auto;
-  position: absolute; /* new */
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
 `;

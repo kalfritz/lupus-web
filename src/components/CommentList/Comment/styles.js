@@ -118,7 +118,7 @@ export const ImgLink = styled(Link)`
   }
 `;
 export const UsernameLink = styled(Link)`
-  span {
+  & > span {
     font-size: 15px;
     color: #7159c1;
     font-weight: bold;

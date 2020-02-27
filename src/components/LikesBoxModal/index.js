@@ -57,8 +57,11 @@ export default function LikeBox() {
     },
     [dispatch]
   );
+
   useEffect(() => {
     if (modal.post.status) {
+      console.log('abri');
+      console.log(event.click);
       document.removeEventListener('click', event.click, false);
       document.removeEventListener('keydown', event.keyDown, false);
     }
@@ -75,13 +78,7 @@ export default function LikeBox() {
         document.addEventListener('keydown', event.keyDown, false);
       }
     };
-  }, [
-    event.click,
-    event.keyDown,
-    modal.post.status,
-    handleClickOutsideModal,
-    handleLikesKeyDown,
-  ]);
+  }, [event, modal.post.status, handleClickOutsideModal, handleLikesKeyDown]);
   return (
     <Container>
       <button onClick={() => dispatch(closeLikesModal())}>
