@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Content, Scroll } from './styles';
 import Like from './Like';
@@ -7,13 +13,38 @@ import { MdClose } from 'react-icons/md';
 
 import { closeLikesModal } from '~/store/modules/modal/actions';
 
+import api from '~/services/api';
+
 export default function LikeBox() {
   const dispatch = useDispatch();
   const contentRef = useRef();
   const profile = useSelector(state => state.user.profile);
   const friends = useSelector(state => state.user.friends);
   const modal = useSelector(state => state.modal);
-  let { data: likes, event } = modal.likes;
+  const [likes, setLikes] = useState([]);
+  let { event, context, post_id, comment_id } = modal.likes;
+
+  const setStatus = ({ status, user_id }) => {
+    const updatedLikers = likes.map(liker => {
+      return liker.id === user_id ? { ...liker, status } : liker;
+    });
+    setLikes(updatedLikers);
+  };
+
+  useEffect(() => {
+    const loadPostLikes = async () => {
+      const response = await api.get(`/posts/${post_id}/likes`);
+      setLikes(response.data);
+    };
+    const loadCommentLikes = async () => {
+      const response = await api.get(
+        `/posts/${post_id}/comments/${comment_id}/likes`
+      );
+      setLikes(response.data);
+    };
+    context === 'post' && loadPostLikes();
+    context === 'comment' && loadCommentLikes();
+  }, [post_id, comment_id]);
 
   const handleLikesKeyDown = useCallback(
     e => {
@@ -26,29 +57,6 @@ export default function LikeBox() {
     return friends.map(friend => friend.id);
   }, [friends]);
 
-  likes = useMemo(() => {
-    const userFetchingIndex = likes.findIndex(like => like.id === profile.id);
-    if (userFetchingIndex === -1) {
-      //if user fetching did not like
-      return likes.map(like => {
-        friendsIds.some(id => id === like.id)
-          ? (like.friendship = 'friend')
-          : (like.friendship = 'add');
-        return like;
-      });
-    } else {
-      const like = likes.find(like => like.id === profile.id); //like made by the user fetching
-      const newLikes = likes
-        .filter((like, index) => index !== userFetchingIndex)
-        .map(like => {
-          friendsIds.some(id => id === like.id)
-            ? (like.friendship = 'friend')
-            : (like.friendship = 'add');
-          return like;
-        });
-      return [{ ...like, friendship: false }, ...newLikes];
-    }
-  }, [likes, friendsIds, profile.id]);
   const handleClickOutsideModal = useCallback(
     e => {
       if (contentRef.current && !contentRef.current.contains(e.target)) {
@@ -60,7 +68,6 @@ export default function LikeBox() {
 
   useEffect(() => {
     if (modal.post.status) {
-      console.log('abri');
       console.log(event.click);
       document.removeEventListener('click', event.click, false);
       document.removeEventListener('keydown', event.keyDown, false);
@@ -87,7 +94,7 @@ export default function LikeBox() {
       <Content ref={contentRef}>
         <Scroll>
           {likes.map(like => (
-            <Like like={like} key={like.id} />
+            <Like like={like} key={like.id} setStatus={setStatus} />
           ))}
         </Scroll>
       </Content>

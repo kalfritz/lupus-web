@@ -109,6 +109,18 @@ export const UsernameLinkBox = styled.div`
   }
 `;
 
+export const LikeBox = styled.div`
+  position: relative;
+  display: block;
+
+  & > strong {
+    color: #111;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
 export const ImgLink = styled(Link)`
   & > img {
     height: 40px;

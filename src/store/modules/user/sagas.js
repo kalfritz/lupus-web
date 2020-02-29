@@ -22,10 +22,18 @@ export function* updateCover({ payload }) {
 
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, bio, location, avatar_id, ...rest } = payload.data;
+    const {
+      name,
+      username,
+      email,
+      bio,
+      location,
+      avatar_id,
+      ...rest
+    } = payload.data;
 
     const profile = Object.assign(
-      { name, email, bio, location, avatar_id },
+      { name, username, email, bio, location, avatar_id },
       rest.oldPassword ? rest : {}
     );
 

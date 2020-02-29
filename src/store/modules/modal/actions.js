@@ -11,10 +11,10 @@ export function closePostModal() {
   };
 }
 
-export function openModalWithLikes({ likes }) {
+export function openModalWithLikes({ context, post_id, comment_id }) {
   return {
     type: '@modal/OPEN_MODAL_WITH_LIKES',
-    payload: { likes },
+    payload: { context, post_id, comment_id },
   };
 }
 export function closeLikesModal() {

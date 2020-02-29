@@ -7,6 +7,7 @@ import api from '~/services/api';
 
 export default function Sent(props) {
   const profile = useSelector(state => state.user.profile);
+  const [loading, setLoading] = useState(true);
   const [sent, setSent] = useState([]);
   const setStatus = ({ status, user_id }) => {
     const updatedSent = sent.map(person => {
@@ -22,13 +23,19 @@ export default function Sent(props) {
         return person;
       });
       setSent(sent);
+      setLoading(false);
     };
     loadSentRequests();
   }, [profile.id]);
 
   return (
     <Container>
-      <SentGrid {...props} sent={sent} setStatus={setStatus} />
+      <SentGrid
+        {...props}
+        sent={sent}
+        setStatus={setStatus}
+        loading={loading}
+      />
     </Container>
   );
 }

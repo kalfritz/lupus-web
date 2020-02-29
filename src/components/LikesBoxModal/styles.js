@@ -25,6 +25,19 @@ export const Container = styled.div`
     outline: 0;
     background: none;
   }
+
+  @media (max-width: 1050px) {
+    grid-template-columns: 4fr 6fr 4fr;
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: 3fr 6fr 3fr;
+  }
+  @media (max-width: 750px) {
+    grid-template-columns: 2fr 8fr 2fr;
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr 8fr 1fr;
+  }
 `;
 
 export const Content = styled.div`

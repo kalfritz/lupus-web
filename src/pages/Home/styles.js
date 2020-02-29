@@ -47,13 +47,13 @@ export const RouteBox = styled.div`
 
 export const Aside = styled.aside`
   grid-area: aside;
-  min-height: 100vh;
   & > nav {
     display: flex;
     flex-direction: column;
     background: #eee;
     min-height: 100vh;
-    padding: 10px 10px 10px 25px;
+    height: 100%;
+    padding: 10px 10px 0px 25px;
     & > div {
       margin-top: 15px;
       display: flex;

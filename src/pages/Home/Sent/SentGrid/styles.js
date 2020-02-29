@@ -86,3 +86,11 @@ export const NameLink = styled(Link)`
     color: rgb(74, 88, 168);
   }
 `;
+
+export const NoSent = styled.div`
+  background: #ddd;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

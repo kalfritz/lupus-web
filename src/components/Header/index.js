@@ -2,12 +2,18 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { MdPerson, MdBookmark, MdSettings, MdExitToApp } from 'react-icons/md';
+import {
+  MdPerson,
+  MdBookmark,
+  MdSettings,
+  MdExitToApp,
+  MdBlock,
+} from 'react-icons/md';
+import { IoIosPersonAdd } from 'react-icons/io';
 
 import Notifications from '~/components/Notifications';
 import Requests from '~/components/Requests';
 
-//import logo from '~/assets/logoHeader.svg';
 import {
   Container,
   Content,
@@ -133,6 +139,18 @@ export default function Header() {
                 <div>
                   <MdBookmark size={22} color="#333" />
                   <span>Saved</span>
+                </div>
+              </HeaderLink>
+              <HeaderLink to="/blocks">
+                <div>
+                  <MdBlock size={22} color="#333" />
+                  <span>Blocks</span>
+                </div>
+              </HeaderLink>
+              <HeaderLink to="/sent">
+                <div>
+                  <IoIosPersonAdd size={22} color="#333" />
+                  <span>Sent</span>
                 </div>
               </HeaderLink>
               <HeaderLink to="/settings">

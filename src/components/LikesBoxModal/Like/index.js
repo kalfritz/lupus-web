@@ -5,7 +5,7 @@ import { Container, UserInfo } from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
-export default function Like({ like: liker }) {
+export default function Like({ like: liker, setStatus }) {
   return (
     <Container>
       <UserInfo>
@@ -54,7 +54,12 @@ export default function Like({ like: liker }) {
         </div>
         <span>{liker.name || liker.username}</span>
       </UserInfo>
-      <Friendship friendship={liker.friendship} />
+      <Friendship
+        user={liker}
+        status={liker.status}
+        context="friend_grid"
+        setStatus={setStatus}
+      />
     </Container>
   );
 }

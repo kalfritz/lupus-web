@@ -20,15 +20,16 @@ export default function DefaultLayout({ children }) {
   const modal = useSelector(state => state.modal);
   const { post, likes } = modal;
 
-  const socket = useMemo(
-    () =>
+  const socket = useMemo(() => {
+    return (
+      profile.id &&
       socketio('http://localhost:3333', {
         query: {
           user_id: profile.id,
         },
-      }),
-    [profile.id]
-  );
+      })
+    );
+  }, [profile.id]);
 
   useEffect(() => {
     return () => {

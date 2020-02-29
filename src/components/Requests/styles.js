@@ -38,6 +38,9 @@ export const RequestList = styled.div`
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
   padding: 5px 0px 0px;
+  @media (max-width: 1050px) {
+    left: calc(50% - 258px);
+  }
   @media (max-width: 500px) {
     width: 350px;
     left: calc(50% - 138px);
@@ -54,6 +57,13 @@ export const RequestList = styled.div`
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-bottom: 20px solid rgba(0, 0, 0, 0.6);
+
+    @media (max-width: 1050px) {
+      left: calc(58% - 2px);
+    }
+    @media (max-width: 500px) {
+      left: calc(66% - 1px);
+    }
   }
 
   h2 {

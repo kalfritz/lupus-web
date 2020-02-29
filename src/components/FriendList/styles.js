@@ -34,7 +34,7 @@ export const Container = styled.div`
 
   @media (max-width: 1050px) {
     width: 200px;
-
+    max-height: calc(100vh - 64px - 30px);
     right: calc(17px + 20px);
     cursor: pointer;
   }
@@ -47,7 +47,6 @@ export const Container = styled.div`
           }
         `
       : css`
-          background: yellowgreen;
           height: auto;
           background: #333;
           border: 0;

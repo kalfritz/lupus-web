@@ -71,6 +71,14 @@ export const Profile = styled.div`
     border-radius: 50%;
     cursor: pointer;
   }
+
+  & > div {
+    &:first-child {
+      @media (max-width: 500px) {
+        display: none;
+      }
+    }
+  }
 `;
 
 export const HeaderOptions = styled.div`

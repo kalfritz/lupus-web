@@ -10,9 +10,11 @@ import {
   UsernameLinkBox,
   UsernameLink,
   LikeAndTime,
+  LikeBox,
   ImgLink,
 } from './styles';
 
+import MiniLikesModal from '~/components/MiniLikesModal';
 import UserHover from '~/components/UserHover';
 
 import standardProfilePic from '~/assets/ninja.jpg';
@@ -20,6 +22,7 @@ import standardProfilePic from '~/assets/ninja.jpg';
 export default function Comment({ comment, isRenderedInModal }) {
   const usernameLinkBoxRef = useRef();
   const [visibleUserHover, setVisibleUserHover] = useState(false);
+  const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(
@@ -101,13 +104,33 @@ export default function Comment({ comment, isRenderedInModal }) {
               </g>
             </g>
           </svg>
-          <span
-            onClick={() => {
-              dispatch(openModalWithLikes({ likes: comment.likes }));
-            }}
-          >
-            {comment.likes && comment.likes.length}
-          </span>
+          <LikeBox>
+            <span
+              onMouseEnter={() => {
+                setVisibleMiniLikes(true);
+              }}
+              onMouseLeave={() => {
+                setVisibleMiniLikes(false);
+              }}
+              onClick={() => {
+                dispatch(
+                  openModalWithLikes({
+                    context: 'comment',
+                    post_id: comment.post_id,
+                    comment_id: comment.id,
+                  })
+                );
+              }}
+            >
+              {comment.likes && comment.likes.length}
+            </span>
+            {comment.likes.length > 0 && (
+              <MiniLikesModal
+                visible={visibleMiniLikes}
+                likes={comment.likes}
+              />
+            )}
+          </LikeBox>
           <small title={comment.time}>
             {comment.timeDistance === 'less than a minute'
               ? 'right now'

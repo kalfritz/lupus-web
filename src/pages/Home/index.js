@@ -33,14 +33,14 @@ export default function Home(props) {
             <HomeNavLink to={`/saved`} activeClassName="is-active">
               Saved Items
             </HomeNavLink>
-            <HomeNavLink to={`/settings`} activeClassName="is-active">
-              Settings
-            </HomeNavLink>
             <HomeNavLink to={`/blocks`} activeClassName="is-active">
               Blocked Users
             </HomeNavLink>
             <HomeNavLink to={`/sent`} activeClassName="is-active">
               Sent Requests
+            </HomeNavLink>
+            <HomeNavLink to={`/settings`} activeClassName="is-active">
+              Settings
             </HomeNavLink>
           </div>
         </nav>

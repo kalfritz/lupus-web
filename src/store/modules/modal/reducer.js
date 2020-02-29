@@ -9,8 +9,10 @@ const INITIAL_STATE = {
   deletePost: null,
   setPostContent: null,
   likes: {
+    context: null,
+    post_id: null,
+    comment_id: null,
     status: false,
-    data: { id: 1 },
     loading: false,
     event: null,
   },
@@ -35,14 +37,18 @@ export default function modal(state = INITIAL_STATE, action) {
         break;
       }
       case '@modal/OPEN_MODAL_WITH_LIKES': {
-        const { likes } = action.payload;
+        const { context, post_id, comment_id } = action.payload;
         draft.likes.status = true;
-        draft.likes.data = likes;
+        draft.likes.context = context;
+        draft.likes.post_id = post_id;
+        draft.likes.comment_id = comment_id;
         break;
       }
       case '@modal/CLOSE_LIKES_MODAL': {
         draft.likes.status = false;
-        draft.likes.data = {};
+        draft.likes.context = null;
+        draft.likes.post_id = null;
+        draft.likes.comment_id = null;
         break;
       }
       case '@modal/PASS_EVENTS_TO_LIKES_MODAL': {

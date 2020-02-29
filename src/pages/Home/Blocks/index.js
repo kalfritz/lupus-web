@@ -8,6 +8,7 @@ import api from '~/services/api';
 export default function Block(props) {
   const profile = useSelector(state => state.user.profile);
   const [blockedUsers, setBlockedUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const setStatus = ({ status, user_id }) => {
     const updatedBlockedUsers = blockedUsers.map(person => {
       return person.id === user_id ? { ...person, status } : person;
@@ -22,13 +23,19 @@ export default function Block(props) {
         return person;
       });
       setBlockedUsers(blockedUsers);
+      setLoading(false);
     };
     loadBlockedUsers();
   }, [profile.id]);
 
   return (
     <Container>
-      <BlockGrid {...props} blockedUsers={blockedUsers} setStatus={setStatus} />
+      <BlockGrid
+        {...props}
+        blockedUsers={blockedUsers}
+        loading={loading}
+        setStatus={setStatus}
+      />
     </Container>
   );
 }

@@ -32,10 +32,11 @@ export default forwardRef(({ visible, setVisible }, ref) => {
 
   const handleAccept = async id => {
     await api.post(`friendships/${id}`);
-    setRequests(requests.slice(id, 0));
+    setRequests(requests.filter(request => request.id !== id));
   };
   const handleReject = async id => {
     await api.delete(`friendships/${id}`);
+    setRequests(requests.filter(request => request.id !== id));
   };
 
   return (

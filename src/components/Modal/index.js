@@ -261,7 +261,13 @@ export default function Modal() {
                     setVisibleMiniLikes(false);
                   }}
                   onClick={() => {
-                    dispatch(openModalWithLikes({ likes: post.likes }));
+                    dispatch(
+                      openModalWithLikes({
+                        context: 'post',
+                        post_id: post.id,
+                        comment_id: null,
+                      })
+                    );
                   }}
                 >
                   {post.likes.length === 0

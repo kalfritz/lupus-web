@@ -43,11 +43,15 @@ export const NotificationList = styled.div`
   background: rgba(255, 255, 255, 1);
   border-radius: 4px;
   padding: 5px 0px 15px;
+  display: ${props => (props.visible ? 'block' : 'none')};
+
+  @media (max-width: 1050px) {
+    left: calc(50% - 251px);
+  }
   @media (max-width: 500px) {
     width: 350px;
     left: calc(50% - 175px);
   }
-  display: ${props => (props.visible ? 'block' : 'none')};
 
   &::before {
     content: '';
@@ -59,6 +63,13 @@ export const NotificationList = styled.div`
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
     border-bottom: 20px solid rgba(0, 0, 0, 0.6);
+
+    @media (max-width: 1050px) {
+      left: calc(58% - 2px);
+    }
+    @media (max-width: 500px) {
+      left: calc(66% - 1px);
+    }
   }
 
   & > header {

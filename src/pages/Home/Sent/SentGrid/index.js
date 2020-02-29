@@ -1,13 +1,24 @@
 import React from 'react';
 
 import Friendship from '~/components/Friendship';
-import { Container, Person, ImageLink, NameLink } from './styles';
+import { Container, Person, ImageLink, NameLink, NoSent } from './styles';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
-export default function SentGrid({ sent, setStatus }) {
+export default function SentGrid({ sent, setStatus, loading }) {
   return (
     <Container>
+      {loading ? (
+        <NoSent>
+          <h2>Loading...</h2>
+        </NoSent>
+      ) : (
+        sent.length === 0 && (
+          <NoSent>
+            <h2>You don't have any pending friends requests</h2>
+          </NoSent>
+        )
+      )}
       {sent.map(person => (
         <Person key={person.id}>
           <div>
