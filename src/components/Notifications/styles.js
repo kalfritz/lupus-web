@@ -50,7 +50,7 @@ export const NotificationList = styled.div`
   }
   @media (max-width: 500px) {
     width: 350px;
-    left: calc(50% - 175px);
+    left: calc(50% - 260px);
   }
 
   &::before {
@@ -68,7 +68,7 @@ export const NotificationList = styled.div`
       left: calc(58% - 2px);
     }
     @media (max-width: 500px) {
-      left: calc(66% - 1px);
+      left: calc(69% - 2px);
     }
   }
 

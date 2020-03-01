@@ -43,8 +43,9 @@ export const RequestList = styled.div`
   }
   @media (max-width: 500px) {
     width: 350px;
-    left: calc(50% - 138px);
+    left: calc(50% - 229px);
   }
+
   display: ${props => (props.visible ? 'block' : 'none')};
 
   &::before {
@@ -62,7 +63,7 @@ export const RequestList = styled.div`
       left: calc(58% - 2px);
     }
     @media (max-width: 500px) {
-      left: calc(66% - 1px);
+      left: calc(58% - 2px);
     }
   }
 
