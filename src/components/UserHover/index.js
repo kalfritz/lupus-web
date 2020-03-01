@@ -42,7 +42,8 @@ export default function UserHover({ user, rect }) {
       setMutualFriends(mutualFriendsResponse.data);
     };
     if (user.id === Number(profile.id)) {
-      loadFriendshipAndMutualFriends(null);
+      setFriendship({});
+      setMutualFriends([]);
     } else {
       user.id && loadFriendshipAndMutualFriends();
     }

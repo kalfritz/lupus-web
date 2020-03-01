@@ -4,10 +4,10 @@ import { likeFailure, likeSuccess } from './actions';
 
 export function* likePost({ payload }) {
   try {
-    const { post_id } = payload;
-
-    const response = yield call(api.post, `posts/${post_id}/likes`);
-
+    const { post_id, op_id } = payload;
+    console.log({ post_id, op_id });
+    const response = yield call(api.post, `posts/${post_id}/op/${op_id}/likes`);
+    console.log(response);
     const { added, removed } = response.data;
 
     yield put(likeSuccess(added, removed));
@@ -19,11 +19,11 @@ export function* likePost({ payload }) {
 
 export function* likeComment({ payload }) {
   try {
-    const { post_id, comment_id } = payload;
+    const { post_id, op_id, comment_id } = payload;
 
     const response = yield call(
       api.post,
-      `posts/${post_id}/comments/${comment_id}/likes`
+      `posts/${post_id}/op/${op_id}/comments/${comment_id}/likes`
     );
 
     const { added, removed } = response.data;

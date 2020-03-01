@@ -84,7 +84,7 @@ export default function FriendList() {
       </span>
       <Scroll friendsBarStatus={friendsBar}>
         {filteredFriends.map(friend => (
-          <Friend key={friend.id}>
+          <Friend key={friend.id} friendsBarStatus={friendsBar}>
             <div>
               <img
                 src={friend.avatar ? friend.avatar.url : standardProfilePic}
@@ -98,7 +98,7 @@ export default function FriendList() {
       </Scroll>
       <SearchBar friendsBarStatus={friendsBar}>
         <MdSearch
-          size={22}
+          size={26}
           color="#888"
           onClick={() => {
             searchBarRef.current.focus();

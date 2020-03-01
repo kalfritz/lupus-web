@@ -80,7 +80,7 @@ export default function Modal() {
     modal.setPostContent({ id: post.id, content: editedContent });
   };
   const handleLike = () => {
-    dispatch(likePostRequest(post.id));
+    dispatch(likePostRequest({ post_id: post.id, op_id: post.user_id }));
   };
   const handleClickOutside = e => {
     if (moreOptionsRef.current && !moreOptionsRef.current.contains(e.target)) {

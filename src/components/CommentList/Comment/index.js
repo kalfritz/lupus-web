@@ -26,7 +26,11 @@ export default function Comment({ comment, isRenderedInModal }) {
   const dispatch = useDispatch();
   const handleLike = () => {
     dispatch(
-      likeCommentRequest({ post_id: comment.post_id, comment_id: comment.id })
+      likeCommentRequest({
+        post_id: comment.post_id,
+        op_id: comment.user_id,
+        comment_id: comment.id,
+      })
     );
   };
   const rect = useMemo(() => {
@@ -50,20 +54,23 @@ export default function Comment({ comment, isRenderedInModal }) {
       <div>
         <UsernameAndContent ref={usernameLinkBoxRef}>
           <UsernameLinkBox
-            onMouseEnter={() => {
-              setVisibleUserHover(true);
-            }}
             onMouseLeave={() => {
               setVisibleUserHover(false);
             }}
           >
             {visibleUserHover && <UserHover user={comment.user} rect={rect} />}
-            <UsernameLink to={`/${comment.user.username}`}>
-              {comment.user.name || comment.user.username}
-            </UsernameLink>
+            <p>
+              <UsernameLink
+                to={`/${comment.user.username}`}
+                onMouseOver={() => {
+                  setVisibleUserHover(true);
+                }}
+              >
+                <span>{comment.user.name || comment.user.username}</span>
+              </UsernameLink>{' '}
+              {comment.content}
+            </p>
           </UsernameLinkBox>
-
-          <p> {comment.content}</p>
         </UsernameAndContent>
         <LikeAndTime liked={comment.liked}>
           <svg

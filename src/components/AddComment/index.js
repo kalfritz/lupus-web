@@ -18,11 +18,14 @@ const schema = Yup.object().shape({
 export default forwardRef(({ post, fixed = false }, ref) => {
   const profile = useSelector(state => state.user.profile);
   const handleSubmit = async ({ comment }, { resetForm }) => {
-    const response = await api.post(`posts/${post.id}/comments`, {
-      content: comment,
-    });
+    const response = await api.post(
+      `posts/${post.id}/op/${post.user_id}/comments`,
+      {
+        content: comment,
+      }
+    );
 
-    response.data.content && resetForm();
+    resetForm();
     response.data.err && toast.error(response.data.err);
   };
   return (

@@ -26,13 +26,11 @@ export const Container = styled.li`
   }
 `;
 export const UsernameAndContent = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 5px;
   padding: 0px 5px;
   width: 100%;
+  position: relative;
 
-  & > p {
+  p {
     font-size: 14px;
     color: #111;
 
@@ -45,13 +43,6 @@ export const LikeAndTime = styled.div`
   align-items: center;
   margin-left: 5px;
 
-  /* button {
-    margin-right: 10px;
-    outline: 0;
-    border: 0;
-    background: transparent;
-    color
-  } */
   svg {
     height: 14px;
     width: 14px;
@@ -94,18 +85,15 @@ export const LikeAndTime = styled.div`
 
 export const UsernameLinkBox = styled.div`
   border: 0;
-  position: relative;
-  color: #7159c1;
-  font-weight: bold;
-  display: inline-block;
   margin-right: 3px;
+
+  & > span {
+    font-weight: bold;
+    color: #7159c1;
+  }
 
   @media (max-width: 700px) {
     /* display: block; */
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 `;
 

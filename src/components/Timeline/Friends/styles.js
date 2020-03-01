@@ -64,7 +64,7 @@ export const Friend = styled(Link)`
     }
   }
   @media (max-width: 450px) {
-    &:nth-child(n + 5):nth-child(-n + 7) {
+    &:nth-child(n + 5):nth-child(-n + 6) {
       display: block;
     }
   }

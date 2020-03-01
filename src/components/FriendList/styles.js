@@ -48,6 +48,7 @@ export const Container = styled.div`
         `
       : css`
           height: auto;
+          transform: translateY(5px);
           background: #333;
           border: 0;
           color: #fff;
@@ -55,17 +56,11 @@ export const Container = styled.div`
 `;
 
 export const Scroll = styled(PerfectScrollBar)`
-  padding: 15px 5px 0px;
+  padding: 5px 5px 0px;
   border-top: 1px solid #ccc;
-
-  ${props =>
-    props.friendsBarStatus
-      ? css`
-          display: block;
-        `
-      : css`
-          display: none;
-        `}
+  /* whatever CSS property I change here based on props.friendBarStatus 
+   will make so that the scrollbar end up not scrolling anymore
+   until I refresh the page */
 `;
 
 export const Friend = styled.div`
@@ -74,6 +69,7 @@ export const Friend = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 5px 5px;
+  display: ${props => !props.friendsBarStatus && 'none'};
 
   & > div {
     display: flex;
@@ -101,8 +97,7 @@ export const SearchBar = styled.div`
   padding: 0px 10px;
 
   svg {
-    margin-right: 5px;
-
+    margin-right: 1px;
     &:hover {
       fill: #777;
     }
@@ -113,13 +108,11 @@ export const SearchBar = styled.div`
   }
 
   input {
-    width: 100%;
     outline: 0;
     border-radius: 4px;
     border: 0;
     padding: 5px 10px;
     color: #222;
-    background: transparent;
   }
 
   ${props =>
