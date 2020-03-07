@@ -110,6 +110,7 @@ export default function FriendList() {
           value={friendSearch}
           onChange={handleFriendSearch}
           ref={searchBarRef}
+          spellcheck="false"
         />
       </SearchBar>
     </Container>

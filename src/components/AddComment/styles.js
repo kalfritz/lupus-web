@@ -1,12 +1,14 @@
 import styled, { css } from 'styled-components';
+import TextareaAutosize from 'react-textarea-autosize';
 
 export const Container = styled.div`
   width: 100%;
-  height: 56px;
+  min-height: 56px;
+  max-height: 85vh;
   display: flex;
   flex-direction: row;
-  padding: 0px 15px;
-  align-items: center;
+  padding: 10px 15px 0px;
+  align-items: flex-start;
   border-top: 1px solid #ddd;
 
   ${props =>
@@ -24,23 +26,32 @@ export const Container = styled.div`
     border-radius: 50%;
     margin-right: 10px;
   }
+`;
 
-  form {
-    width: 100%;
-    display: flex;
-    align-items: center;
+export const Form = styled.form`
+  width: 100%;
+  display: flex;
+  align-items: center;
 
-    input {
-      width: 100%;
-      height: 38px;
-      border: 1px solid #ddd;
-      border-radius: 30px;
-      font-size: 16px;
-      padding: 0 20px;
-    }
-
-    button {
+  input {
+    &:last-child {
       display: none;
     }
+  }
+`;
+
+export const TextareaAutosizeStyled = styled(TextareaAutosize)`
+  color: #222;
+  resize: none;
+  overflow: hidden;
+  font-family: roboto;
+  width: 100%;
+  min-height: 38px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  font-size: 16px;
+  padding: 8px 20px 5px;
+  &::placeholder {
   }
 `;

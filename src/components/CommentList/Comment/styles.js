@@ -122,6 +122,9 @@ export const UsernameLink = styled(Link)`
     font-size: 15px;
     color: #7159c1;
     font-weight: bold;
+    @media (max-width: 600px) {
+      display: block;
+    }
   }
 
   &:link {

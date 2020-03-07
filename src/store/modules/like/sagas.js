@@ -7,8 +7,8 @@ export function* likePost({ payload }) {
     const { post_id, op_id } = payload;
     console.log({ post_id, op_id });
     const response = yield call(api.post, `posts/${post_id}/op/${op_id}/likes`);
-    console.log(response);
     const { added, removed } = response.data;
+    console.log({ added, removed });
 
     yield put(likeSuccess(added, removed));
   } catch (err) {

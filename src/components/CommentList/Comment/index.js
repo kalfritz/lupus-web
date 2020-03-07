@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { likeCommentRequest } from '~/store/modules/like/actions';
@@ -20,6 +20,9 @@ import UserHover from '~/components/UserHover';
 import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function Comment({ comment, isRenderedInModal }) {
+  useEffect(() => {
+    console.log('changed...', comment);
+  }, [comment]);
   const usernameLinkBoxRef = useRef();
   const [visibleUserHover, setVisibleUserHover] = useState(false);
   const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
@@ -131,7 +134,7 @@ export default function Comment({ comment, isRenderedInModal }) {
             >
               {comment.likes && comment.likes.length}
             </span>
-            {comment.likes.length > 0 && (
+            {comment.likes && comment.likes.length > 0 && (
               <MiniLikesModal
                 visible={visibleMiniLikes}
                 likes={comment.likes}

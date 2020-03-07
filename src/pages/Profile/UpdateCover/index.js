@@ -66,6 +66,7 @@ export default function UpdateCover({ cover }) {
             data-file={file}
             onChange={handleChange}
             ref={ref}
+            spellcheck="false"
           />
           {actionsStatus && (
             <Actions

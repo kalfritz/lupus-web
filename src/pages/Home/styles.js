@@ -46,14 +46,24 @@ export const RouteBox = styled.div`
 `;
 
 export const Aside = styled.aside`
-  grid-area: aside;
+  position: relative;
+  width: 100%;
   & > nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 26.5%;
     display: flex;
     flex-direction: column;
     background: #eee;
     min-height: 100vh;
     height: 100%;
-    padding: 10px 10px 0px 25px;
+    padding: calc(10px + 64px) 10px 0px 25px;
+
+    @media (max-width: 1050px) {
+      width: 32.6%;
+    }
+
     & > div {
       margin-top: 15px;
       display: flex;

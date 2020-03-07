@@ -234,6 +234,7 @@ export default function Modal() {
                     value={editedContent}
                     name="content"
                     type="text"
+                    spellcheck="false"
                   />
                   <div>
                     <button

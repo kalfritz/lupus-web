@@ -55,7 +55,13 @@ export default function Overview({ profile, editable }) {
             </header>
             <div>
               <MdDescription size={18} color="#333" title="Bio" />
-              <Input name="bio" multiline maxLength={120} rows={2} />
+              <Input
+                name="bio"
+                multiline
+                maxLength={120}
+                rows={2}
+                spellcheck="false"
+              />
             </div>
           </Bio>
 
@@ -68,7 +74,7 @@ export default function Overview({ profile, editable }) {
               <p>
                 Lives in{' '}
                 <span>
-                  <Input name="location" />
+                  <Input name="location" spellcheck="false" />
                 </span>
               </p>
             </div>

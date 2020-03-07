@@ -88,15 +88,30 @@ export default function Settings() {
           <AvatarInput name="avatar_id" />
           <div>
             <label htmlFor="name">Name</label>
-            <Input name="name" type="text" placeholder="Your name" />
+            <Input
+              name="name"
+              type="text"
+              placeholder="Your name"
+              spellcheck="false"
+            />
           </div>
           <div>
             <label htmlFor="username">Username</label>
-            <Input name="username" type="text" placeholder="Your username" />
+            <Input
+              name="username"
+              type="text"
+              placeholder="Your username"
+              spellcheck="false"
+            />
           </div>
           <div>
             <label htmlFor="email">E-mail</label>
-            <Input name="email" type="email" placeholder="Your e-mail" />
+            <Input
+              name="email"
+              type="email"
+              placeholder="Your e-mail"
+              spellcheck="false"
+            />
           </div>
           <ChangePasswordButton
             type="button"

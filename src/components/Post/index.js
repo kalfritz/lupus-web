@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useMemo, forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { MdBookmark, MdInfo } from 'react-icons/md';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -37,7 +37,7 @@ import {
   DeleteSpan,
 } from './styles';
 
-export default function Post({ post, deletePost, setPostContent }) {
+export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
   const nameLinkBoxRef = useRef();
   const dispatch = useDispatch();
   const moreOptionsRef = useRef();
@@ -111,7 +111,7 @@ export default function Post({ post, deletePost, setPostContent }) {
   }, [visibleUserHover]);
 
   return (
-    <Container>
+    <Container ref={ref}>
       <header>
         <UserInfo>
           {post.user.avatar && (
@@ -210,6 +210,7 @@ export default function Post({ post, deletePost, setPostContent }) {
               value={editedContent}
               name="content"
               type="text"
+              spellcheck="false"
             />
             <div>
               <button
@@ -317,4 +318,4 @@ export default function Post({ post, deletePost, setPostContent }) {
       <AddComment ref={addCommentRef} post={post} />
     </Container>
   );
-}
+});
