@@ -7,6 +7,8 @@ import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
 import send from '~/assets/send.svg';
 
+import standardProfilePic from '~/assets/ninja.jpg';
+
 import CommentList from '~/components/CommentList';
 import AddComment from '~/components/AddComment';
 import MiniLikesModal from '~/components/MiniLikesModal';
@@ -152,7 +154,14 @@ export default function Modal() {
             <header>
               <UserInfo>
                 {post.user.avatar && (
-                  <img src={post.user.avatar.url} alt="user profile pic" />
+                  <img
+                    src={
+                      post.user.avatar
+                        ? post.user.avatar.url
+                        : standardProfilePic
+                    }
+                    alt="user profile pic"
+                  />
                 )}
                 <div>
                   <span>{post.user.name || post.user.username}</span>

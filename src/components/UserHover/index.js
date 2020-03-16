@@ -4,6 +4,8 @@ import { MdHome, MdGroup } from 'react-icons/md';
 
 import api from '~/services/api';
 
+import standardProfilePic from '~/assets/ninja.jpg';
+
 import {
   Container,
   Content,
@@ -57,7 +59,9 @@ export default function UserHover({ user, rect }) {
     <Container aboveMiddleOfScreenOnYAxis={aboveMiddleOfScreenOnYAxis}>
       <Content>
         <Cover src={user.cover.url}></Cover>
-        <ProfilePic src={user.avatar.url}></ProfilePic>
+        <ProfilePic
+          src={user.avatar ? user.avatar.url : standardProfilePic}
+        ></ProfilePic>
         <Username to={`/${user.username}`}>
           <span>{user.name || user.username}</span>
         </Username>
