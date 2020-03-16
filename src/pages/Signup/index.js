@@ -31,31 +31,29 @@ export default function Signup() {
   };
   return (
     <>
-      {/* <img src={logo} alt="GoBarber" /> */}
-
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input
           name="username"
           type="text"
-          placeholder="Seu username"
+          placeholder="Your username"
           spellCheck="false"
         />
         <Input
           name="email"
           type="email"
-          placeholder="Seu e-mail"
+          placeholder="Your e-mail"
           spellCheck="false"
         />
         <Input
           name="password"
           type="password"
-          placeholder="Sua senha secreta"
+          placeholder="Your secret password"
         />
 
         <button type="submit">
-          {loading ? 'Carregando...' : 'Criar conta'}
+          {loading ? 'Creating account...' : 'Create Account'}
         </button>
-        <Link to="/">Já tenho login</Link>
+        <Link to="/login">Already have an account?</Link>
       </Form>
     </>
   );
