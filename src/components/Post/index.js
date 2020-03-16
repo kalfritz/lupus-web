@@ -210,7 +210,7 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
               value={editedContent}
               name="content"
               type="text"
-              spellcheck="false"
+              spellCheck="false"
             />
             <div>
               <button

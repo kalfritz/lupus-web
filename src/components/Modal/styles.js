@@ -65,6 +65,10 @@ export const Scroll = styled(PerfectScrollBar)`
   width: 100%;
   grid-area: post;
 
+  & > p {
+    margin-bottom: 10px;
+  }
+
   header {
     display: flex;
     flex-direction: row;

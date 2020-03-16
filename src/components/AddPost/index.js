@@ -83,7 +83,7 @@ export default function AddPost({ profile, setPosts }) {
             name="content"
             type="text"
             placeholder="Why don't you share something fun?"
-            spellcheck="false"
+            spellCheck="false"
           />
           <label htmlFor="picture">
             <MdPhotoCamera size={20} color="#333" />

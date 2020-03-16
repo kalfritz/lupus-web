@@ -60,7 +60,7 @@ export default function Overview({ profile, editable }) {
                 multiline
                 maxLength={120}
                 rows={2}
-                spellcheck="false"
+                spellCheck="false"
               />
             </div>
           </Bio>
@@ -74,7 +74,7 @@ export default function Overview({ profile, editable }) {
               <p>
                 Lives in{' '}
                 <span>
-                  <Input name="location" spellcheck="false" />
+                  <Input name="location" spellCheck="false" />
                 </span>
               </p>
             </div>

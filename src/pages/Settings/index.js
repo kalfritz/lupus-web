@@ -92,7 +92,7 @@ export default function Settings() {
               name="name"
               type="text"
               placeholder="Your name"
-              spellcheck="false"
+              spellCheck="false"
             />
           </div>
           <div>
@@ -101,7 +101,7 @@ export default function Settings() {
               name="username"
               type="text"
               placeholder="Your username"
-              spellcheck="false"
+              spellCheck="false"
             />
           </div>
           <div>
@@ -110,7 +110,7 @@ export default function Settings() {
               name="email"
               type="email"
               placeholder="Your e-mail"
-              spellcheck="false"
+              spellCheck="false"
             />
           </div>
           <ChangePasswordButton

@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import usePostQuery from '~/hooks/usePostQuery';
 import SocketContext from '~/context/SocketContext';
+
+import {
+  likeModalPost,
+  commentModalPost,
+  likeModalComment,
+} from '~/store/modules/modal/actions';
 
 import AddPost from '~/components/AddPost';
 import Posts from '~/components/Posts';
@@ -11,8 +17,11 @@ import { Container, PostList } from './styles';
 
 export default function Feed() {
   const [page, setPage] = useState(1);
+  const postModal = useSelector(state => state.modal.post);
   const socket = useContext(SocketContext);
   const profile = useSelector(state => state.user.profile);
+
+  const dispatch = useDispatch();
 
   const { loading, hasMore, posts, setPosts } = usePostQuery({
     page,
@@ -20,11 +29,16 @@ export default function Feed() {
     query: 'posts',
   });
 
+  const profile_id = useMemo(() => profile.id, [profile]);
+
   useEffect(() => {
-    if (posts) {
+    if (posts && postModal !== undefined) {
       socket.on('LIKE_POST', async ({ params }) => {
         const { person, post_id, addedLike } = params;
         console.log({ person, post_id, addedLike });
+
+        postModal.status &&
+          dispatch(likeModalPost({ person, addedLike, profile_id }));
 
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
@@ -44,20 +58,26 @@ export default function Feed() {
       socket.on('COMMENT_POST', async ({ params }) => {
         const { person, post_id, comment } = params;
         console.log({ person, post_id, comment });
-        console.log('posts: ', posts);
+
+        postModal.status && dispatch(commentModalPost({ person, comment }));
+
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
             post.comments.push(comment);
           }
           return post;
         });
-        console.log(updatedPosts);
-        console.log('will set');
+
         setPosts(updatedPosts);
       });
       socket.on('LIKE_COMMENT', async ({ params }) => {
         const { person, post_id, comment_id, addedLike } = params;
         console.log({ person, post_id, comment_id, addedLike });
+
+        postModal.status &&
+          dispatch(
+            likeModalComment({ person, comment_id, addedLike, profile_id })
+          );
 
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
@@ -65,7 +85,6 @@ export default function Feed() {
               if (comment.id === comment_id) {
                 if (addedLike) {
                   comment.likes.push(person);
-                  console.log(person.id, profile.id);
                   if (person.id === profile.id) comment.liked = true;
                 } else {
                   comment.likes = comment.likes.filter(
@@ -88,7 +107,7 @@ export default function Feed() {
       socket.off('COMMENT_POST');
       socket.off('LIKE_COMMENT');
     };
-  }, [socket, posts]);
+  }, [socket, posts, postModal]);
 
   return (
     <Container>

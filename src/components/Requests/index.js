@@ -16,7 +16,7 @@ import {
   Button,
 } from './styles';
 
-export default forwardRef(({ visible, setVisible }, ref) => {
+export default forwardRef(({ visible, setVisible, showSearchBar }, ref) => {
   const [requests, setRequests] = useState([]);
   //   const hasUnread = useMemo(() => {
   //     return requests.some(notification => notification.read === false);
@@ -40,7 +40,7 @@ export default forwardRef(({ visible, setVisible }, ref) => {
   };
 
   return (
-    <Container ref={ref}>
+    <Container ref={ref} showSearchBar={showSearchBar}>
       <Badge onClick={() => setVisible(!visible)}>
         <MdGroup size={24} color="#444" />
       </Badge>

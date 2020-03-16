@@ -5,6 +5,14 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 export const Container = styled.div`
   z-index: 2;
   position: relative;
+
+  @media (max-width: 560px) {
+    ${props =>
+      props.showSearchBar &&
+      css`
+        display: none;
+      `}
+  }
 `;
 
 export const Badge = styled.button`
@@ -48,6 +56,9 @@ export const NotificationList = styled.div`
   @media (max-width: 1050px) {
     left: calc(50% - 251px);
   }
+  @media (max-width: 700px) {
+    left: calc(50% - 320px);
+  }
   @media (max-width: 500px) {
     width: 350px;
     left: calc(50% - 260px);
@@ -67,8 +78,13 @@ export const NotificationList = styled.div`
     @media (max-width: 1050px) {
       left: calc(58% - 2px);
     }
+
+    @media (max-width: 700px) {
+      left: 75%;
+    }
+
     @media (max-width: 500px) {
-      left: calc(69% - 2px);
+      left: calc(68%);
     }
   }
 
@@ -82,7 +98,6 @@ export const NotificationList = styled.div`
     & > h2 {
       font-size: 16px;
       color: #333;
-      margin-bottom: 5px;
     }
 
     & > button {
@@ -116,10 +131,8 @@ export const Notification = styled.div`
     background: #ddd;
   }
 
-  & + div {
-    margin-top: 5px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
+  margin-top: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
   ${props =>
     props.unread &&
@@ -150,20 +163,23 @@ export const NotifActions = styled.div`
   align-items: center;
   margin-left: 3px;
 
-  button {
-    width: 7px;
-    height: 7px;
+  & > button {
     border: 0;
-    margin-bottom: 5px;
-    div {
-      margin: 0;
-      height: 7px;
+    background: transparent;
+    &:first-child {
       width: 7px;
-      border-radius: 50%;
-      border: 0;
-      outline: 0;
-      cursor: pointer;
-      background: #aaa;
+      height: 7px;
+      margin-bottom: 5px;
+      div {
+        margin: 0;
+        height: 7px;
+        width: 7px;
+        border-radius: 50%;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        background: #aaa;
+      }
     }
   }
 

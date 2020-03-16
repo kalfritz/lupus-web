@@ -5,6 +5,14 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 export const Container = styled.div`
   position: relative;
   z-index: 2;
+
+  @media (max-width: 560px) {
+    ${props =>
+      props.showSearchBar &&
+      css`
+        display: none;
+      `}
+  }
 `;
 
 export const Badge = styled.button`

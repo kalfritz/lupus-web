@@ -61,7 +61,7 @@ export default forwardRef(({ post, fixed = false }, ref) => {
           aria-label="comment"
           type="text"
           placeholder="Write a comment"
-          spellcheck="false"
+          spellCheck="false"
         />
         <input type="submit" />
       </Form>

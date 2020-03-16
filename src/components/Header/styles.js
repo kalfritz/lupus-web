@@ -10,8 +10,11 @@ export const Container = styled.header`
   right: 17px;
   z-index: 1;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     right: 0px;
+  }
+  @media (max-width: 600px) {
+    padding: 0 15px;
   }
 `;
 
@@ -22,11 +25,16 @@ export const Content = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   nav {
     display: flex;
     align-items: center;
 
-    img {
+    @media (max-width: 560px) {
+      width: 100%;
+    }
+
+    & > img {
       padding-right: 20px;
       margin-right: 20px;
       border-right: 1px solid #eee;
@@ -74,7 +82,7 @@ export const Profile = styled.div`
 
   & > div {
     &:first-child {
-      @media (max-width: 500px) {
+      @media (max-width: 700px) {
         display: none;
       }
     }

@@ -38,13 +38,13 @@ export default function Signup() {
           name="username"
           type="text"
           placeholder="Seu username"
-          spellcheck="false"
+          spellCheck="false"
         />
         <Input
           name="email"
           type="email"
           placeholder="Seu e-mail"
-          spellcheck="false"
+          spellCheck="false"
         />
         <Input
           name="password"

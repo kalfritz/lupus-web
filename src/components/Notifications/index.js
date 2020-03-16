@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useMemo, forwardRef } from 'react';
+import React, { useEffect, useMemo, forwardRef, useContext } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MdNotifications, MdDelete } from 'react-icons/md';
-import { parseISO, formatDistance } from 'date-fns';
-//import pt from 'date-fns/locale/pt';
-import en from 'date-fns/locale/en-US';
 
-import api from '~/services/api';
+import {
+  fetchNotificationsRequest,
+  markAllNotifAsRead,
+  markNotifAsReadRequest,
+  deleteNotif,
+} from '~/store/modules/notifications/actions';
 
 import standardProfilePic from '~/assets/ninja.jpg';
 
@@ -19,70 +22,45 @@ import {
   NotifActions,
 } from './styles';
 
-export default forwardRef(({ visible, setVisible }, ref) => {
-  const [notifications, setNotifications] = useState([]);
+export default forwardRef(({ visible, setVisible, showSearchBar }, ref) => {
+  const dispatch = useDispatch();
+  const notifications = useSelector(state => state.notifications);
 
   useEffect(() => {
-    async function loadNotifications() {
-      const response = await api.get('notifications');
-      const data = response.data.map(notification => ({
-        ...notification,
-        timeDistance: formatDistance(
-          parseISO(notification.createdAt),
-          new Date(),
-          { addSuffix: true, locale: en }
-        ),
-      }));
-      setNotifications(data);
-    }
-    loadNotifications();
-  }, []);
+    dispatch(fetchNotificationsRequest());
+  }, [dispatch]);
 
   const hasUnread = useMemo(() => {
-    return notifications.some(notification => notification.read === false);
+    return notifications.data.some(notification => notification.read === false);
   }, [notifications]);
 
   const unreadNotifsCount = useMemo(() => {
-    let unreadNotifs = notifications.filter(notif => !notif.read);
+    let unreadNotifs = notifications.data.filter(notif => !notif.read);
     return unreadNotifs.length;
   }, [notifications]);
 
   const handleMarkAllAsRead = async () => {
-    const hasUnreadNotifs = notifications.some(notif => !notif.read);
+    const hasUnreadNotifs = notifications.data.some(notif => !notif.read);
     if (hasUnreadNotifs) {
-      await api.put(`notifications`);
-      setNotifications(
-        notifications.map(notification => {
-          return { ...notification, read: true };
-        })
-      );
+      dispatch(markAllNotifAsRead());
     }
   };
 
-  const handleMarkAsRead = async id => {
-    const response = await api.put(`notifications/${id}`);
-    const { read } = response.data;
-    setNotifications(
-      notifications.map(notification =>
-        notification._id === id ? { ...notification, read } : notification
-      )
-    );
+  const handleMarkAsRead = async notif_id => {
+    dispatch(markNotifAsReadRequest({ notif_id }));
   };
 
-  const handleDelete = async id => {
-    await api.delete(`notifications/${id}`);
-    const newNotifications = notifications.filter(
-      notification => notification._id !== id
-    );
-    setNotifications(newNotifications);
+  const handleDelete = async notif_id => {
+    dispatch(deleteNotif({ notif_id }));
   };
 
   return (
-    <Container ref={ref}>
+    <Container ref={ref} showSearchBar={showSearchBar}>
       <Badge
         hasUnread={hasUnread}
         unreadCount={String(unreadNotifsCount)}
         onClick={() => setVisible(!visible)}
+        className="notifications"
       >
         <MdNotifications size={24} color="#444" />
       </Badge>
@@ -92,7 +70,7 @@ export default forwardRef(({ visible, setVisible }, ref) => {
           <button onClick={handleMarkAllAsRead}>Mark all as read</button>
         </header>
         <Scroll>
-          {notifications.map(notif => (
+          {notifications.data.map(notif => (
             <Notification key={notif._id} unread={!notif.read}>
               <section>
                 <ProfileLink notif={notif} to={`/${notif.dispatcher.username}`}>
@@ -112,14 +90,17 @@ export default forwardRef(({ visible, setVisible }, ref) => {
                 >
                   <div />
                 </button>
-                <MdDelete
-                  onClick={() => {
-                    handleDelete(notif._id);
-                  }}
-                  title="Delete"
-                  size={12}
-                  color="#f64c75"
-                />
+                <button>
+                  <MdDelete
+                    onClick={() => {
+                      handleDelete(notif._id);
+                    }}
+                    title="Delete"
+                    size={12}
+                    color="#f64c75"
+                    className="delete"
+                  />
+                </button>
               </NotifActions>
             </Notification>
           ))}

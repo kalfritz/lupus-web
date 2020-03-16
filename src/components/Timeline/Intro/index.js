@@ -31,13 +31,13 @@ export default function Intro({ profile, editable }) {
       </header>
       {editing ? (
         <Form onSubmit={handleSubmit} initialData={initialData}>
-          <Input name="bio" multiline maxLength={120} spellcheck="false" />
+          <Input name="bio" multiline maxLength={120} spellCheck="false" />
           <Location>
             <MdHome size={18} color="#333" title="Location" />
             <p>
               Lives in{' '}
               <span>
-                <Input name="location" spellcheck="false" />
+                <Input name="location" spellCheck="false" />
               </span>
             </p>
           </Location>

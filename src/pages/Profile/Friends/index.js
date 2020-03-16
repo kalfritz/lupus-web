@@ -115,7 +115,7 @@ export default function Friends({ profile, editable }) {
               value={friendSearch}
               onChange={handleFriendsSearch}
               ref={searchBarRef}
-              spellcheck="false"
+              spellCheck="false"
             />
           </SearchBar>
         </header>

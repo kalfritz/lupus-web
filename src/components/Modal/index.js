@@ -41,8 +41,6 @@ export default function Modal() {
   const moreOptionsRef = useRef();
   const [visibleMoreOptions, setVisibleMoreOptions] = useState(false);
   const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);
-  const [comments, setComments] = useState([]);
-  const [loadingComments, setLoadingComments] = useState(false);
 
   const [confirm, setConfirm] = useState(false);
   const [editing, setEditing] = useState(false);
@@ -53,6 +51,7 @@ export default function Modal() {
     },
     [dispatch]
   );
+
   const modal = useSelector(state => state.modal);
   const { data: post } = modal.post;
   const [editedContent, setEditedContent] = useState(post.content);
@@ -105,14 +104,6 @@ export default function Modal() {
   );
 
   useEffect(() => {
-    async function loadComments() {
-      setLoadingComments(true);
-      const response = await api.get(`posts/${post.id}/comments`);
-      setComments(response.data);
-      setLoadingComments(false);
-    }
-    loadComments();
-
     ref.current.focus();
 
     document.addEventListener('click', handleClickOutsideModal, false);
@@ -234,7 +225,7 @@ export default function Modal() {
                     value={editedContent}
                     name="content"
                     type="text"
-                    spellcheck="false"
+                    spellCheck="false"
                   />
                   <div>
                     <button
@@ -342,11 +333,8 @@ export default function Modal() {
                 <img src={send} alt="send" />
               </Actions>
             </footer>
-            {loadingComments ? (
-              <h1>carregando.....</h1>
-            ) : (
-              <CommentList comments={comments} isRenderedInModal={true} />
-            )}
+            {modal.post.loading && <p>loading more comments....</p>}
+            <CommentList comments={post.comments} isRenderedInModal={true} />
           </Scroll>
           <AddComment ref={addCommentRef} post={post} fixed={true} />
         </section>

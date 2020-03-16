@@ -31,7 +31,7 @@ export default function Signin() {
           name="email"
           type="email"
           placeholder="Seu e-mail"
-          spellcheck="false"
+          spellCheck="false"
         />
         <Input
           name="password"

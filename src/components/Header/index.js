@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 
 import {
   MdPerson,
@@ -11,6 +12,7 @@ import {
 } from 'react-icons/md';
 import { IoIosPersonAdd } from 'react-icons/io';
 
+import UserSearchBar from '~/components/UserSearchBar';
 import Notifications from '~/components/Notifications';
 import Requests from '~/components/Requests';
 
@@ -28,6 +30,7 @@ import standardProfilePic from '~/assets/ninja.jpg';
 import { signOut } from '~/store/modules/auth/actions';
 
 export default function Header() {
+  const [showSearchBar, setShowSearchBar] = useState(true);
   const requestsRef = useRef();
   const notifsRef = useRef();
   const headerOptionsRef = useRef();
@@ -37,6 +40,14 @@ export default function Header() {
   const [visibleNotifs, setVisibleNotifs] = useState(false);
   const [visibleHeaderOptions, setVisibleHeaderOptions] = useState(false);
 
+  const isLessThan530PxWith = useMediaQuery({
+    query: '(max-width: 560px)',
+  });
+
+  useEffect(() => {
+    isLessThan530PxWith ? setShowSearchBar(false) : setShowSearchBar(true);
+  }, [isLessThan530PxWith]);
+
   const handleClickOutside = e => {
     if (requestsRef.current && !requestsRef.current.contains(e.target)) {
       //if click outside closes requests
@@ -44,6 +55,11 @@ export default function Header() {
     }
     if (notifsRef.current && !notifsRef.current.contains(e.target)) {
       //if click outside closes notifs
+      console.log(e.target);
+      console.log(e.target.className);
+      if (e.target.color !== 'rgb(68, 68, 68)') return;
+      //when clicking on svg icon for delete the notifsRef.current do not
+      //contains the element
       setVisibleNotifs(false);
     }
     if (
@@ -99,22 +115,30 @@ export default function Header() {
 
   return (
     <Container>
+      {/* <UserSearchBar context="top" /> */}
       <Content>
         <nav>
-          {/* <img src={logo} alt="GoBarber" /> */}
           <Link to="/">Lupus</Link>
+          <UserSearchBar
+            isLessThan530PxWith={isLessThan530PxWith}
+            showSearchBar={showSearchBar}
+            setShowSearchBar={setShowSearchBar}
+          />
         </nav>
         <aside>
           <Requests
+            showSearchBar={showSearchBar}
             visible={visibleRequests}
             setVisible={setVisibleRequests}
             ref={requestsRef}
           />
           <Notifications
+            showSearchBar={showSearchBar}
             visible={visibleNotifs}
             setVisible={setVisibleNotifs}
             ref={notifsRef}
           />
+
           <Profile>
             <div>
               <strong>{profile.name || profile.username}</strong>
