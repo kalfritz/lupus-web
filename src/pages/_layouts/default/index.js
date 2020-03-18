@@ -33,13 +33,13 @@ export default function DefaultLayout({ children }) {
 
   useEffect(() => {
     const unreadNotif = notifications.data.filter(notif => !notif.read).length;
-    document.title = unreadNotif ? `(${unreadNotif}) Lupus` : 'Lupus';
+    document.title = unreadNotif ? `(${unreadNotif}) Luppus` : 'Luppus';
   }, [notifications.data]);
 
   const socket = useMemo(() => {
     return (
       profile.id &&
-      socketio('http://localhost:3333', {
+      socketio('https://luppusapi.xyz', {
         query: {
           user_id: profile.id,
         },

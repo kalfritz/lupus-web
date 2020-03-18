@@ -118,7 +118,7 @@ export default function Header() {
       {/* <UserSearchBar context="top" /> */}
       <Content>
         <nav>
-          <Link to="/">Lupus</Link>
+          <Link to="/">Luppus</Link>
           <UserSearchBar
             isLessThan530PxWith={isLessThan530PxWith}
             showSearchBar={showSearchBar}

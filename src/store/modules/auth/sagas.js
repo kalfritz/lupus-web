@@ -22,7 +22,7 @@ export function* signIn({ payload }) {
 
     history.push('/');
   } catch (err) {
-    toast.error('Falha na autenticação, verifique seus dados');
+    toast.error('Auth failure, verify your data');
     yield put(signFailure());
   }
 }
@@ -41,7 +41,7 @@ export function* signUp({ payload }) {
     yield put(signInSuccess(token, user));
     history.push('/');
   } catch (err) {
-    toast.error('Falha ao criar conta. Tente novamente');
+    toast.error('Failure creating account. Try again');
     yield put(signFailure());
   }
 }
