@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '~/services/api';
 
-export default function usePostQuery({ page, profile, query }) {
+export default function usePostQuery({ setPage, page, profile, query }) {
   const [loading, setLoading] = useState(true);
   const [hasMore, setHasMore] = useState(false);
   const [posts, setPosts] = useState([]);

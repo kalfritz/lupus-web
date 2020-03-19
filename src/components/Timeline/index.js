@@ -16,6 +16,7 @@ export default function Timeline({ editable, profile }) {
   const socket = useContext(SocketContext);
 
   const { loading, hasMore, posts, setPosts } = usePostQuery({
+    setPage,
     page,
     profile,
     query: `timeline/${profile.id}`,

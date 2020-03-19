@@ -24,6 +24,7 @@ export default function Feed() {
   const dispatch = useDispatch();
 
   const { loading, hasMore, posts, setPosts } = usePostQuery({
+    setPage,
     page,
     profile,
     query: 'posts',
