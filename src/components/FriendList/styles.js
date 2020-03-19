@@ -59,7 +59,7 @@ export const Container = styled.div`
 
 export const Scroll = styled(PerfectScrollBar)`
   padding: 5px 5px 0px;
-  border-top: 1px solid #ccc;
+  border: 1px solid #ccc;
   /* whatever CSS property I change here based on props.friendBarStatus 
    will make so that the scrollbar end up not scrolling anymore
    until I refresh the page */
