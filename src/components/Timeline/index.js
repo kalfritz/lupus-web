@@ -18,7 +18,6 @@ export default function Timeline({ editable, profile }) {
   const { loading, hasMore, posts, setPosts } = usePostQuery({
     page,
     profile,
-    profile_id: profile.id,
     query: `timeline/${profile.id}`,
   });
 

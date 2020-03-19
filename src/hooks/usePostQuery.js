@@ -25,7 +25,7 @@ export default function usePostQuery({ page, profile, query }) {
       }
     }
     profile.id && loadPosts();
-  }, [page, profile]);
+  }, [page, profile.id]);
 
   return { loading, hasMore, posts, setPosts };
 }
