@@ -16,6 +16,7 @@ export default function usePostQuery({ page, profile, query }) {
           },
         });
         setLoading(false);
+        response.data.length === 0 && setPage(1);
         if (page === 1) setPosts(response.data);
         else
           setPosts(prevPosts => {
