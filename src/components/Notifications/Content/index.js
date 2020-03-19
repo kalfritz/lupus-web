@@ -14,7 +14,10 @@ export default function Content({ notif }) {
       return `/posts/${notif.content.post_id}/comments/${notif.content.comment_id}`;
     }
     if (notif.context === 'friendship') {
-      return `/users/${notif.dispatcher.id}`;
+      return `/${notif.dispatcher.id}`;
+    }
+    if (notif.context === 'welcome') {
+      return `/luppus`;
     }
   }, [notif]);
 
@@ -88,6 +91,14 @@ export default function Content({ notif }) {
                 </span>
                 are friends now!
               </p>
+              <Time>{notif.timeDistance}</Time>
+            </div>
+          </div>
+        )}
+        {notif.context === 'welcome' && (
+          <div>
+            <div>
+              <p>Welcome to Luppus!</p>
               <Time>{notif.timeDistance}</Time>
             </div>
           </div>

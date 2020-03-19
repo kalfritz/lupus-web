@@ -3,7 +3,6 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
   background: #fff;
-  position: relative;
   border: 1px solid #ddd;
   padding: 0px 0px;
   height: calc(100vh - 64px); /*64px = header, 10px = extra margin*/
@@ -42,6 +41,9 @@ export const Container = styled.div`
   ${props =>
     props.friendsBarStatus
       ? css`
+          @media (max-width: 1050px) {
+            z-index: 2;
+          }
           & > span {
             background: #eee;
           }
@@ -94,6 +96,7 @@ export const SearchBar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  border-top: 1px solid #eee;
   padding: 0px 10px;
 
   svg {

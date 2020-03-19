@@ -3,7 +3,7 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
   background: rgba(0, 0, 0, 0.4);
-  z-index: 4;
+  z-index: 5;
   position: absolute;
   top: 0;
   left: 0;

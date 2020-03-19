@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
-  z-index: 2;
+  z-index: 3;
   position: relative;
 
   @media (max-width: 560px) {

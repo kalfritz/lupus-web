@@ -4,7 +4,7 @@ import PerfectScrollBar from 'react-perfect-scrollbar';
 
 export const Container = styled.div`
   position: relative;
-  z-index: 2;
+  z-index: 3;
 
   @media (max-width: 560px) {
     ${props =>

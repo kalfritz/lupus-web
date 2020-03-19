@@ -109,7 +109,6 @@ export const FriendshipOptions = styled.div`
 export const FriendshipOptionsContent = styled.div`
   background: #fff;
   border: 1px solid #ccc;
-  z-index: 20px;
   padding: 5px;
   & > button {
     width: 100%;

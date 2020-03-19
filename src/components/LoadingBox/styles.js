@@ -4,9 +4,6 @@ export const Container = styled.div`
   background: transparent;
   width: 100%;
   margin-top: ${props => (props.context === 'feed' ? '10px' : '0px')};
-  @media (max-width: 1050px) {
-    padding: 10px 15px 15px;
-  }
 `;
 export const LoadingPost = styled.div`
   height: 300px;
