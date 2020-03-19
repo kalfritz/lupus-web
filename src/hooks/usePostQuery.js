@@ -7,6 +7,10 @@ export default function usePostQuery({ setPage, page, profile, query }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    setPage(1);
+  }, [profile.id]);
+
+  useEffect(() => {
     async function loadPosts() {
       try {
         setLoading(true);
@@ -16,7 +20,7 @@ export default function usePostQuery({ setPage, page, profile, query }) {
           },
         });
         setLoading(false);
-        response.data.length === 0 && setPage(1);
+
         if (page === 1) setPosts(response.data);
         else
           setPosts(prevPosts => {
