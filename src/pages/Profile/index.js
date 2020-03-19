@@ -45,7 +45,7 @@ export default function Profile(props) {
   useEffect(() => {
     const { username } = props.match.params;
 
-    if (props.match.path === '/profile/:username') {
+    if (props.match.path === '/:username') {
       ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',

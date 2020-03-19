@@ -34,7 +34,17 @@ export default function Friends({ profile, editable }) {
       </header>
       <FriendsGrid>
         {friends.map(friend => (
-          <Friend to={`/${friend.username}`} key={friend.id}>
+          <Friend
+            to={`/${friend.username}`}
+            key={friend.id}
+            onClick={() => {
+              ref.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+              });
+              return;
+            }}
+          >
             <img
               src={friend.avatar ? friend.avatar.url : standardProfilePic}
               alt="friend"

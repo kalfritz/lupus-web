@@ -16,9 +16,11 @@ export default function usePostQuery({ page, profile, query }) {
           },
         });
         setLoading(false);
-        setPosts(prevPosts => {
-          return [...prevPosts, ...response.data];
-        });
+        if (page === 1) setPosts(response.data);
+        else
+          setPosts(prevPosts => {
+            return [...prevPosts, ...response.data];
+          });
         setHasMore(response.data.length > 0);
       } catch (err) {
         console.log(err);
