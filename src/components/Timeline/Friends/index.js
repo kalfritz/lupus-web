@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MdGroup } from 'react-icons/md';
 
 import api from '~/services/api';
@@ -8,6 +8,7 @@ import { Container, FriendsGrid, Friend, FriendsLink } from './styles';
 import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function Friends({ profile, editable }) {
+  const ref = useRef();
   const [friends, setFriends] = useState([]);
   const [friendsCount, setFriendsCount] = useState(0);
   useEffect(() => {
@@ -34,17 +35,7 @@ export default function Friends({ profile, editable }) {
       </header>
       <FriendsGrid>
         {friends.map(friend => (
-          <Friend
-            to={`/${friend.username}`}
-            key={friend.id}
-            onClick={() => {
-              ref.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-              });
-              return;
-            }}
-          >
+          <Friend to={`/${friend.username}`} key={friend.id}>
             <img
               src={friend.avatar ? friend.avatar.url : standardProfilePic}
               alt="friend"
