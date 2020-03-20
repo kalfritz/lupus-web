@@ -8,7 +8,6 @@ import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function AvatarInput() {
   const { defaultValue, registerField } = useField('avatar');
-  console.tron.log(defaultValue);
 
   const [file, setFile] = useState(defaultValue && defaultValue.id);
   const [preview, setPreview] = useState(defaultValue && defaultValue.url);
