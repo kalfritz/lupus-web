@@ -57,16 +57,19 @@ export default function Settings() {
   };
 
   const handleSubmit = data => {
-    console.log(data);
     const {
       name,
-      username,
       email,
       avatar_id,
       oldPassword,
       password,
       confirmPassword,
     } = data;
+
+    const username = data.username
+      .toLowerCase()
+      .split(' ')
+      .join('');
 
     dispatch(
       updateProfileRequest({

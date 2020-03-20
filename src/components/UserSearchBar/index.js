@@ -14,9 +14,7 @@ export default function UserSearchBar({
 }) {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-  const handleClickUserLink = () => {
-    setQuery('');
-  };
+  const handleClickUserLink = () => {};
   const handleSearchInput = e => {
     setQuery(e.target.value);
     setPage(1);
@@ -52,7 +50,7 @@ export default function UserSearchBar({
           setTimeout(() => {
             setQuery('');
             isLessThan530PxWith && setShowSearchBar(false);
-          }, 100);
+          }, 650);
         }}
         value={query}
         onChange={handleSearchInput}

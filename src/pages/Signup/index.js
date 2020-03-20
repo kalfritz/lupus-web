@@ -5,28 +5,29 @@ import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
-//import logo from '~/assets/logo.svg';
-
 const schema = Yup.object().shape({
   username: Yup.string()
-    .lowercase()
+    .trim('Username cannot have empty spaces')
     .max(12)
-    .trim('O username não pode conter espaços')
-    .required('O username é obrigatório'),
+    .required('Username is required'),
   email: Yup.string()
-    .email('Insira um e-email válido')
-    .required('O e-mail é obrigatório'),
+    .email('Insert a valid e-mail')
+    .required('E-mail is required'),
   password: Yup.string()
-    .min(6, 'No mínimo 6 caracteres')
-    .required('A senha é obrigatória'),
+    .min(6, 'Password must have at least 6 characteres')
+    .required('Password is required'),
 });
 
 export default function Signup() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.auth.loading);
   const handleSubmit = data => {
-    const { username, email, password } = data;
-
+    const castData = schema.cast(data);
+    let { username, email, password } = castData;
+    username = username
+      .toLowerCase()
+      .split(' ')
+      .join('');
     dispatch(signUpRequest(username, email, password));
   };
   return (

@@ -59,7 +59,7 @@ export const Container = styled.div`
 
 export const Scroll = styled(PerfectScrollBar)`
   padding: 5px 5px 0px;
-  border: 1px solid #ccc;
+
   /* whatever CSS property I change here based on props.friendBarStatus 
    will make so that the scrollbar end up not scrolling anymore
    until I refresh the page */
@@ -93,25 +93,13 @@ export const GreenCircle = styled.div`
 `;
 
 export const SearchBar = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-top: 1px solid #eee;
-  padding: 0px 10px;
-
-  svg {
-    margin-right: 1px;
-    &:hover {
-      fill: #777;
-    }
-  }
-
-  @media (max-width: 1050px) {
-    /* display: none; */
-  }
+  border: 1px solid #eee;
+  width: 100%;
+  padding: 0px;
 
   input {
     outline: 0;
+    width: 100%;
     border-radius: 4px;
     border: 0;
     padding: 5px 10px;

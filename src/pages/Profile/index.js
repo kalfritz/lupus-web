@@ -68,7 +68,7 @@ export default function Profile(props) {
       behavior: 'smooth',
       block: 'start',
     });
-  }, [props.match.params]);
+  }, [props.match.path]);
 
   useEffect(() => {
     const loadFriendship = async () => {
@@ -86,8 +86,6 @@ export default function Profile(props) {
   const editable = useMemo(() => {
     return user.id === Number(profile.id);
   }, [user.id, profile.id]);
-
-  /*hhttps://scontent.fsdu11-1.fna.fbcdn.net/v/t1.0-9/18198454_877568099050834_5440765596958276149_n.jpg?_nc_cat=106&_nc_oc=AQlgDLVZMpTf_KrrkMTE6BRdYOqzvFc-NDrz9bA25YylD1s49kSBbWSieQmLhRktb1M&_nc_ht=scontent.fsdu11-1.fna&oh=3206f802898a1e47adb86efa16e79b5b&oe=5EC4CE2D*/
 
   const handleBlock = async () => {
     await api.post(`/blockedusers/${user.id}`);
@@ -111,6 +109,13 @@ export default function Profile(props) {
             src={user.avatar ? user.avatar.url : standardProfilePic}
           />
         )}
+
+        {visibleBlockButton && !editable ? (
+          <BlockButton onClick={handleBlock} context="left">
+            <MdBlock size={14} color="#333" />
+            <span>Block</span>
+          </BlockButton>
+        ) : null}
 
         <Name>
           <span>{user.name || user.username}</span>

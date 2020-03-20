@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
@@ -63,6 +63,12 @@ export const UserNameAndOptions = styled.div`
     &:last-child {
     }
   }
+
+  @media (max-width: 550px) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 export const Options = styled.div`
@@ -73,6 +79,10 @@ export const Options = styled.div`
   display: flex;
   flex-direction: row;
   min-height: 32px;
+
+  @media (max-width: 550px) {
+    transform: translateY(0px);
+  }
 `;
 
 export const BlockButton = styled.button`
@@ -93,6 +103,22 @@ export const BlockButton = styled.button`
     font-weight: 400;
     color: #333;
   }
+
+  ${props =>
+    props.context === 'left'
+      ? css`
+          display: none;
+          @media (max-width: 550px) {
+            display: flex;
+            margin-left: 0px;
+            padding: 7px;
+          }
+        `
+      : css`
+          @media (max-width: 550px) {
+            display: none;
+          }
+        `}
 `;
 
 export const Name = styled.div`

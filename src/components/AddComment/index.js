@@ -57,6 +57,7 @@ export default forwardRef(({ post, fixed = false }, ref) => {
           maxRows={20}
           name="comment"
           value={comment}
+          maxLength="50000"
           onChange={handleInput}
           aria-label="comment"
           type="text"

@@ -6,7 +6,6 @@ import {
   friendSignedIn,
 } from '~/store/modules/user/actions';
 import { useMediaQuery } from 'react-responsive';
-import { MdSearch } from 'react-icons/md';
 import SocketContext from '~/context/SocketContext';
 
 import standardProfilePic from '~/assets/ninja.jpg';
@@ -97,13 +96,6 @@ export default function FriendList() {
         ))}
       </Scroll>
       <SearchBar friendsBarStatus={friendsBar}>
-        <MdSearch
-          size={26}
-          color="#888"
-          onClick={() => {
-            searchBarRef.current.focus();
-          }}
-        />
         <input
           type="text"
           placeholder="Search"

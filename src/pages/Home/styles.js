@@ -7,6 +7,7 @@ export const Container = styled.div`
   grid-template-columns: 4fr 8fr;
   grid-template-areas: 'aside route';
   grid-gap: 10px;
+  min-height: 100vh;
 
   @media (max-width: 1050px) {
     grid-gap: 10px;
@@ -68,6 +69,12 @@ export const Aside = styled.aside`
       margin-top: 15px;
       display: flex;
       flex-direction: column;
+    }
+
+    footer {
+      margin: auto 0px 10px;
+      color: #555;
+      font-size: 13px;
     }
   }
   @media (max-width: 800px) {

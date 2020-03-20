@@ -230,6 +230,7 @@ export default function Modal() {
                   <TextareaAutosize
                     minRows={1}
                     maxRows={100}
+                    maxLength="100000"
                     onChange={handleTextarea}
                     value={editedContent}
                     name="content"

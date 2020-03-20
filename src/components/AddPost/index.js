@@ -79,6 +79,7 @@ export default function AddPost({ profile, setPosts }) {
             minRows={3}
             maxRows={100}
             onChange={handleTextarea}
+            maxLength="100000"
             value={textareaText}
             name="content"
             type="text"

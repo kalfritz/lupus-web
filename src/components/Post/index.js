@@ -206,6 +206,7 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
             <TextareaAutosize
               minRows={1}
               maxRows={100}
+              maxLength="100000"
               onChange={handleTextarea}
               value={editedContent}
               name="content"
