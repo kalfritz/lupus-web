@@ -14,10 +14,10 @@ export default function Content({ notif }) {
       return `/posts/${notif.content.post_id}/comments/${notif.content.comment_id}`;
     }
     if (notif.context === 'friendship') {
-      return `/${notif.dispatcher.id}`;
+      return `/${notif.dispatcher.username}`;
     }
     if (notif.context === 'welcome') {
-      return `/luppus`;
+      return `/${notif.dispatcher.username}`;
     }
   }, [notif]);
 

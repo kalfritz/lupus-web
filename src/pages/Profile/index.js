@@ -45,13 +45,6 @@ export default function Profile(props) {
   useEffect(() => {
     const { username } = props.match.params;
 
-    if (props.match.path === '/:username') {
-      ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    }
-
     async function loadUser() {
       try {
         const response = await api.get(`/users/${username}`);
@@ -69,6 +62,13 @@ export default function Profile(props) {
     modal.likes.status,
     modal.post.status,
   ]);
+
+  useEffect(() => {
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  }, [props.match.params]);
 
   useEffect(() => {
     const loadFriendship = async () => {
