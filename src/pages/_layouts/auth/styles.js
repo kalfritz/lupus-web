@@ -16,7 +16,7 @@ export const Content = styled.div`
 
   header {
     color: #fff;
-    font-size: 70px;
+    font-size: 50px;
     margin-bottom: 20px;
   }
 
