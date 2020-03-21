@@ -14,6 +14,12 @@ export const Content = styled.div`
   max-width: 315px;
   text-align: center;
 
+  header {
+    color: #fff;
+    font-size: 70px;
+    margin-bottom: 20px;
+  }
+
   form {
     display: flex;
     flex-direction: column;

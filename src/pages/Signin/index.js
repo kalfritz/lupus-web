@@ -24,6 +24,7 @@ export default function Signin() {
   };
   return (
     <>
+      <header>Luppus</header>
       <Form schema={schema} onSubmit={handleSumit}>
         <Input
           name="email"

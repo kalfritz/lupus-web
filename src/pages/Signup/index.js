@@ -32,6 +32,7 @@ export default function Signup() {
   };
   return (
     <>
+      <header>Luppus</header>
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input
           name="username"
