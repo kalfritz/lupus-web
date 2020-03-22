@@ -9,11 +9,11 @@ import { signInRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('Insira um e-email válido')
-    .required('O e-mail é obrigatório'),
+    .email('Insert a valid e-mail')
+    .required('E-mail is required'),
   password: Yup.string()
     .min(6)
-    .required('A senha é obrigatória'),
+    .required('Password is required'),
 });
 
 export default function Signin() {
