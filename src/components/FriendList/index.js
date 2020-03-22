@@ -64,13 +64,11 @@ export default function FriendList() {
   useEffect(() => {
     socket.on('FRIEND_SIGNED_IN', async ({ params }) => {
       const { friend_id } = params;
-      console.log('signed in: ', friend_id);
 
       dispatch(friendSignedIn({ friend_id }));
     });
     socket.on('FRIEND_SIGNED_OUT', async ({ params }) => {
       const { friend_id } = params;
-      console.log('signed out: ', friend_id);
 
       dispatch(friendSignedOut({ friend_id }));
     });

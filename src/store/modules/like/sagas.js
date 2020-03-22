@@ -5,10 +5,9 @@ import { likeFailure, likeSuccess } from './actions';
 export function* likePost({ payload }) {
   try {
     const { post_id, op_id } = payload;
-    console.log({ post_id, op_id });
+
     const response = yield call(api.post, `posts/${post_id}/op/${op_id}/likes`);
     const { added, removed } = response.data;
-    console.log({ added, removed });
 
     yield put(likeSuccess(added, removed));
   } catch (err) {

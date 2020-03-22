@@ -58,7 +58,6 @@ export default function Feed() {
       });
       socket.on('COMMENT_POST', async ({ params }) => {
         const { person, post_id, comment } = params;
-        console.log({ person, post_id, comment });
 
         postModal.status && dispatch(commentModalPost({ person, comment }));
 
@@ -73,7 +72,6 @@ export default function Feed() {
       });
       socket.on('LIKE_COMMENT', async ({ params }) => {
         const { person, post_id, comment_id, addedLike } = params;
-        console.log({ person, post_id, comment_id, addedLike });
 
         postModal.status &&
           dispatch(
@@ -94,7 +92,7 @@ export default function Feed() {
                   if (person.id === profile.id) comment.liked = false;
                 }
               }
-              console.log(comment.liked);
+
               return comment;
             });
           }

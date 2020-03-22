@@ -23,7 +23,6 @@ export default forwardRef(({ post, fixed = false }, ref) => {
   };
   const handleSubmit = async () => {
     try {
-      console.log(comment);
       const response = await api.post(
         `posts/${post.id}/op/${post.user_id}/comments`,
         {
@@ -32,9 +31,7 @@ export default forwardRef(({ post, fixed = false }, ref) => {
       );
       setComment('');
       response.data.err && toast.error(response.data.err);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
   return (
     <Container ref={ref} fixed={fixed}>

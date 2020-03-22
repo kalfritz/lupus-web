@@ -20,9 +20,6 @@ import UserHover from '~/components/UserHover';
 import standardProfilePic from '~/assets/ninja.jpg';
 
 export default function Comment({ comment, isRenderedInModal }) {
-  useEffect(() => {
-    console.log('changed...', comment);
-  }, [comment]);
   const usernameLinkBoxRef = useRef();
   const [visibleUserHover, setVisibleUserHover] = useState(false);
   const [visibleMiniLikes, setVisibleMiniLikes] = useState(false);

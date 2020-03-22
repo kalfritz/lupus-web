@@ -68,7 +68,6 @@ export default function LikeBox() {
 
   useEffect(() => {
     if (modal.post.status) {
-      console.log(event.click);
       document.removeEventListener('click', event.click, false);
       document.removeEventListener('keydown', event.keyDown, false);
     }

@@ -51,12 +51,9 @@ export default function modal(state = INITIAL_STATE, action) {
         const { person, addedLike, profile_id } = action.payload;
         if (addedLike) {
           draft.post.data.likes.push(person);
-          console.log('likou');
-          console.log({ person, addedLike, profile_id });
+
           if (person.id === profile_id) draft.post.data.liked = true;
         } else {
-          console.log('deslikou');
-          console.log({ person, addedLike, profile_id });
           draft.post.data.likes = draft.post.data.likes.filter(
             liker => liker.id !== person.id
           );

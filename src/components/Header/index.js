@@ -55,8 +55,7 @@ export default function Header() {
     }
     if (notifsRef.current && !notifsRef.current.contains(e.target)) {
       //if click outside closes notifs
-      console.log(e.target);
-      console.log(e.target.className);
+
       if (e.target.color === '#f64c75') return;
       //when clicking on svg icon for delete the notifsRef.current do not
       //contains the element

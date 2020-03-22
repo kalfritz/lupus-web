@@ -27,9 +27,7 @@ export default function useUserQuery({ page, query, context }) {
           });
 
         setHasMore(response.data.length > 0);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
     query !== '' && loadUsers();
   }, [query, page]);

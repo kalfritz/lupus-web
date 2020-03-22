@@ -26,7 +26,6 @@ export default function Timeline({ editable, profile }) {
     if (posts) {
       socket.on('LIKE_POST', async ({ params }) => {
         const { person, post_id, addedLike } = params;
-        console.log({ person, post_id, addedLike });
 
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
@@ -45,21 +44,18 @@ export default function Timeline({ editable, profile }) {
       });
       socket.on('COMMENT_POST', async ({ params }) => {
         const { person, post_id, comment } = params;
-        console.log({ person, post_id, comment });
-        console.log('posts: ', posts);
+
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
             post.comments.push(comment);
           }
           return post;
         });
-        console.log(updatedPosts);
-        console.log('will set');
+
         setPosts(updatedPosts);
       });
       socket.on('LIKE_COMMENT', async ({ params }) => {
         const { person, post_id, comment_id, addedLike } = params;
-        console.log({ person, post_id, comment_id, addedLike });
 
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
@@ -67,7 +63,7 @@ export default function Timeline({ editable, profile }) {
               if (comment.id === comment_id) {
                 if (addedLike) {
                   comment.likes.push(person);
-                  console.log(person.id, profile.id);
+
                   if (person.id === profile.id) comment.liked = true;
                 } else {
                   comment.likes = comment.likes.filter(
@@ -76,7 +72,7 @@ export default function Timeline({ editable, profile }) {
                   if (person.id === profile.id) comment.liked = false;
                 }
               }
-              console.log(comment.liked);
+
               return comment;
             });
           }

@@ -49,10 +49,6 @@ export default function Friends({ profile, editable }) {
     }
   }, [friends, friendSearch]);
 
-  useEffect(() => {
-    console.log(friends);
-  }, [friends]);
-
   const handleFriendsSearch = e => {
     setFriendSearch(e.target.value.toLowerCase());
   };

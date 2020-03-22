@@ -27,9 +27,7 @@ export default function usePostQuery({ setPage, page, profile, query }) {
             return [...prevPosts, ...response.data];
           });
         setHasMore(response.data.length > 0);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     }
     profile.id && loadPosts();
   }, [page, profile.id]);
