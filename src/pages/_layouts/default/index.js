@@ -51,7 +51,7 @@ export default function DefaultLayout({ children }) {
     let cancelToken;
     socket.on('NOTIFICATION', async ({ params }) => {
       const { notification } = params;
-      console.log({ notification });
+
       clearTimeout(cancelToken);
 
       notification.timeDistance = formatDistance(

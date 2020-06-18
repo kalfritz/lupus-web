@@ -36,7 +36,6 @@ export default function Feed() {
     if (posts && postModal !== undefined) {
       socket.on('LIKE_POST', async ({ params }) => {
         const { person, post_id, addedLike } = params;
-        console.log({ person, post_id, addedLike });
 
         postModal.status &&
           dispatch(likeModalPost({ person, addedLike, profile_id }));
