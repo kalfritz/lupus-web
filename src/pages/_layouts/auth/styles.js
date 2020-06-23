@@ -45,7 +45,7 @@ export const Content = styled.div`
       font-weight: bold;
     }
 
-    button {
+    & > button {
       margin: 5px 0 0;
       height: 44px;
       background: #3b9eff;
@@ -60,7 +60,25 @@ export const Content = styled.div`
         background: ${darken(0.03, '#3b9eff')};
       }
     }
+    
   }
+
+  div {
+      margin-top:45px; background: #444;padding:5px;
+      p{
+        color:#eee; margin-bottom:5px;
+      }
+      &>button{
+        background: none;
+        color: #3b9eff;
+        border:0;
+        outline:0;
+
+        &:hover{
+          text-decoration: underline
+        }
+      }
+    }
 
   a {
     color: #fff;

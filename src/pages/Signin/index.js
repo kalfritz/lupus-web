@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import faker from 'faker'
 
-import { signInRequest } from '~/store/modules/auth/actions';
+import { signInRequest, signUpRequest } from '~/store/modules/auth/actions';
 //import logo from '~/assets/logo.svg';
 
 const schema = Yup.object().shape({
@@ -21,6 +22,12 @@ export default function Signin() {
   const loading = useSelector(state => state.auth.loading);
   const handleSumit = ({ email, password }) => {
     dispatch(signInRequest(email, password));
+  };
+  const handleGenAccount = () => {
+    const genUsername = faker.name.firstName().toLowerCase()
+    const genEmail = faker.internet.email()
+    const genPassword = faker.internet.password()
+    dispatch(signUpRequest(genUsername, genEmail, genPassword));
   };
   return (
     <>
@@ -40,7 +47,17 @@ export default function Signin() {
 
         <button type="submit">{loading ? 'Signing in...' : 'Sign In'}</button>
         <Link to="/register">Create free account</Link>
+
+        
+
       </Form>
+      <div>
+          <p>Just testing the app?</p>
+          <button onClick={handleGenAccount}>
+            Generate a new temporary account
+          </button>
+        </div>
+
     </>
   );
 }
