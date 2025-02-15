@@ -43,7 +43,7 @@ export default function Home(props) {
               Settings
             </HomeNavLink>
           </div>
-          <footer>Luppus © 2020</footer>
+          <footer>Luppus © 2025</footer>
         </nav>
       </Aside>
       <RouteBox>

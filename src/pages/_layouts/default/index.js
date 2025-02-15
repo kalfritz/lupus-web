@@ -39,7 +39,7 @@ export default function DefaultLayout({ children }) {
   const socket = useMemo(() => {
     return (
       profile.id &&
-      socketio('https://luppusapi.xyz', {
+      socketio(process.env.BACKEND_APP_URL, {
         query: {
           user_id: profile.id,
         },
