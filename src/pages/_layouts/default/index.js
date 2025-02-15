@@ -39,7 +39,7 @@ export default function DefaultLayout({ children }) {
   const socket = useMemo(() => {
     return (
       profile.id &&
-      socketio(process.env.BACKEND_APP_URL, {
+      socketio(process.env.REACT_APP_BACKEND_APP_URL, {
         query: {
           user_id: profile.id,
         },
