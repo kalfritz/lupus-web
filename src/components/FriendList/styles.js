@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import PerfectScrollBar from 'react-perfect-scrollbar';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   background: #fff;
@@ -65,7 +66,7 @@ export const Scroll = styled(PerfectScrollBar)`
    until I refresh the page */
 `;
 
-export const Friend = styled.div`
+export const Friend = styled(Link)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -77,6 +78,12 @@ export const Friend = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+  &:link {
+    color: black;
+  }
+  &:visited {
+    color: black;
   }
 
   &:hover {

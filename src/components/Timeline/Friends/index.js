@@ -5,7 +5,7 @@ import api from '~/services/api';
 
 import { Container, FriendsGrid, Friend, FriendsLink } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function Friends({ profile, editable }) {
   const ref = useRef();

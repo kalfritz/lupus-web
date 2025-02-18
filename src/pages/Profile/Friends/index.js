@@ -16,8 +16,8 @@ import {
 import FriendsGrid from './FriendsGrid';
 
 export default function Friends({ profile, editable }) {
-  let [friends, setFriends] = useState([]);
-  let [friendsCount, setFriendsCount] = useState(0);
+  const [friends, setFriends] = useState([]);
+  const [friendsCount, setFriendsCount] = useState(0);
   const [friendSearch, setFriendSearch] = useState('');
   const searchBarRef = useRef();
   useEffect(() => {
@@ -42,11 +42,10 @@ export default function Friends({ profile, editable }) {
   const filteredFriends = useMemo(() => {
     if (friendSearch.length < 1) {
       return friends;
-    } else {
-      return friends.filter(friend =>
-        friend.username.toLowerCase().includes(friendSearch)
-      );
     }
+    return friends.filter(friend =>
+      friend.username.toLowerCase().includes(friendSearch)
+    );
   }, [friends, friendSearch]);
 
   const handleFriendsSearch = e => {
@@ -66,11 +65,10 @@ export default function Friends({ profile, editable }) {
   const filteredMutualFriends = useMemo(() => {
     if (friendSearch.length < 1) {
       return mutualFriends;
-    } else {
-      return mutualFriends.filter(friend =>
-        friend.username.toLowerCase().includes(friendSearch)
-      );
     }
+    return mutualFriends.filter(friend =>
+      friend.username.toLowerCase().includes(friendSearch)
+    );
   }, [mutualFriends, friendSearch]);
 
   return (

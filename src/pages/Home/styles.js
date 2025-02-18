@@ -4,8 +4,8 @@ import { Link, NavLink } from 'react-router-dom';
 export const Container = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: 4fr 8fr;
-  grid-template-areas: 'aside route';
+  grid-template-columns: 4fr 8fr 10px;
+  grid-template-areas: 'aside route .';
   grid-gap: 10px;
   min-height: 100vh;
 
@@ -56,7 +56,7 @@ export const Aside = styled.aside`
     width: 26.5%;
     display: flex;
     flex-direction: column;
-    background: #eee;
+    background: #eaeaea;
     min-height: 100vh;
     height: 100%;
     padding: calc(10px + 64px) 10px 0px 25px;

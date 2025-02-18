@@ -7,7 +7,7 @@ import en from 'date-fns/locale/en-US';
 import api from '~/services/api';
 import { Container, Actions } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function AddPost({ profile, setPosts }) {
   const [textareaText, setTextareaText] = useState('');

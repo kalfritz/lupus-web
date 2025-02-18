@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMediaQuery } from 'react-responsive';
 import {
   storeMyFriendListRequest,
   friendSignedOut,
   friendSignedIn,
 } from '~/store/modules/user/actions';
-import { useMediaQuery } from 'react-responsive';
 import SocketContext from '~/context/SocketContext';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 import { Container, Scroll, Friend, GreenCircle, SearchBar } from './styles';
 
@@ -50,11 +50,10 @@ export default function FriendList() {
   const filteredFriends = useMemo(() => {
     if (friendSearch.length < 1) {
       return friends;
-    } else {
-      return friends.filter(friend =>
-        friend.username.toLowerCase().includes(friendSearch)
-      );
     }
+    return friends.filter(friend =>
+      friend.username.toLowerCase().includes(friendSearch)
+    );
   }, [friends, friendSearch]);
 
   const handleFriendSearch = e => {
@@ -81,7 +80,11 @@ export default function FriendList() {
       </span>
       <Scroll friendsBarStatus={friendsBar}>
         {filteredFriends.map(friend => (
-          <Friend key={friend.id} friendsBarStatus={friendsBar}>
+          <Friend
+            key={friend.id}
+            friendsBarStatus={friendsBar}
+            to={`/${friend.username}`}
+          >
             <div>
               <img
                 src={friend.avatar ? friend.avatar.url : standardProfilePic}

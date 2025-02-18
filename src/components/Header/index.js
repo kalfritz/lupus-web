@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,9 +25,11 @@ import {
   HeaderOptions,
   HeaderLink,
   LogoutButton,
+  HomeLink,
 } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
+import logo from '~/assets/socihub-logo-purple.svg';
 
 import { signOut } from '~/store/modules/auth/actions';
 
@@ -45,47 +49,46 @@ export default function Header() {
   });
 
   useEffect(() => {
-    isLessThan530PxWith ? setShowSearchBar(false) : setShowSearchBar(true);
+    setShowSearchBar(!isLessThan530PxWith);
   }, [isLessThan530PxWith]);
 
   const handleClickOutside = e => {
     if (requestsRef.current && !requestsRef.current.contains(e.target)) {
-      //if click outside closes requests
+      // if click outside closes requests
       setVisibleRequests(false);
     }
     if (notifsRef.current && !notifsRef.current.contains(e.target)) {
-      //if click outside closes notifs
+      // if click outside closes notifs
 
       if (e.target.color === '#f64c75') return;
-      //when clicking on svg icon for delete the notifsRef.current do not
-      //contains the element
+      // when clicking on svg icon for delete the notifsRef.current do not
+      // contains the element
       setVisibleNotifs(false);
     }
     if (
       headerOptionsRef.current &&
       !headerOptionsRef.current.contains(e.target)
     ) {
-      //if click outside closes header options
+      // if click outside closes header options
       setVisibleHeaderOptions(false);
     }
   };
 
   useEffect(() => {
     if (visibleRequests === true) {
-      //if requests opens...
+      // if requests opens...
 
-      //add event listener so that when the user clicks anywhere outside the div,
-      //it gets closed
+      // add event listener so that when the user clicks anywhere outside the div,
+      // it gets closed
       document.addEventListener('click', handleClickOutside, false);
 
       return () => {
-        //remove listener when header unmounts
+        // remove listener when header unmounts
         document.removeEventListener('click', handleClickOutside, false);
       };
-    } else {
-      //if requests closes remove the listener
-      document.removeEventListener('click', handleClickOutside, false);
     }
+    // if requests closes remove the listener
+    document.removeEventListener('click', handleClickOutside, false);
   }, [visibleRequests]);
 
   useEffect(() => {
@@ -95,9 +98,8 @@ export default function Header() {
       return () => {
         document.removeEventListener('click', handleClickOutside, false);
       };
-    } else {
-      document.removeEventListener('click', handleClickOutside, false);
     }
+    document.removeEventListener('click', handleClickOutside, false);
   }, [visibleNotifs]);
 
   useEffect(() => {
@@ -107,9 +109,8 @@ export default function Header() {
       return () => {
         document.removeEventListener('click', handleClickOutside, false);
       };
-    } else {
-      document.removeEventListener('click', handleClickOutside, false);
     }
+    document.removeEventListener('click', handleClickOutside, false);
   }, [visibleHeaderOptions]);
 
   return (
@@ -117,7 +118,11 @@ export default function Header() {
       {/* <UserSearchBar context="top" /> */}
       <Content>
         <nav>
-          <Link to="/">Luppus</Link>
+          <HomeLink to="/">
+            {' '}
+            <img src={logo} alt="SociHub" />
+            SociHub
+          </HomeLink>
           <UserSearchBar
             isLessThan530PxWith={isLessThan530PxWith}
             showSearchBar={showSearchBar}

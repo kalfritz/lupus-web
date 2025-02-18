@@ -1,13 +1,12 @@
 import React, { useState, forwardRef } from 'react';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import api from '~/services/api';
-
 import { toast } from 'react-toastify';
+import api from '~/services/api';
 
 import { Container, Form, TextareaAutosizeStyled } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 const schema = Yup.object().shape({
   comment: Yup.string()

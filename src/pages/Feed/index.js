@@ -37,7 +37,7 @@ export default function Feed() {
       socket.on('LIKE_POST', async ({ params }) => {
         const { person, post_id, addedLike } = params;
 
-        postModal.status &&
+        if (postModal.status)
           dispatch(likeModalPost({ person, addedLike, profile_id }));
 
         const updatedPosts = posts.map(post => {
@@ -58,7 +58,7 @@ export default function Feed() {
       socket.on('COMMENT_POST', async ({ params }) => {
         const { person, post_id, comment } = params;
 
-        postModal.status && dispatch(commentModalPost({ person, comment }));
+        if (postModal.status) dispatch(commentModalPost({ person, comment }));
 
         const updatedPosts = posts.map(post => {
           if (post.id === post_id) {
@@ -72,7 +72,7 @@ export default function Feed() {
       socket.on('LIKE_COMMENT', async ({ params }) => {
         const { person, post_id, comment_id, addedLike } = params;
 
-        postModal.status &&
+        if (postModal.status)
           dispatch(
             likeModalComment({ person, comment_id, addedLike, profile_id })
           );
@@ -105,7 +105,7 @@ export default function Feed() {
       socket.off('COMMENT_POST');
       socket.off('LIKE_COMMENT');
     };
-  }, [socket, posts, postModal]);
+  }, [socket, posts, postModal, dispatch, profile_id, setPosts, profile.id]);
 
   return (
     <Container>

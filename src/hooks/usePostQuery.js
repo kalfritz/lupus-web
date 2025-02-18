@@ -8,7 +8,7 @@ export default function usePostQuery({ setPage, page, profile, query }) {
 
   useEffect(() => {
     setPage(1);
-  }, [profile.id]);
+  }, [profile.id, setPage]);
 
   useEffect(() => {
     async function loadPosts() {
@@ -30,7 +30,7 @@ export default function usePostQuery({ setPage, page, profile, query }) {
       } catch (err) {}
     }
     profile.id && loadPosts();
-  }, [page, profile.id]);
+  }, [page, profile.id, query]);
 
   return { loading, hasMore, posts, setPosts };
 }

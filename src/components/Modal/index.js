@@ -7,7 +7,7 @@ import more from '~/assets/more.svg';
 import comment from '~/assets/comment.svg';
 import send from '~/assets/send.svg';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 import CommentList from '~/components/CommentList';
 import AddComment from '~/components/AddComment';

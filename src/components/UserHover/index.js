@@ -4,7 +4,7 @@ import { MdHome, MdGroup } from 'react-icons/md';
 
 import api from '~/services/api';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 import {
   Container,

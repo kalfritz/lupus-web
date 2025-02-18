@@ -7,7 +7,7 @@ import { likePostRequest } from '~/store/modules/like/actions';
 
 import api from '~/services/api';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 import {
   openModalWithAPost,
   openModalWithLikes,
@@ -85,7 +85,7 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
 
   const handleClickOutside = e => {
     if (moreOptionsRef.current && !moreOptionsRef.current.contains(e.target)) {
-      //if click outside closes moreOptions
+      // if click outside closes moreOptions
       setVisibleMoreOptions(false);
     }
   };
@@ -97,17 +97,15 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
       return () => {
         document.removeEventListener('click', handleClickOutside, false);
       };
-    } else {
-      document.removeEventListener('click', handleClickOutside, false);
     }
+    document.removeEventListener('click', handleClickOutside, false);
   }, [visibleMoreOptions]);
 
   const rect = useMemo(() => {
     if (visibleUserHover) {
       return nameLinkBoxRef.current.getBoundingClientRect();
-    } else {
-      return null;
     }
+    return null;
   }, [visibleUserHover]);
 
   return (
@@ -266,7 +264,7 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
                       <path
                         d="M10.4483946,29.0625 L8.93337735,27.6740458 C3.55245415,22.7379084 -5.68434189e-14,19.4805856 -5.68434189e-14,15.4947206 C-5.68434189e-14,12.2373978 2.52328729,9.6875 5.74661701,9.6875 C7.56463766,9.6875 9.30951955,10.5427452 10.4483946,11.8889645 C11.5872696,10.5427452 13.3321515,9.6875 15.1501721,9.6875 C18.3735018,9.6875 20.8967891,12.2373978 20.8967891,15.4947206 C20.8967891,19.4805856 17.344335,22.7379084 11.9634118,27.6740458 L10.4483946,29.0625 Z"
                         id="Like"
-                      ></path>
+                      />
                     </g>
                   </g>
                 </g>
@@ -281,7 +279,6 @@ export default forwardRef(({ post, deletePost, setPostContent }, ref) => {
                 behavior: 'smooth',
                 block: 'center',
               });
-              return;
             }}
             alt="comment"
           />

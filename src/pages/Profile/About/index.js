@@ -11,6 +11,7 @@ import {
   AboutNavLink,
   RouteBox,
 } from './styles';
+import Maintenance from '../../../components/Maintenance';
 
 export default function About(props) {
   const { profile, editable } = props;
@@ -49,17 +50,7 @@ export default function About(props) {
             <Route
               exact
               path={`${props.match.path}/contact`}
-              render={props => (
-                <div>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                  <h1>contact page</h1>
-                </div>
-              )}
+              render={() => <Maintenance height="300px" title="Contact Page" />}
             />
           </RouteBox>
 

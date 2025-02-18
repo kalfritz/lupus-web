@@ -62,6 +62,7 @@ export const Content = styled.div`
     line-height: 18px;
     margin-bottom: 15px;
     margin-left: 20px;
+    margin-right: 20px;
   }
 
   & > img {

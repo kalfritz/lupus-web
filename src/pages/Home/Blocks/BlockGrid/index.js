@@ -3,7 +3,7 @@ import React from 'react';
 import Friendship from '~/components/Friendship';
 import { Container, Person, ImageLink, NameLink, NoBlocks } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function BlockGrid({ blockedUsers, setStatus, loading }) {
   return (

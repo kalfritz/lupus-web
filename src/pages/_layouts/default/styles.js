@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   height: 100%;
   overflow: auto;
   background: linear-gradient(-90deg, #7159c1, #ab59c1);
-  background: #aaa;
+  background: #888888;
   display: grid;
   grid-template-columns: 84fr 18fr;
   grid-template-areas: 'children aside';

@@ -5,13 +5,14 @@ export const Container = styled.div`
   border: 1px solid #eee;
 
   header {
-    padding: 0px 15px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 
     h2 {
       font-size: 20px;
+      font-weight: 700;
       color: #111;
     }
   }
@@ -88,6 +89,7 @@ export const Container = styled.div`
         background: gold;
         font-size: 16px;
         color: #555;
+        font-weight: 600;
         border-radius: 6px;
         &:focus {
           outline: none;

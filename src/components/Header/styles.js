@@ -101,6 +101,17 @@ export const HeaderOptions = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
 `;
 
+export const HomeLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > img {
+    height: 24px;
+    width: 24px;
+  }
+`;
+
 export const HeaderLink = styled(Link)`
   border: 0;
   width: 100%;

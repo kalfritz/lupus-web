@@ -11,17 +11,17 @@ import Profile from '~/pages/Profile';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/login" component={SignIn}></Route>
-      <Route path="/register" component={SignUp}></Route>
+      <Route path="/login" component={SignIn} />
+      <Route path="/register" component={SignUp} />
 
-      <Route path="/" exact component={Home} isPrivate></Route>
-      <Route path="/saved" component={Home} isPrivate></Route>
-      <Route path="/settings" component={Home} isPrivate></Route>
-      <Route path="/blocks" component={Home} isPrivate></Route>
-      <Route path="/sent" component={Home} isPrivate></Route>
-      <Route path="/:username" component={Profile} isPrivate></Route>
+      <Route path="/" exact component={Home} isPrivate />
+      <Route path="/saved" component={Home} isPrivate />
+      <Route path="/settings" component={Home} isPrivate />
+      <Route path="/blocks" component={Home} isPrivate />
+      <Route path="/sent" component={Home} isPrivate />
+      <Route path="/:username" component={Profile} isPrivate />
 
-      <Route path="/" component={Home}></Route>
+      <Route path="/" component={Home} />
     </Switch>
   );
 }

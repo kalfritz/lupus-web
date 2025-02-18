@@ -9,7 +9,7 @@ import {
   deleteNotif,
 } from '~/store/modules/notifications/actions';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 import Content from './Content';
 import {

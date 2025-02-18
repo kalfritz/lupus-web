@@ -33,7 +33,7 @@ export default function DefaultLayout({ children }) {
 
   useEffect(() => {
     const unreadNotif = notifications.data.filter(notif => !notif.read).length;
-    document.title = unreadNotif ? `(${unreadNotif}) Luppus` : 'Luppus';
+    document.title = unreadNotif ? `(${unreadNotif}) SociHub` : 'SociHub';
   }, [notifications.data]);
 
   const socket = useMemo(() => {
@@ -77,11 +77,11 @@ export default function DefaultLayout({ children }) {
         },
       });
     };
-  }, [profile.id, socket]);
+  }, [dispatch, profile.id, socket]);
 
   useEffect(() => {
-    modal.post.status && dispatch(closePostModal());
-    modal.likes.status && dispatch(closeLikesModal()); //eslint-disable-next-line
+    if (modal.post.status) dispatch(closePostModal());
+    if (modal.likes.status) dispatch(closeLikesModal()); // eslint-disable-next-line
   }, []); //I just want to check it on first render
 
   return (

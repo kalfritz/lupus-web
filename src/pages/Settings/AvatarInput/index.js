@@ -4,7 +4,7 @@ import api from '~/services/api';
 
 import { Container } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function AvatarInput() {
   const { defaultValue, registerField } = useField('avatar');

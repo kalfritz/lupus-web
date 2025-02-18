@@ -3,7 +3,7 @@ import { darken } from 'polished';
 
 export const Wrapper = styled.div`
   height: 100%;
-  background: linear-gradient(-90deg, #232526, #414345);
+  background-image: url(${props => props.backgroundImage});
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,8 +15,14 @@ export const Content = styled.div`
   text-align: center;
 
   header {
+    transform: translateY(-10px);
     color: #fff;
     font-size: 50px;
+  }
+
+  h3 {
+    transform: translateY(-5px);
+    color: #ddd;
     margin-bottom: 20px;
   }
 
@@ -48,37 +54,43 @@ export const Content = styled.div`
     & > button {
       margin: 5px 0 0;
       height: 44px;
-      background: #3b9eff;
+      background: gold;
       font-weight: bold;
-      color: #fff;
+      color: black;
       border: 0;
       border-radius: 4px;
       font-size: 16px;
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.03, '#3b9eff')};
+        background: ${darken(0.1, 'gold')};
       }
     }
-    
   }
 
   div {
-      margin-top:45px; background: #444;padding:5px;
-      p{
-        color:#eee; margin-bottom:5px;
-      }
-      &>button{
-        background: none;
-        color: #3b9eff;
-        border:0;
-        outline:0;
+    margin-top: 45px;
+    background: #444;
+    padding: 5px;
+    span {
+      margin: 0 5px;
+    }
+    p {
+      color: #eee;
+      margin-bottom: 5px;
+    }
+    & > button {
+      background: none;
+      color: gold;
+      font-weight: bold;
+      border: 0;
+      outline: 0;
 
-        &:hover{
-          text-decoration: underline
-        }
+      &:hover {
+        text-decoration: underline;
       }
     }
+  }
 
   a {
     color: #fff;

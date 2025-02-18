@@ -141,17 +141,15 @@ export const Button = styled.button`
   ${props =>
     props.color === 'accept' &&
     css`
-      /* background: #3b9eff; */
-      background: #3b9eff;
-
-      &:hover {
-      }
+      /* background: gold; */
+      background: gold;
+      color: #333;
     `}
   ${props =>
     props.color === 'reject' &&
     css`
       /* background: #f64c75; */
       background: #ddd;
-      color: #111;
+      color: #333;
     `};
 `;

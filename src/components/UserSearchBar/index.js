@@ -3,7 +3,7 @@ import { MdSearch } from 'react-icons/md';
 
 import useUserQuery from '~/hooks/useUserQuery';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 import { Container, Users, UserLink } from './styles';
 

@@ -20,17 +20,19 @@ export default function useUserQuery({ page, query, context }) {
 
         setLoading(false);
 
-        context === 'top' && setUsers(response.data);
-        context === 'page' &&
+        if (context === 'top') setUsers(response.data);
+        if (context === 'page')
           setUsers(prevUsers => {
             return [...prevUsers, ...response.data];
           });
 
         setHasMore(response.data.length > 0);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     }
-    query !== '' && loadUsers();
-  }, [query, page]);
+    if (query !== '') loadUsers();
+  }, [query, page, context]);
 
   useEffect(() => {
     setUsers([]);

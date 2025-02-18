@@ -27,7 +27,7 @@ import {
 
 import { MdBlock } from 'react-icons/md';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function Profile(props) {
   const dispatch = useDispatch();

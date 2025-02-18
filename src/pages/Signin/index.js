@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
-import faker from 'faker'
+import faker from 'faker';
+import logo from '~/assets/socihub-logo.svg';
 
 import { signInRequest, signUpRequest } from '~/store/modules/auth/actions';
-//import logo from '~/assets/logo.svg';
+import { Logo } from './styles';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -24,14 +26,17 @@ export default function Signin() {
     dispatch(signInRequest(email, password));
   };
   const handleGenAccount = () => {
-    const genUsername = faker.name.firstName().toLowerCase()
-    const genEmail = faker.internet.email()
-    const genPassword = faker.internet.password()
+    const genUsername = faker.name.firstName().toLowerCase();
+    const genEmail = faker.internet.email();
+    const genPassword = faker.internet.password();
     dispatch(signUpRequest(genUsername, genEmail, genPassword));
   };
   return (
     <>
-      <header>Luppus</header>
+      <Logo src={logo} alt="SociHub" />
+      <header>SociHub</header>
+      <h3>Connect with your friends!</h3>
+
       <Form schema={schema} onSubmit={handleSumit}>
         <Input
           name="email"
@@ -47,17 +52,15 @@ export default function Signin() {
 
         <button type="submit">{loading ? 'Signing in...' : 'Sign In'}</button>
         <Link to="/register">Create free account</Link>
-
-        
-
       </Form>
       <div>
-          <p>Just testing the app?</p>
-          <button onClick={handleGenAccount}>
-            Generate a new temporary account
-          </button>
-        </div>
-
+        <p>
+          <span>⚡</span>Just testing the app?<span>⚡</span>
+        </p>
+        <button onClick={handleGenAccount} type="button">
+          <span>✨</span>Generate a temporary account for me<span>✨</span>
+        </button>
+      </div>
     </>
   );
 }

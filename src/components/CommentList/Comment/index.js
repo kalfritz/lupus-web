@@ -17,7 +17,7 @@ import {
 import MiniLikesModal from '~/components/MiniLikesModal';
 import UserHover from '~/components/UserHover';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function Comment({ comment, isRenderedInModal }) {
   const usernameLinkBoxRef = useRef();

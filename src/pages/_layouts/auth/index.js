@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import backgroundImage from '~/assets/background.jpg';
 import { Wrapper, Content } from './styles';
 
 export default function AuthLayout({ children }) {
   useEffect(() => {
-    document.title = 'Luppus - Log in or Sign Up';
+    document.title = 'SociHub - Connect with your friends!';
   }, []);
   return (
-    <Wrapper>
+    <Wrapper backgroundImage={backgroundImage}>
       <Content>{children}</Content>
     </Wrapper>
   );

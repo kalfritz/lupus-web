@@ -27,7 +27,7 @@ export const Cover = styled.div`
   align-items: center;
   background: #eee;
   background-image: url(${({ img }) => img});
-  background-repeat: no-repeat;
+  background-repeat: round;
   background-size: cover;
   /* width: calc(100% / 12 * 11 - 13px); */
   width: 100%;

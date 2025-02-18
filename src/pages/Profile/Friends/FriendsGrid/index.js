@@ -3,7 +3,7 @@ import React from 'react';
 import Friendship from '~/components/Friendship';
 import { Container, Friend, ImageLink, NameLink } from './styles';
 
-import standardProfilePic from '~/assets/ninja.jpg';
+import standardProfilePic from '~/assets/default-pfp.jpeg';
 
 export default function FriendsGrid({ friends, setStatus }) {
   return (

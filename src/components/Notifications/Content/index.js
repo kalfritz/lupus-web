@@ -98,7 +98,7 @@ export default function Content({ notif }) {
         {notif.context === 'welcome' && (
           <div>
             <div>
-              <p>Welcome to Luppus!</p>
+              <p>Welcome to SociHub!</p>
               <Time>{notif.timeDistance}</Time>
             </div>
           </div>

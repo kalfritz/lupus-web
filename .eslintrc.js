@@ -19,6 +19,11 @@ module.exports = {
   },
   plugins: ["react", "jsx-a11y", "import", "react-hooks", "prettier"],
   rules: {
+    'react/prop-types': 'off',
+    'no-unused-vars': 'off',
+    'no-unused-expressions': 'off',
+    'no-console': 'off',
+    'consistent-return': 'off',
     "prettier/prettier": "error",
     "react/jsx-filename-extension": ["error", { extensions: [".js", ".jsx"] }],
     "import/prefer-default-export": "off",
