@@ -6,6 +6,6 @@
 
 **Backend Code**: https://github.com/kalfritz/socihub-backend
 
-**See Live:** https://socihub.net
+**🖥️ Live on:** https://socihub.net
 
 ![socihub](https://github.com/user-attachments/assets/1f098301-cb36-41ee-97c9-4dfa875f9619)
